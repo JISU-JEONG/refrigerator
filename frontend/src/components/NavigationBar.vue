@@ -20,9 +20,6 @@
         <li>
           <router-link to="/camera">카메라</router-link>
         </li>
-        <li>
-          <router-link to="/fooddetail">상세페이지</router-link>
-        </li>
       </ul>
     </nav>
   </header>
