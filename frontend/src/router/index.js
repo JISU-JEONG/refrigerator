@@ -6,6 +6,9 @@ import recipe from "../components/recipe";
 import meterial from "../components/meterial";
 import test from "../components/test";
 import foodlist from "../view/FoodList";
+import fooddetail from "../view/FoodDetail";
+import camera from "../components/camera";
+
 Vue.use(Router);
 
 export default new Router({
@@ -40,6 +43,16 @@ export default new Router({
       path: "/foodlist",
       name: "foodlist",
       component: foodlist
+    },
+    {
+      path: "/camera",
+      name: "camera",
+      component: camera
+    },
+    {
+      path: "/fooddetail",
+      name: "fooddetail",
+      component: fooddetail
     }
   ]
 });
