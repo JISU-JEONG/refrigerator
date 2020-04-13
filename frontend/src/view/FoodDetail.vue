@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="fooddetail-container">
     <slider_recipe :recipes_img="recipes_img" />
     <cooking_meterial :cooking_meterial="cooking_meterial" />
     <cooking_order :recipes_order="recipes_order" />
@@ -76,3 +76,11 @@ export default {
   }
 };
 </script>
+
+<style>
+.fooddetail-container {
+  width: 100%;
+  height: 100vh;
+  padding-top: 80px;
+}
+</style>

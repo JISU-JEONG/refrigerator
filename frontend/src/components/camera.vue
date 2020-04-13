@@ -1,5 +1,5 @@
 <template>
-  <div id="img">
+  <div class="img">
     <div v-if="!image">
       <h2>Select an image</h2>
       <input type="file" @change="onFileChange" />
@@ -51,7 +51,11 @@ export default {
 </script>
 
 <style scoped>
-#img {
+.img {
+  width: 100%;
+  height: 100vh;
+  padding-top: 80px;
+
   text-align: center;
 }
 img {
