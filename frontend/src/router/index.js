@@ -50,7 +50,7 @@ export default new Router({
       component: camera
     },
     {
-      path: "/fooddetail",
+      path: "/fooddetail/:id",
       name: "fooddetail",
       component: fooddetail
     }

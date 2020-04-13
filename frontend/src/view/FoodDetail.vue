@@ -71,6 +71,7 @@ export default {
     }
   },
   beforeMount() {
+    console.log(this.$route.params.id);
     this.get_food_data();
   }
 };
