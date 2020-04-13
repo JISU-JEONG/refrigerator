@@ -17,7 +17,9 @@ schema_view = get_schema_view(
 
 app_name = 'recipes'
 urlpatterns = [
-  path('basicinfo/', views.basicinfo),
+  path('basicinfo/', views.basicinfo, name='basicinfo'),
   path('materialinfo/<int:basic_pk>/', views.materialinfo),
-  path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+  path('processinfo/<int:basic_pk>/', views.processinfo),
+  path('materialcheck/', views.materialcheck),
+  path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='swagger'),
 ]
