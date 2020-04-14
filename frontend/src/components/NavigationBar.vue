@@ -12,7 +12,7 @@
           <router-link to="/RecipeRecommendation">레시피 추천</router-link>
         </li>
         <li>
-          <router-link to="/VuexExample">상태관리 테스트</router-link>
+          <router-link to="/VuexExample">상태관리테스트</router-link>
         </li>
       </ul>
     </nav>
