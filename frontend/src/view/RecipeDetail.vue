@@ -23,7 +23,21 @@ export default {
     recipeSequence: null
   }),
   methods: {
-    get_food_data() {
+    getRecipeImage(v) {
+      if (v.STRE_STEP_IMAGE_URL !== "") {
+        this.recipeCarousel.push(v.STRE_STEP_IMAGE_URL);
+      }
+    },
+
+    getRecipeSequence(obj, v) {
+      if (obj[v.RECIPE_ID] === undefined) {
+        obj[v.RECIPE_ID] = [v.COOKING_DC];
+      } else {
+        obj[v.RECIPE_ID].push(v.COOKING_DC);
+      }
+      return obj;
+    },
+    getRecipeData() {
       this.$axios
         .get(
           "/openapi/59bcdda005827dab577c5d693e6d162d49bd93d6c087f359d170465129ae5a5d/json/Grid_20150827000000000228_1/1/10"
@@ -33,18 +47,8 @@ export default {
 
           this.recipeSequence = res.data.Grid_20150827000000000228_1.row.reduce(
             (obj, v) => {
-              // 이미지
-              if (v.COOKING_NO === 1 || v.COOKING_NO === 2) {
-                this.recipeCarousel.push(v.STRE_STEP_IMAGE_URL);
-              }
-
-              // 요리순서
-              if (obj[v.RECIPE_ID] === undefined) {
-                obj[v.RECIPE_ID] = [v.COOKING_DC];
-              } else {
-                obj[v.RECIPE_ID].push(v.COOKING_DC);
-              }
-              return obj;
+              this.getRecipeImage(v);
+              return this.getRecipeSequence(obj, v);
             },
             {}
           );
@@ -57,7 +61,6 @@ export default {
         .then(res => {
           this.recipeMeterial = res.data.Grid_20150827000000000227_1.row.reduce(
             (obj, v) => {
-              // 요리재료
               if (obj[v.RECIPE_ID] === undefined) {
                 obj[v.RECIPE_ID] = [v];
               } else {
@@ -72,7 +75,7 @@ export default {
   },
   beforeMount() {
     console.log(this.$route.params.id);
-    this.get_food_data();
+    this.getRecipeData();
   }
 };
 </script>
