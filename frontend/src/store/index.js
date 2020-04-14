@@ -5,16 +5,16 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    token: null,
+    name: null
   },
   mutations: {
-    setToken(state, payload) {
-      state.token = payload.token;
+    setValue(state, payload) {
+      state.name = payload.name;
     }
   },
   actions: {
-    login(context, payload) {
-      context.commit("setToken", payload);
-    },
+    VuexTest(context, payload) {
+      context.commit("setValue", payload);
+    }
   }
 });

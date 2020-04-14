@@ -1,23 +1,30 @@
 <template>
-  <div class="foodlist-container">
+  <div class="recipe-list-container">
     <v-row no-gutters>
-      <v-col v-for="foodInfo in foodInfoArr" :key="foodInfo.id" cols="12" sm="6" md="4" lg="3">
-        <food-card :foodInfo="foodInfo"></food-card>
+      <v-col
+        v-for="recipeInfo in recipeInfoArr"
+        :key="recipeInfo.id"
+        cols="12"
+        sm="6"
+        md="4"
+        lg="3"
+      >
+        <RecipeCard :recipeInfo="recipeInfo" />
       </v-col>
     </v-row>
   </div>
 </template>
 
 <script>
-import FoodCard from "../components/FoodCard";
+import RecipeCard from "../components/RecipeCard";
 
 export default {
-  name: "FoodList",
+  name: "RecipeList",
   components: {
-    FoodCard
+    RecipeCard
   },
   data: () => ({
-    foodInfoArr: [
+    recipeInfoArr: [
       {
         id: 1,
         RECIPE_NM_KO: "나물비빔밥",
@@ -74,5 +81,9 @@ export default {
 </script>
 
 <style>
-  .foodlist-container { width: 100%; height: 100vh; padding-top: 80px;}
+.recipe-list-container {
+  width: 100%;
+  height: 100vh;
+  padding-top: 80px;
+}
 </style>

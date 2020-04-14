@@ -1,26 +1,26 @@
 <template>
-  <div class="fooddetail-container">
-    <slider_recipe :recipes_img="recipes_img" />
-    <cooking_meterial :cooking_meterial="cooking_meterial" />
-    <cooking_order :recipes_order="recipes_order" />
+  <div class="recipe-detail-container">
+    <RecipeCarousel :recipeCarousel="recipeCarousel" />
+    <RecipeMeterial :recipeMeterial="recipeMeterial" />
+    <RecipeSequence :recipeSequence="recipeSequence" />
   </div>
 </template>
 <script>
-import slider_recipe from "../components/slider_recipe";
-import cooking_order from "../components/cooking_order";
-import cooking_meterial from "../components/cooking_meterial";
+import RecipeCarousel from "../components/RecipeCarousel";
+import RecipeMeterial from "../components/RecipeMeterial";
+import RecipeSequence from "../components/RecipeSequence";
 
 export default {
-  name: "FoodDetail",
+  name: "RecipeDetail",
   components: {
-    slider_recipe,
-    cooking_order,
-    cooking_meterial
+    RecipeCarousel,
+    RecipeMeterial,
+    RecipeSequence
   },
   data: () => ({
-    recipes_img: null,
-    recipes_order: null,
-    cooking_meterial: null
+    recipeCarousel: null,
+    recipeMeterial: null,
+    recipeSequence: null
   }),
   methods: {
     get_food_data() {
@@ -29,13 +29,13 @@ export default {
           "/openapi/59bcdda005827dab577c5d693e6d162d49bd93d6c087f359d170465129ae5a5d/json/Grid_20150827000000000228_1/1/10"
         )
         .then(res => {
-          this.recipes_img = [];
+          this.recipeCarousel = [];
 
-          this.recipes_order = res.data.Grid_20150827000000000228_1.row.reduce(
+          this.recipeSequence = res.data.Grid_20150827000000000228_1.row.reduce(
             (obj, v) => {
               // 이미지
               if (v.COOKING_NO === 1 || v.COOKING_NO === 2) {
-                this.recipes_img.push(v.STRE_STEP_IMAGE_URL);
+                this.recipeCarousel.push(v.STRE_STEP_IMAGE_URL);
               }
 
               // 요리순서
@@ -55,7 +55,7 @@ export default {
           "/openapi/59bcdda005827dab577c5d693e6d162d49bd93d6c087f359d170465129ae5a5d/json/Grid_20150827000000000227_1/1/30"
         )
         .then(res => {
-          this.cooking_meterial = res.data.Grid_20150827000000000227_1.row.reduce(
+          this.recipeMeterial = res.data.Grid_20150827000000000227_1.row.reduce(
             (obj, v) => {
               // 요리재료
               if (obj[v.RECIPE_ID] === undefined) {
@@ -78,7 +78,7 @@ export default {
 </script>
 
 <style>
-.fooddetail-container {
+.recipe-detail-container {
   width: 100%;
   height: 100vh;
   padding-top: 80px;

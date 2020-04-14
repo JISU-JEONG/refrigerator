@@ -1,16 +1,16 @@
 <template>
   <div>
     <div class="banner"></div>
-    <category />
+    <RecipeCategory />
     <!-- <input type="file" /> -->
   </div>
 </template>
 <script>
-import category from "../components/category";
+import RecipeCategory from "../components/RecipeCategory";
 export default {
-  name: "foodmain",
+  name: "Main",
   components: {
-    category
+    RecipeCategory
   },
   data: () => ({}),
   methods: {

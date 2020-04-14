@@ -6,19 +6,13 @@
     <nav>
       <ul>
         <li>
-          <router-link to="/food">음식 목록(공공데이터 확인용)</router-link>
+          <router-link to="/RecipeList">레시피 목록</router-link>
         </li>
         <li>
-          <router-link to="/foodlist">음식 목록(찐)</router-link>
+          <router-link to="/RecipeRecommendation">레시피 추천</router-link>
         </li>
         <li>
-          <router-link to="/recipe">레시피</router-link>
-        </li>
-        <li>
-          <router-link to="/meterial">재료</router-link>
-        </li>
-        <li>
-          <router-link to="/camera">카메라</router-link>
+          <router-link to="/VuexExample">상태관리 테스트</router-link>
         </li>
       </ul>
     </nav>

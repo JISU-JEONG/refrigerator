@@ -1,11 +1,10 @@
 <template>
   <v-app>
-    <navigation-bar />
+    <NavigationBar />
     <v-content>
-      <router-view></router-view>
+      <RouterView />
     </v-content>
-
-    <v-footer app></v-footer>
+    <Footer app />
   </v-app>
 </template>
 
@@ -19,6 +18,4 @@ export default {
   }
 };
 </script>
-<style>
-
-</style>
+<style></style>
