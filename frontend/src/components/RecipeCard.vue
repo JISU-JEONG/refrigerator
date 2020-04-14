@@ -1,52 +1,52 @@
 <template>
-  <div class="food-container" @click="DetailFood($event, foodInfo)">
+  <div class="recipe-container" @click="recipeDetail($event, recipeInfo)">
     <div
-      class="food-card"
-      :style="{ backgroundImage: `url(${foodInfo.IMG_URL})` }"
+      class="recipe-card"
+      :style="{ backgroundImage: `url(${recipeInfo.IMG_URL})` }"
     ></div>
-    <v-container class="food-info">
-      <p class="food-name">
-        {{ foodInfo.RECIPE_NM_KO }}
-        <span class="food-detail">{{ foodInfo.CALORIE }}</span>
+    <v-container class="recipe-info">
+      <p class="recipe-name">
+        {{ recipeInfo.RECIPE_NM_KO }}
+        <span class="recipe-detail">{{ recipeInfo.CALORIE }}</span>
       </p>
-      <p class="food-detail">{{ foodInfo.SUMRY }}</p>
+      <p class="recipe-detail">{{ recipeInfo.SUMRY }}</p>
     </v-container>
   </div>
 </template>
 
 <script>
 export default {
-  name: "FoodCard",
+  name: "RecipeCard",
   data: () => ({}),
   props: {
-    foodInfo: {
+    recipeInfo: {
       type: Object,
       required: true
     }
   },
   methods: {
-    DetailFood(event, foodInfo) {
+    recipeDetail(event, recipeInfo) {
       this.$router.push({
-        name: "fooddetail",
-        params: { id: foodInfo.id }
+        name: "RecipeDetail",
+        params: { id: recipeInfo.id }
       });
-      console.log(event, foodInfo);
+      console.log(event, recipeInfo);
     }
   }
 };
 </script>
 
 <style scoped>
-.food-container {
+.recipe-container {
   width: 100%;
   position: relative;
   padding-bottom: 100%;
   overflow: hidden;
 }
-.food-container:hover .food-card {
+.recipe-container:hover .recipe-card {
   transform: scale(1.05);
 }
-.food-card {
+.recipe-card {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -54,7 +54,7 @@ export default {
   background-size: cover;
   transition: transform 0.2s linear;
 }
-.food-info {
+.recipe-info {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -64,7 +64,7 @@ export default {
   background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(255, 255, 255, 0));
   cursor: pointer;
 }
-.food-detail {
+.recipe-detail {
   font-size: 16px;
   font-weight: 500;
 }

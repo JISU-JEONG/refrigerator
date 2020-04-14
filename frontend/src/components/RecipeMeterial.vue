@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h1>요리순서</h1>
-    <div v-for="(recipe, i) in recipes_order" :key="i">
+    <h1>요리재료</h1>
+    <div v-for="(recipeItem, i) in recipeMeterial" :key="i">
       <v-card class="mx-auto" max-width="344" outline>
-        <v-card-text v-for="(order, i) in recipe" :key="i">
-          <p>{{ order }}</p>
+        <v-card-text v-for="(meterial, i) in recipeItem" :key="i">
+          <p>{{ meterial }}</p>
           <v-divider></v-divider>
         </v-card-text>
       </v-card>
@@ -15,9 +15,9 @@
 
 <script>
 export default {
-  name: "cooking_order",
+  name: "RecipeMeterial",
   props: {
-    recipes_order: {
+    recipeMeterial: {
       type: Object
     }
   }

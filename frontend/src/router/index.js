@@ -1,13 +1,11 @@
 import Vue from "vue";
 import Router from "vue-router";
-import main from "../view/main";
-import food from "../components/food";
-import recipe from "../components/recipe";
-import meterial from "../components/meterial";
-import test from "../components/test";
-import foodlist from "../view/FoodList";
-import fooddetail from "../view/FoodDetail";
-import camera from "../components/camera";
+
+import Main from "../view/Main";
+import RecipeList from "../view/RecipeList";
+import VuexExample from "../view/VuexExample";
+import RecipeDetail from "../view/RecipeDetail";
+import RecipeRecommendation from "../view/RecipeRecommendation";
 
 Vue.use(Router);
 
@@ -16,43 +14,28 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "main",
-      component: main
+      name: "Main",
+      component: Main
     },
     {
-      path: "/food",
-      name: "food",
-      component: food
+      path: "/RecipeList",
+      name: "RecipeList",
+      component: RecipeList
     },
     {
-      path: "/recipe",
-      name: "recipe",
-      component: recipe
+      path: "/RecipeRecommendation",
+      name: "RecipeRecommendation",
+      component: RecipeRecommendation
     },
     {
-      path: "/meterial",
-      name: "meterial",
-      component: meterial
+      path: "/RecipeDetail/:id",
+      name: "RecipeDetail",
+      component: RecipeDetail
     },
     {
-      path: "/test",
-      name: "test",
-      component: test
-    },
-    {
-      path: "/foodlist",
-      name: "foodlist",
-      component: foodlist
-    },
-    {
-      path: "/camera",
-      name: "camera",
-      component: camera
-    },
-    {
-      path: "/fooddetail/:id",
-      name: "fooddetail",
-      component: fooddetail
+      path: "/VuexExample",
+      name: "VuexExample",
+      component: VuexExample
     }
   ]
 });

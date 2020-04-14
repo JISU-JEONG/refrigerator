@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  name: "camera",
+  name: "RecipeRecommendation",
   components: {},
   data: () => ({
     image: "",
