@@ -59,16 +59,15 @@ def materialcheck(request):
 from .forms import *
 import matplotlib.pyplot as plt
 from PIL import Image
+import tensorflow as tf
 @api_view(['POST'])
 def image_upload(request):
-  embed()
-  base64_img = request.FILES.get('file').read()
-  plt.imshow(base64_img)
+  img = request.FILES.get('file').read()
+  # 배열 변환
+  img = tf.image.decode_jpeg(img)
+  plt.imshow(img)
   plt.show()
   # embed()
-  # form = UploadFileForm(request.POST, request.FILES)
-  # show_image(form.files)
   pass
-
 
   
