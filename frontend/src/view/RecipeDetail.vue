@@ -29,46 +29,48 @@ export default {
       }
     },
 
-    getRecipeSequence(obj, v) {
-      if (obj[v.RECIPE_ID] === undefined) {
-        obj[v.RECIPE_ID] = [v.COOKING_DC];
-      } else {
-        obj[v.RECIPE_ID].push(v.COOKING_DC);
-      }
-      return obj;
+    getTestApi() {
+      this.$axios.get("http://localhost:8080/hello").then(res => {
+        console.log(res);
+      });
     },
     getRecipeData() {
       this.$axios
         .get(
-          "/openapi/59bcdda005827dab577c5d693e6d162d49bd93d6c087f359d170465129ae5a5d/json/Grid_20150827000000000228_1/1/10"
+          "/openapi/59bcdda005827dab577c5d693e6d162d49bd93d6c087f359d170465129ae5a5d/json/Grid_20150827000000000228_1/1/5"
         )
         .then(res => {
           this.recipeCarousel = [];
 
           this.recipeSequence = res.data.Grid_20150827000000000228_1.row.reduce(
-            (obj, v) => {
+            (arr, v) => {
               this.getRecipeImage(v);
-              return this.getRecipeSequence(obj, v);
+              arr.push(v);
+              return arr;
             },
-            {}
+            []
           );
+          console.log(this.recipeSequence);
         });
+    },
 
+    getRecipeMeterial() {
       this.$axios
         .get(
-          "/openapi/59bcdda005827dab577c5d693e6d162d49bd93d6c087f359d170465129ae5a5d/json/Grid_20150827000000000227_1/1/30"
+          "/openapi/59bcdda005827dab577c5d693e6d162d49bd93d6c087f359d170465129ae5a5d/json/Grid_20150827000000000227_1/1/24"
         )
         .then(res => {
           this.recipeMeterial = res.data.Grid_20150827000000000227_1.row.reduce(
-            (obj, v) => {
-              if (obj[v.RECIPE_ID] === undefined) {
-                obj[v.RECIPE_ID] = [v];
-              } else {
-                obj[v.RECIPE_ID].push(v);
-              }
-              return obj;
+            (arr, v) => {
+              // if (obj[v.RECIPE_ID] === undefined) {
+              //   obj[v.RECIPE_ID] = [v];
+              // } else {
+              //   obj[v.RECIPE_ID].push(v);
+              // }
+              arr.push(v);
+              return arr;
             },
-            {}
+            []
           );
         });
     }
@@ -76,6 +78,7 @@ export default {
   beforeMount() {
     console.log(this.$route.params.id);
     this.getRecipeData();
+    this.getRecipeMeterial();
   }
 };
 </script>

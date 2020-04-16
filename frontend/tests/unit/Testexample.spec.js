@@ -1,5 +1,6 @@
 import Vue from "vue";
 import TestExample from "@/components/TestExample";
+import RecipeDetail from "@/view/RecipeDetail";
 
 let Constructor;
 let vm;
@@ -10,6 +11,7 @@ let second;
 beforeEach(() => {
   Constructor = Vue.extend(TestExample);
   vm = new Constructor().$mount();
+
   frist = vm._data.frist;
   second = vm._data.second;
 });
@@ -45,6 +47,20 @@ describe("TestExample.vue", () => {
     it("나누기의 결과값을 비교하여 소스점 반올림이 되었는지 확인한다.", () => {
       // toBeCloseTo : 소수점 다음에 확인할 자리 수를 제어하는데 사용
       expect(vm.divide(frist, second)).toBeCloseTo(4, 5);
+    });
+  });
+});
+
+jest.mock("axios", () => ({
+  get: jest.fn()
+}));
+
+import axios from "axios";
+
+describe("RecipeMeterial.vue", () => {
+  describe("API 테스트", () => {
+    it("Calls axios.get", () => {
+      expect(axios.get).toBeCalledWith("http://localhost:8080/hello");
     });
   });
 });
