@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 
-import Main from "../view/Main";
+import main from "../view/main";
 import RecipeList from "../view/RecipeList";
 import VuexExample from "../view/VuexExample";
 import RecipeDetail from "../view/RecipeDetail";
@@ -14,8 +14,8 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "Main",
-      component: Main
+      name: "main",
+      component: main
     },
     {
       path: "/RecipeList",

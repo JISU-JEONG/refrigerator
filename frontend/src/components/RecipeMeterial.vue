@@ -8,22 +8,12 @@
       <div class="meterial-list" id="divConfirmedMaterialArea">
         <ul class="case1">
           <li v-for="(meterial, i) in recipeMeterial" :key="i">
-            {{meterial.IRDNT_NM}}
-            <span class="meterial-unit">{{meterial.IRDNT_CPCTY}}</span>
+            {{meterial.material_name}}
+            <span class="meterial-unit">{{meterial.material_volume}}</span>
           </li>
         </ul>
       </div>
     </div>
-
-    <!-- <div v-for="(recipeItem, i) in recipeMeterial" :key="i">
-      <v-card class="mx-auto" max-width="344" outline>
-        <v-card-text v-for="(meterial, i) in recipeItem" :key="i">
-          <p>{{ meterial }}</p>
-          <v-divider></v-divider>
-        </v-card-text>
-      </v-card>
-      <br />
-    </div>-->
   </div>
 </template>
 
