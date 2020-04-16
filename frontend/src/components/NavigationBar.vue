@@ -12,7 +12,7 @@
           <router-link to="/RecipeRecommendation">레시피 추천</router-link>
         </li>
         <li>
-          <router-link to="/VuexExample">상태관리 테스트</router-link>
+          <router-link to="/VuexExample">상태관리테스트</router-link>
         </li>
       </ul>
     </nav>
@@ -24,7 +24,7 @@ export default {
   name: "NavigationBar"
 };
 </script>
-<style>
+<style >
 header {
   height: 80px;
   width: 100%;
@@ -37,7 +37,7 @@ header {
 header h1 {
   display: inline-block;
   position: absolute;
-  left: 50px;
+  left: 24px;
 }
 header h1 a {
   text-decoration: none;
@@ -50,7 +50,7 @@ header nav {
   display: inline-block;
   position: absolute;
   top: 0;
-  right: 50px;
+  right: 24px;
 }
 header nav li {
   list-style: none;
@@ -74,5 +74,13 @@ header nav li a {
 }
 .header-transparent a {
   color: white !important;
+}
+@media (max-width: 850px) {
+  header nav li {
+    padding: 0 5px;
+  }
+  header nav li a {
+    font-size: 12px;
+  }
 }
 </style>
