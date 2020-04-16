@@ -12,11 +12,7 @@
       :slide-ratio="1 / 4"
       :bullets="false"
     >
-      <vueper-slide
-        v-for="(recipeItem, i) in recipeCarousel"
-        :key="i"
-        :image="recipeItem"
-      />
+      <vueper-slide v-for="(recipeItem, i) in recipeCarousel" :key="i" :image="recipeItem" />
     </vueper-slides>
     <br />
     <vueper-slides
