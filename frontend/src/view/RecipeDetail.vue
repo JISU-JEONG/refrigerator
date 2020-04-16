@@ -26,59 +26,65 @@ export default {
     getRecipeImage(v) {
       if (v.STRE_STEP_IMAGE_URL !== "") {
         this.recipeCarousel.push(v.STRE_STEP_IMAGE_URL);
+        this.$axios
+          .get(`/recipes/materialinfo/${this.$route.params.id}`)
+          .then(res => {
+            this.recipeMeterial = res.data.process_imgurl;
+            console.log(res.data);
+          });
       }
     },
 
-    getTestApi() {
-      this.$axios.get("http://localhost:8080/hello").then(res => {
-        console.log(res);
-      });
-    },
-    getRecipeData() {
+    getRecipeCarousel() {
       this.$axios
-        .get(
-          "/openapi/59bcdda005827dab577c5d693e6d162d49bd93d6c087f359d170465129ae5a5d/json/Grid_20150827000000000228_1/1/5"
-        )
+        .get(`/recipes/processinfo/${this.$route.params.id}`)
         .then(res => {
           this.recipeCarousel = [];
+          this.recipeCarousel = res.data.map(v => {
+            return v.process_imgurl;
+          });
+        });
+    },
 
-          this.recipeSequence = res.data.Grid_20150827000000000228_1.row.reduce(
-            (arr, v) => {
-              this.getRecipeImage(v);
-              arr.push(v);
-              return arr;
-            },
-            []
-          );
-          console.log(this.recipeSequence);
+    getRecipeSequence() {
+      this.$axios
+        .get(`/recipes/processinfo/${this.$route.params.id}`)
+        .then(res => {
+          // console.log(res.data);
+          this.recipeSequence = res.data;
         });
     },
 
     getRecipeMeterial() {
       this.$axios
-        .get(
-          "/openapi/59bcdda005827dab577c5d693e6d162d49bd93d6c087f359d170465129ae5a5d/json/Grid_20150827000000000227_1/1/24"
-        )
+        .get(`/recipes/materialinfo/${this.$route.params.id}`)
         .then(res => {
-          this.recipeMeterial = res.data.Grid_20150827000000000227_1.row.reduce(
-            (arr, v) => {
-              // if (obj[v.RECIPE_ID] === undefined) {
-              //   obj[v.RECIPE_ID] = [v];
-              // } else {
-              //   obj[v.RECIPE_ID].push(v);
-              // }
-              arr.push(v);
-              return arr;
-            },
-            []
-          );
+          // console.log(res.data);
+          this.recipeMeterial = res.data;
         });
     }
+
+    // getRecipeMeterial() {
+    //   this.$axios
+    //     .get(
+    //       "/openapi/59bcdda005827dab577c5d693e6d162d49bd93d6c087f359d170465129ae5a5d/json/Grid_20150827000000000227_1/1/24"
+    //     )
+    //     .then(res => {
+    //       this.recipeMeterial = res.data.Grid_20150827000000000227_1.row.reduce(
+    //         (arr, v) => {
+    //           arr.push(v);
+    //           return arr;
+    //         },
+    //         []
+    //       );
+    //     });
+    // }
   },
   beforeMount() {
     console.log(this.$route.params.id);
-    this.getRecipeData();
+    this.getRecipeSequence();
     this.getRecipeMeterial();
+    this.getRecipeCarousel();
   }
 };
 </script>

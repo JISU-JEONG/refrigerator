@@ -26,7 +26,7 @@
           })
       "
       :visible-slides="2"
-      fixed-height="130px"
+      fixed-height="200px"
     >
       <vueper-slide
         v-for="(recipeItem, i) in recipeCarousel"

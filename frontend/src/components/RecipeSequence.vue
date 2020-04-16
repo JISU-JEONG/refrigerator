@@ -7,7 +7,7 @@
       </div>
       <div v-for="(sequence, i) in recipeSequence" :key="i">
         <div :class="getClassPath(i+1)">
-          <div>{{sequence.COOKING_DC}}</div>
+          <div>{{sequence.process_info}}</div>
         </div>
       </div>
 
