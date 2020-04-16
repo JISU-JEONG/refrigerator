@@ -24,7 +24,7 @@ export default {
   name: "NavigationBar"
 };
 </script>
-<style>
+<style >
 header {
   height: 80px;
   width: 100%;
@@ -37,7 +37,7 @@ header {
 header h1 {
   display: inline-block;
   position: absolute;
-  left: 50px;
+  left: 24px;
 }
 header h1 a {
   text-decoration: none;
@@ -50,7 +50,7 @@ header nav {
   display: inline-block;
   position: absolute;
   top: 0;
-  right: 50px;
+  right: 24px;
 }
 header nav li {
   list-style: none;
