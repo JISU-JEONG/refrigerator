@@ -75,4 +75,12 @@ header nav li a {
 .header-transparent a {
   color: white !important;
 }
+@media (max-width: 850px) {
+  header nav li {
+    padding: 0 5px;
+  }
+  header nav li a {
+    font-size: 12px;
+  }
+}
 </style>
