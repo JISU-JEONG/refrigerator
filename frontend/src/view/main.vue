@@ -1,6 +1,13 @@
 <template>
   <div>
-    <div class="banner"></div>
+    <div class="intro-backaground">
+      <div class="intro-container">
+        <div class="intro-card">여기에 이제 어쩌구 저쩌구 관련 내용이 들어가고 마지막에는 카메라 페이지 가기 버튼을 넣으려구요</div>
+        <div class="intro-card">여기에 이제 어쩌구 저쩌구 관련 내용이 들어가고 마지막에는 카메라 페이지 가기 버튼을 넣으려구요</div>
+        <div class="intro-card">여기에 이제 어쩌구 저쩌구 관련 내용이 들어가고 마지막에는 카메라 페이지 가기 버튼을 넣으려구요</div>
+        <div class="intro-card">여기에 이제 어쩌구 저쩌구 관련 내용이 들어가고 마지막에는 카메라 페이지 가기 버튼을 넣으려구요</div>
+      </div>
+    </div>
     <RecipeCategory />
     <!-- <input type="file" /> -->
   </div>
@@ -43,10 +50,40 @@ export default {
 };
 </script>
 <style scoped>
-.banner {
-  width: 100%;
-  height: 500px;
-  /* background-image: url('https://images.food52.com/ABp9BlnO_4sKOVA1asXsC7G_tCs=/1008x672/filters:format(webp)/333bee7e-8eb7-4282-8769-c83fc408abd3--pjimage_1-.jpg'); */
+.intro-backaground {
+  width: 100vw;
+  height: 100vh;
   background: rgb(77, 71, 71);
+  padding-top: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.intro-container {
+  width: 100%;
+  max-width: 1200px;
+  padding: 1rem;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+.intro-card {
+  width: 47%;
+  height: 250px;
+  display: inline-block;
+  margin: 16px;
+  padding: 16px;
+  box-sizing: border-box;
+  border: 2px solid white;
+  border-radius: 10px;
+  font-size: 1.5rem;
+  color: white;
+}
+@media (max-width: 850px) {
+  .intro-card {
+    width: 100%;
+    height: 20vh;
+    margin: 0 0 8px 0;
+    font-size: 1rem;
+  } 
 }
 </style>

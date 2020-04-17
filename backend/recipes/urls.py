@@ -21,5 +21,6 @@ urlpatterns = [
   path('materialinfo/<int:basic_pk>/', views.materialinfo),
   path('processinfo/<int:basic_pk>/', views.processinfo),
   path('materialcheck/', views.materialcheck),
+  path('image_upload/', views.image_upload),
   path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='swagger'),
 ]
