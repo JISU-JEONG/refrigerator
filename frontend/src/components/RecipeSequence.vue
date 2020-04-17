@@ -76,11 +76,13 @@ export default {
 .view_step {
   padding: 35px 0 10px;
 }
+
 .view_step_cont {
   padding: 6px 0 60px 96px;
-  width: 300px;
+  width: 100%;
   font-size: 22px;
 }
+
 .view_step_cont.step1 {
   background: url(https://recipe1.ezmember.co.kr/img/icon_step_1.gif) no-repeat
     48px 6px;

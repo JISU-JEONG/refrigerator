@@ -31,7 +31,7 @@ header {
   background: #ffffff;
   position: fixed;
   top: 0;
-  z-index: 1;
+  z-index: 100;
   border-bottom: 1px solid #dbdbdb;
 }
 header h1 {

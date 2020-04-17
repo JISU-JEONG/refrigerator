@@ -93,6 +93,6 @@ export default {
 .recipe-detail-container {
   width: 100%;
   height: 100vh;
-  padding-top: 80px;
+  padding: 80px 80px 80px 80px;
 }
 </style>
