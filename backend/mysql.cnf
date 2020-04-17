@@ -1,4 +1,4 @@
 [client]
 database = amt2
 user = root
-password = admin
+password = root
