@@ -230,4 +230,6 @@ public/
 !.vscode/extensions.json
 
 .history
-.cnf
+
+# Image Files
+images/

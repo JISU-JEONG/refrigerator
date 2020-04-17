@@ -8,10 +8,10 @@ class RecipeBasicInfoSerializer(serializers.ModelSerializer):
 class RecipeMaterialInfoSerializer(serializers.ModelSerializer):
   class Meta:
     model = RecipeMaterialInfo
-    fields = ('material_number', 'material_name',)
+    # fields = ('material_number', 'material_name',)
+    fields = '__all__'
     
-# class MusicSerialized', 'title', 'artist_id',)
-# class RecipeProcessInfoSerializer(serializers.ModelSerializer):
-#   class Meta:
-#     model = RecipeProcessInfo
-#     fields = '__all__'
+class RecipeProcessInfoSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = RecipeProcessInfo
+    fields = '__all__'
