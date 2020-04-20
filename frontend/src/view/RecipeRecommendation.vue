@@ -21,24 +21,7 @@
       </div>
     </div>
     <div class="material-container">
-      <div class="material">
-        <div class="card">
-          <h1 class="heading">Select material </h1>
-          <ul id="list" @click="clickMaterial">
-            <li class="item" v-for="material in materials" :key="material">
-              <span class="text">{{material}}</span>
-              <div class="custom-checkbox">
-                <input type="checkbox">
-                <svg viewBox="0 0 35.6 35.6">
-                  <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
-                  <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
-                  <polyline class="check" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
-                </svg>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
+
     </div>
   </div>
   <!-- <div class="img">
@@ -115,118 +98,7 @@ export default {
   .left { left: 5%; }
   .right { right:5%;  }
 
-  .material-container { width: 100%; height: 60%; position: relative; border: 1px blue solid; }
-  .material {
-    width: 100%;
-    height: 100%;
-    .card {
-      position: absolute;
-      left: 50%; top: 50%;
-      transform: translate(-50%, -50%);
-      width: 100%;
-      height: 100%;
-      max-width: 400px;
-      padding: 5%;
-      border-radius: 20px 20px 0 0;
-      background-color: #fff;
-      box-shadow: 0px 5px 10px rgba(0,0,0,.2);
-    }
-    .heading {
-      opacity: .6;
-      margin: 0px auto 20px;
-      font-size: 18px;
-      text-align: center;
-    }
-    #list {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      .item {
-        display: flex;
-        flex-direction: column-reverse;
-        align-items: center;
-        .text {
-          opacity: 0.4;
-          margin-top: 10px;
-          font-size: 12px;
-          font-weight: bold;
-          transition: ease all .2s;
-          -webkit-transition: ease all .2s;
-        }
-        &:hover {
-          .text {
-            opacity: 1;
-          }
-          .custom-checkbox {
-            .check {
-              stroke-dashoffset: 0;
-            }
-          }
-        }
-      }
-    }
-  }
 
-  .custom-checkbox {
-    position: relative;
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    .background {
-      fill: #ccc;
-      transition: ease all .6s;
-      -webkit-transition: ease all .6s;
-    }
-    .stroke {
-      fill:none;
-      stroke:#fff;
-      stroke-miterlimit:10;
-      stroke-width:2px;
-      stroke-dashoffset: 100;
-      stroke-dasharray: 100;
-      transition: ease all .6s;
-      -webkit-transition: ease all .6s;
-    }
-    .check {
-      fill:none;
-      stroke:#fff;
-      stroke-linecap:round;
-      stroke-linejoin:round;
-      stroke-width:2px;
-      stroke-dashoffset: 22;
-      stroke-dasharray: 22;
-      transition: ease all .6s;
-      -webkit-transition: ease all .6s;
-    }
-    input[type=checkbox]{
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      left: 0; top: 0;
-      margin: 0;
-      opacity: 0;
-      -appearance: none;
-      -webkit-appearance: none;
-      
-      &:hover {
-        cursor: pointer;
-      }
-      
-      &:checked {
-        &+svg {
-          .background {
-            fill: #6cbe45;
-          }
-          .stroke {
-            stroke-dashoffset: 0;
-          }
-          .check {
-            stroke-dashoffset: 0;
-          }
-        }
-      }
-    }
-  }
 /* .img {
   width: 100%;
   height: 100vh;
