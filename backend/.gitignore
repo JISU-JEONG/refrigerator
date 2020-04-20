@@ -233,3 +233,5 @@ public/
 
 # Image Files
 images/
+
+*.cnf
