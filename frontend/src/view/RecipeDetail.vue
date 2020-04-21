@@ -6,6 +6,7 @@
   </div>
 </template>
 <script>
+import http from '../services/http-common.js'
 import RecipeCarousel from "../components/RecipeCarousel";
 import RecipeMeterial from "../components/RecipeMeterial";
 import RecipeSequence from "../components/RecipeSequence";
@@ -26,8 +27,7 @@ export default {
     getRecipeImage(v) {
       if (v.STRE_STEP_IMAGE_URL !== "") {
         this.recipeCarousel.push(v.STRE_STEP_IMAGE_URL);
-        this.$axios
-          .get(`/recipes/materialinfo/${this.$route.params.id}`)
+        http.get(`/recipes/materialinfo/${this.$route.params.id}`)
           .then(res => {
             this.recipeMeterial = res.data.process_imgurl;
             console.log(res.data);
@@ -36,8 +36,7 @@ export default {
     },
 
     getRecipeCarousel() {
-      this.$axios
-        .get(`/recipes/processinfo/${this.$route.params.id}`)
+      http.get(`/recipes/processinfo/${this.$route.params.id}`)
         .then(res => {
           this.recipeCarousel = [];
           this.recipeCarousel = res.data.map(v => {
@@ -47,8 +46,7 @@ export default {
     },
 
     getRecipeSequence() {
-      this.$axios
-        .get(`/recipes/processinfo/${this.$route.params.id}`)
+      http.get(`/recipes/processinfo/${this.$route.params.id}`)
         .then(res => {
           // console.log(res.data);
           this.recipeSequence = res.data;
@@ -56,8 +54,7 @@ export default {
     },
 
     getRecipeMeterial() {
-      this.$axios
-        .get(`/recipes/materialinfo/${this.$route.params.id}`)
+      http.get(`/recipes/materialinfo/${this.$route.params.id}`)
         .then(res => {
           // console.log(res.data);
           this.recipeMeterial = res.data;

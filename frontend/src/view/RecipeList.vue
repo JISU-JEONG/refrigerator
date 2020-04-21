@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import http from "../services/http-common"
 import RecipeCard from "../components/RecipeCard";
 
 export default {
@@ -74,7 +75,7 @@ export default {
   }),
   methods: {
     getRecipeData() {
-      this.$axios.get("/recipes/basicinfo/").then(res => {
+      http.get("/recipes/basicinfo/").then(res => {
         for (let i = 1000; i < 1010; i++) {
           this.recipeInfoArr.push(res.data[i]);
         }
