@@ -1,38 +1,52 @@
 <template>
-  <div>
-    <div class="intro-backaground">
-      <div class="intro-container">
-        <p>메인 어찌합니까</p>
-        <!-- <div class="intro-card">여기에 이제 어쩌구 저쩌구 관련 내용이 들어가고 마지막에는 카메라 페이지 가기 버튼을 넣으려구요</div>
-        <div class="intro-card">여기에 이제 어쩌구 저쩌구 관련 내용이 들어가고 마지막에는 카메라 페이지 가기 버튼을 넣으려구요</div>
-        <div class="intro-card">여기에 이제 어쩌구 저쩌구 관련 내용이 들어가고 마지막에는 카메라 페이지 가기 버튼을 넣으려구요</div>
-        <div class="intro-card">여기에 이제 어쩌구 저쩌구 관련 내용이 들어가고 마지막에는 카메라 페이지 가기 버튼을 넣으려구요</div> -->
+  <div class="main-container">
+    <div class="wrapper">
+      <div class="logo" >
+        <label for="ex_file">
+          <v-icon>mdi-camera</v-icon>
+        </label>
+        <input type="file" @change="onFileChange" id="ex_file"/>
       </div>
+      <div class="intro">
+        <p>이곳에는 이런 저런 설명이 들어 갈거고 위에 카메라 버튼을 누르면 바로 사진을 찍을 겁니다.</p>
+      </div>
+      
+      
     </div>
-    <RecipeCategory />
+    <!-- <RecipeCategory /> -->
     <!-- <input type="file" /> -->
   </div>
 </template>
 <script>
-import RecipeCategory from "../components/RecipeCategory";
+// import RecipeCategory from "../components/RecipeCategory";
 export default {
   name: "Main",
   components: {
-    RecipeCategory
+    // RecipeCategory
   },
-  data: () => ({}),
+  data() {
+    return {
+      uploadedImage: new FormData(),    
+    }
+  },
   methods: {
-    addTransparentClass() {
+    onFileChange(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length) return;
+      this.uploadedImage.append('image', files[0])
+      console.log(this.uploadedImage.get('image'))
+    },
+    addTransparentClass() { // nav 조작하던거. 이제 빼도 될 듯?
       const navClassList = document.querySelector("header").classList;
       navClassList.add("header-transparent");
     },
-    removeTransparentClass() {
+    removeTransparentClass() { // nav 조작하던거. 이제 빼도 될 듯?
       const navClassList = document.querySelector("header").classList;
       if (navClassList.contains("header-transparent")) {
         navClassList.remove("header-transparent");
       }
     },
-    onScroll() {
+    onScroll() { // nav 조작하던거. 이제 빼도 될 듯?
       if (window.scrollY > 300) {
         this.removeTransparentClass();
       } else {
@@ -51,40 +65,45 @@ export default {
 };
 </script>
 <style scoped>
-.intro-backaground {
-  width: 100%;
-  height: 100vh;
-  background: rgb(77, 71, 71);
-  padding-top: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.intro-container {
-  width: 100%;
-  max-width: 1200px;
-  padding: 1rem;
-  margin: 0 auto;
-  box-sizing: border-box;
-}
-.intro-card {
-  width: 90%;
-  height: 250px;
-  display: inline-block;
-  margin: 16px;
-  padding: 16px;
-  box-sizing: border-box;
-  border: 2px solid white;
-  border-radius: 10px;
-  font-size: 1.5rem;
-  color: white;
-}
-@media (max-width: 850px) {
-  .intro-card {
+  * {
+    box-sizing: border-box;
+  }
+  .main-container {
     width: 100%;
-    height: 20vh;
-    margin: 0 0 8px 0;
-    font-size: 1rem;
-  } 
-}
+    height: 100%;
+    background-color: #f1f1f1;
+    padding-top:70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+  }
+  .wrapper {
+    width: 70%;
+    height: 80%;
+    /* border: 1px blue solid; */
+  }
+  .logo {
+    width:100%;
+    padding-bottom:100%;
+    position:relative;
+    /* border: 1px solid red; */
+   }
+  .logo label { position: absolute; display: inline-block; width:100%; height: 100%; background-color: cadetblue; border-radius: 50%; cursor: pointer; box-shadow: 0px 0px 2px #5f5f5f, 0px 0px 0px 5px #ecf0f3, 8px 8px 15px #a7aaaf, -8px -8px 15px #ffffff; }
+  .logo input { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip:rect(0,0,0,0); border: 0; }
+  .logo i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 150px;
+    color: white;
+  }
+  .intro {
+    width: 100%;
+    margin-top: 24px;
+    font-size: 20px;
+    font-weight: 700;
+    border: 1px solid black;
+  }
 </style>
