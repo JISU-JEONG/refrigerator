@@ -74,10 +74,13 @@ export default {
     getRecipeData() {
       http.get("/recipes/basicinfo/").then(res => {
         for (let i = 1000; i < 1010; i++) {
+          console.log(res.data[i])
           this.recipeInfoArr.push(res.data[i]);
         }
-        console.log(res.data);
-      });
+      })
+      .catch(err => {
+        console.log(err)
+      })
     }
   },
   beforeMount() {

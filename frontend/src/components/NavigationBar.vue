@@ -1,18 +1,18 @@
 <template>
   <header>
     <h1>
-      <router-link to="/">HOME</router-link>
+      <router-link to="/">냉장고를 부탁해</router-link>
     </h1>
     <nav>
       <ul>
         <li>
-          <router-link to="/RecipeList">레시피 목록</router-link>
+          <router-link to="/RecipeList">A</router-link>
         </li>
         <li>
-          <router-link to="/RecipeRecommendation">레시피 추천</router-link>
+          <router-link to="/RecipeRecommendation">B</router-link>
         </li>
         <li>
-          <router-link to="/VuexExample">상태관리테스트</router-link>
+          <router-link to="/VuexExample">C</router-link>
         </li>
       </ul>
     </nav>
@@ -45,7 +45,9 @@ header h1 a {
   display: inline-block;
   height: 70px;
   line-height: 70px;
-  color: #888888 !important;
+  font-size: 25px;
+  font-family: 'Gugi', cursive;
+  color: black !important;
 }
 header nav {
   display: inline-block;
@@ -67,14 +69,14 @@ header nav li a {
   height: 70px;
   line-height: 70px;
   font-size: 18px;
-  color: #888888 !important;
+  color: black !important;
 }
 .header-transparent {
   background: transparent;
   border-bottom: none;
 }
 .header-transparent a {
-  color: white !important;
+  color:black !important;
 }
 @media (max-width: 850px) {
   header nav li {
