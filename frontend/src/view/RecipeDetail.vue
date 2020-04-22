@@ -1,6 +1,9 @@
 <template>
   <div class="recipe-detail-container">
-    <img :src="getImgPath()" />
+    <div
+      :style="{ backgroundImage: `url(${imagePath})` }"
+      class="thumbnail"
+    ></div>
     <RecipeMeterial :recipeMeterial="recipeMeterial" />
     <RecipeSequence :recipeSequence="recipeSequence" />
   </div>
@@ -18,7 +21,8 @@ export default {
   },
   data: () => ({
     recipeMeterial: null,
-    recipeSequence: null
+    recipeSequence: null,
+    imagePath: null
   }),
   methods: {
     getRecipeSequence() {
@@ -32,8 +36,11 @@ export default {
         this.recipeMeterial = res.data;
       });
     },
+
     getImgPath() {
-      return this.$route.params.id;
+      http.get(`/recipes/basicinfo/${this.$route.params.id}`).then(res => {
+        this.imagePath = res.data[0].basic_imgurl;
+      });
     }
   },
   beforeMount() {
@@ -48,9 +55,11 @@ export default {
 <style>
 .recipe-detail-container {
   width: 100%;
-  max-width: 960px;
   height: 100vh;
   padding: 70px 0 0 0;
-  margin: 0 auto;
+}
+.thumbnail {
+  width: 100%;
+  height: 50%;
 }
 </style>
