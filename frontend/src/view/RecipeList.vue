@@ -74,12 +74,17 @@ export default {
   }),
   methods: {
     getRecipeData() {
-      this.$axios.get("/recipes/basicinfo/").then(res => {
+      this.$axios.get("http://192.168.25.4:8085/recipes/basicinfo/")
+      .then(res => {
+        console.log('here')
         for (let i = 1000; i < 1010; i++) {
+          console.log(res.data[i])
           this.recipeInfoArr.push(res.data[i]);
         }
-        console.log(res.data);
-      });
+      })
+      .catch(err => {
+        console.log(err)
+      })
     }
   },
   beforeMount() {
