@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from .models import *
 from .serializers import *
 # Create your views here.
+import detect
+
 
 @api_view(['GET'])
 def basicinfo(request):
@@ -60,18 +62,24 @@ from .forms import *
 import matplotlib.pyplot as plt
 from PIL import Image
 import tensorflow as tf
+from keras.preprocessing.image import img_to_array
+import numpy as np
+import cv2
 @api_view(['POST'])
 def image_upload(request):
   img = request.FILES.get('file').read()
+  img = cv2.imdecode(np.frombuffer(img, np.uint8), -1)
+  S = detect.detect(img)
+  embed()
+  for get_label, get_prob in S:
+    print(get_label,':', get_prob*100)
   # 배열 변환
-  img = tf.image.decode_jpeg(img)
-  # plt.imshow(img)
-  # plt.show()
-  # embed()
+  
+  
   # 사진에서 인식한 재료
-  get_materials = ['베이컨', '양배추', '소고기', '대파', '쌀', '고구마 큰거', '올리브유', '소면', '물', '포도']
+  get_materials = ['계란','전분', '부침가루', '밀가루', '배추', '호박', '대파', '다짐육', '콩', '마늘']
   # 사용자가 선택할 조미료
-  get_cond = ['설탕', '소금']
+  get_cond = ['설탕', '소금', '후추', '참기름']
   all_materials = set(get_materials + get_cond)
 
   all_dishes = RecipeBasicInfo.objects.all()
@@ -81,7 +89,8 @@ def image_upload(request):
     cnt = 0
     for r_m in recipe_materials:
       for a_m in all_materials:
-        if r_m.material_name == a_m:
+        # 마늘과 다진마늘은 같은 마늘로 취급 검색.
+        if a_m in r_m.material_name:
           cnt += 1
 
     if len(recipe_materials) == cnt:
