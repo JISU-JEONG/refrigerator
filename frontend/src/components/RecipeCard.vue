@@ -1,6 +1,9 @@
 <template>
   <div class="recipe-container" @click="recipeDetail($event, recipeInfo)">
-    <div class="recipe-card" :style="{ backgroundImage: `url(${recipeInfo.basic_imgurl})` }"></div>
+    <div
+      class="recipe-card"
+      :style="{ backgroundImage: `url(${recipeInfo.basic_imgurl})` }"
+    ></div>
     <v-container class="recipe-info">
       <p class="recipe-name">
         {{ recipeInfo.basic_name }}
@@ -27,7 +30,6 @@ export default {
         name: "RecipeDetail",
         params: { id: recipeInfo.basic_code }
       });
-      console.log(event, recipeInfo);
     }
   }
 };

@@ -9,17 +9,12 @@
         <div class="intro-card">여기에 이제 어쩌구 저쩌구 관련 내용이 들어가고 마지막에는 카메라 페이지 가기 버튼을 넣으려구요</div> -->
       </div>
     </div>
-    <RecipeCategory />
-    <!-- <input type="file" /> -->
   </div>
 </template>
 <script>
-import RecipeCategory from "../components/RecipeCategory";
 export default {
   name: "Main",
-  components: {
-    RecipeCategory
-  },
+  components: {},
   data: () => ({}),
   methods: {
     addTransparentClass() {
@@ -85,6 +80,6 @@ export default {
     height: 20vh;
     margin: 0 0 8px 0;
     font-size: 1rem;
-  } 
+  }
 }
 </style>
