@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="picture-container">
+    <!-- <div class="picture-container"> ?? ??????.
       <div class="before-take" v-if="!image">
         <div>
           <p>Plz Take Pic</p>
@@ -19,35 +19,19 @@
         </div>
         <img :src="image">
       </div>
-    </div>
+    </div> -->
     <div class="material-container">
       <div class="material-card">
         <p>Select materials</p>
         <ul @click="onClcikMaterial">
-          <li v-for="material in materials" :key="material" >{{material}}</li>
+          <li v-for="material in materials" :key="material" >
+            {{material}}
+          </li>
         </ul>
       </div>
 
     </div>
   </div>
-  <!-- <div class="img">
-    <div v-if="!image">
-      <h2>Select an image</h2>
-      <input type="file" @change="onFileChange" />
-    </div>
-    <div v-else>
-      <img :src="image" />
-      <button @click="removeImage">Remove image</button>
-    </div>
-    <br />
-    <input type="checkbox" id="one" value="One" v-model="picked" />
-    <label for="one">One</label>
-    <br />
-    <input type="checkbox" id="two" value="Two" v-model="picked" />
-    <label for="two">Two</label>
-    <br />
-    <span>선택: {{ picked }}</span>
-  </div> -->
 </template>
 
 <script>
@@ -107,8 +91,8 @@ export default {
 
 <style scoped lang="scss">
   div { box-sizing: border-box; }
-  .container { width: 100%; height: 100vh; margin:0; padding: 70px 0 0 0; }
-  .picture-container { width:100%; height: 40%; position:relative; box-sizing: border-box; /*border: 1px green solid;*/}
+  .container { width: 100%; height: 100vh; margin:0; padding: 70px 0 0 0; background: #f1f1f1; }
+  /* .picture-container { width:100%; height: 40%; position:relative; box-sizing: border-box; border: 1px green solid;}
   .before-take { width:100%; height: 100%; position: relative; text-align: center; }
   .before-take>div { margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
   .before-take>div input { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip:rect(0,0,0,0); border: 0; }
@@ -118,8 +102,7 @@ export default {
   .option { position: absolute; width: 10%; top: 50%; transform: translateY(-50%); text-align: center; cursor: pointer;}
   .option p { margin: 0;}
   .left { left: 5%; }
-  .right { right:5%;  }
-  .material-container { height: 60%; padding: 8px 8px 0 8px; background: #f1f1f1; border-radius: 20px 20px 0 0; /*border: 1px solid blue;*/}
+  .right { right:5%;  } */
   .material-card { height: 100%; text-align: center; }
   .material-card>p { margin: 0; font-size: 24px; font-weight: 700; color:rgb(65, 65, 65);}
   .material-card ul { width: 100%; max-height: 85%; margin: 8px 0 0 0; padding:0; margin-top:8px; display: flex; flex-wrap: wrap; justify-content: space-between; overflow: scroll; /*border: solid 1px red;*/ }
