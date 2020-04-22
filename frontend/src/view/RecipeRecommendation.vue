@@ -107,7 +107,7 @@ export default {
 
 <style scoped lang="scss">
   div { box-sizing: border-box; }
-  .container { width: 100vw; height: 100vh; margin:0; padding: 70px 0 0 0; }
+  .container { width: 100%; height: 100vh; margin:0; padding: 70px 0 0 0; }
   .picture-container { width:100%; height: 40%; position:relative; box-sizing: border-box; /*border: 1px green solid;*/}
   .before-take { width:100%; height: 100%; position: relative; text-align: center; }
   .before-take>div { margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }

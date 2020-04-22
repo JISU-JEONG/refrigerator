@@ -28,6 +28,7 @@ export default {
 header {
   height: 70px;
   width: 100%;
+  max-width: 600px;
   background: #ffffff;
   position: fixed;
   top: 0;
