@@ -6,14 +6,16 @@
         <span>Steps</span>
       </div>
       <div v-for="(sequence, i) in recipeSequence" :key="i">
-        <div :class="getClassPath(i+1)">
-          <div>{{sequence.process_info}}</div>
+        <div class="view_step_cont" :style="getSequnceNumber(i + 1)">
+          <div>{{ sequence.process_info }}</div>
+          <img :src="sequence.process_imgurl" />
         </div>
       </div>
 
       <div class="view_tip">
         *토마토 씨를 제거 해 주면 즙이 덜 생겨요
-        <p></p>*참기름 대신 올리브오일 넣어도 됩니다
+        <p></p>
+        *참기름 대신 올리브오일 넣어도 됩니다
       </div>
     </div>
   </div>
@@ -25,11 +27,18 @@ export default {
   props: {
     recipeSequence: {
       type: Array
+    },
+    recipeCarousel: {
+      type: Array
     }
   },
   methods: {
-    getClassPath(index) {
-      return "view_step_cont step" + index;
+    getSequnceNumber(index) {
+      return (
+        "background: url(https://recipe1.ezmember.co.kr/img/icon_step_" +
+        index +
+        ".gif) no-repeat 48px 6px; background-size: 36px;"
+      );
     }
   }
 };
@@ -83,91 +92,6 @@ export default {
   font-size: 22px;
 }
 
-.view_step_cont.step1 {
-  background: url(https://recipe1.ezmember.co.kr/img/icon_step_1.gif) no-repeat
-    48px 6px;
-  background-size: 36px;
-}
-.view_step_cont.step2 {
-  background: url(https://recipe1.ezmember.co.kr/img/icon_step_2.gif) no-repeat
-    48px 6px;
-  background-size: 36px;
-}
-.view_step_cont.step3 {
-  background: url(https://recipe1.ezmember.co.kr/img/icon_step_3.gif) no-repeat
-    48px 6px;
-  background-size: 36px;
-}
-.view_step_cont.step4 {
-  background: url(https://recipe1.ezmember.co.kr/img/icon_step_4.gif) no-repeat
-    48px 6px;
-  background-size: 36px;
-}
-.view_step_cont.step5 {
-  background: url(https://recipe1.ezmember.co.kr/img/icon_step_5.gif) no-repeat
-    48px 6px;
-  background-size: 36px;
-}
-.view_step_cont.step6 {
-  background: url(https://recipe1.ezmember.co.kr/img/icon_step_6.gif) no-repeat
-    48px 6px;
-  background-size: 36px;
-}
-.view_step_cont.step7 {
-  background: url(https://recipe1.ezmember.co.kr/img/icon_step_7.gif) no-repeat
-    48px 6px;
-  background-size: 36px;
-}
-.view_step_cont.step8 {
-  background: url(https://recipe1.ezmember.co.kr/img/icon_step_8.gif) no-repeat
-    48px 6px;
-  background-size: 36px;
-}
-.view_step_cont.step9 {
-  background: url(https://recipe1.ezmember.co.kr/img/icon_step_9.gif) no-repeat
-    48px 6px;
-  background-size: 36px;
-}
-.view_step_cont.step10 {
-  background: url(https://recipe1.ezmember.co.kr/img/icon_step_10.gif) no-repeat
-    48px 6px;
-  background-size: 36px;
-}
-.view_step_cont.step11 {
-  background: url(https://recipe1.ezmember.co.kr/img/icon_step_11.gif) no-repeat
-    48px 6px;
-  background-size: 36px;
-}
-.view_step_cont.step12 {
-  background: url(https://recipe1.ezmember.co.kr/img/icon_step_12.gif) no-repeat
-    48px 6px;
-  background-size: 36px;
-}
-.view_step_cont.step13 {
-  background: url(https://recipe1.ezmember.co.kr/img/icon_step_13.gif) no-repeat
-    48px 6px;
-  background-size: 36px;
-}
-.view_step_cont.step14 {
-  background: url(https://recipe1.ezmember.co.kr/img/icon_step_14.gif) no-repeat
-    48px 6px;
-  background-size: 36px;
-}
-.view_step_cont.step15 {
-  background: url(https://recipe1.ezmember.co.kr/img/icon_step_15.gif) no-repeat
-    48px 6px;
-  background-size: 36px;
-}
-.view_step_cont.step16 {
-  background: url(https://recipe1.ezmember.co.kr/img/icon_step_16.gif) no-repeat
-    48px 6px;
-  background-size: 36px;
-}
-.view_step_cont.step17 {
-  background: url(https://recipe1.ezmember.co.kr/img/icon_step_17.gif) no-repeat
-    48px 6px;
-  background-size: 36px;
-}
 .view_step_cont img {
   border-radius: 10px;
   max-width: 100%;
