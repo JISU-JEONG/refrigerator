@@ -23,6 +23,7 @@
     <div class="material-container">
       <div class="material-card">
         <p>Select materials</p>
+        <div class="hello-container"></div>
         <ul @click="onClcikMaterial">
           <li v-for="material in materials" :key="material" >
             {{material}}
@@ -109,6 +110,14 @@ export default {
   .material-card li { width:90px; height: 55px; margin: 8px; box-sizing: border-box; list-style: none; line-height: 51px; box-shadow: 4px 4px 8px #cbced1,-4px -4px 8px #ffffff; border-radius: 10px; color:rgb(124, 124, 124); font-weight: 600;}
   .material-card li.on { box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px #ffffff; color:black; }
 
+  .hello-container {
+    width:100px; 
+    height:100px;     
+    mask-image: url('../assets/ingredients/salt.svg');
+    background-color: gray;
+    position: relative;
+  }
+  .hello-container:hover{ background-color: red; }
 /* .img {
   width: 100%;
   height: 100vh;
