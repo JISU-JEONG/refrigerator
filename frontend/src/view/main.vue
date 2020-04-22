@@ -2,10 +2,11 @@
   <div>
     <div class="intro-backaground">
       <div class="intro-container">
+        <p>메인 어찌합니까</p>
+        <!-- <div class="intro-card">여기에 이제 어쩌구 저쩌구 관련 내용이 들어가고 마지막에는 카메라 페이지 가기 버튼을 넣으려구요</div>
         <div class="intro-card">여기에 이제 어쩌구 저쩌구 관련 내용이 들어가고 마지막에는 카메라 페이지 가기 버튼을 넣으려구요</div>
         <div class="intro-card">여기에 이제 어쩌구 저쩌구 관련 내용이 들어가고 마지막에는 카메라 페이지 가기 버튼을 넣으려구요</div>
-        <div class="intro-card">여기에 이제 어쩌구 저쩌구 관련 내용이 들어가고 마지막에는 카메라 페이지 가기 버튼을 넣으려구요</div>
-        <div class="intro-card">여기에 이제 어쩌구 저쩌구 관련 내용이 들어가고 마지막에는 카메라 페이지 가기 버튼을 넣으려구요</div>
+        <div class="intro-card">여기에 이제 어쩌구 저쩌구 관련 내용이 들어가고 마지막에는 카메라 페이지 가기 버튼을 넣으려구요</div> -->
       </div>
     </div>
     <RecipeCategory />
@@ -51,7 +52,7 @@ export default {
 </script>
 <style scoped>
 .intro-backaground {
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   background: rgb(77, 71, 71);
   padding-top: 80px;
@@ -67,7 +68,7 @@ export default {
   box-sizing: border-box;
 }
 .intro-card {
-  width: 47%;
+  width: 90%;
   height: 250px;
   display: inline-block;
   margin: 16px;

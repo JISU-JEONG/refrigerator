@@ -26,8 +26,9 @@ export default {
 </script>
 <style >
 header {
-  height: 80px;
+  height: 70px;
   width: 100%;
+  max-width: 600px;
   background: #ffffff;
   position: fixed;
   top: 0;
@@ -42,8 +43,8 @@ header h1 {
 header h1 a {
   text-decoration: none;
   display: inline-block;
-  height: 80px;
-  line-height: 80px;
+  height: 70px;
+  line-height: 70px;
   color: #888888 !important;
 }
 header nav {
@@ -63,8 +64,8 @@ header nav li:last-child {
 header nav li a {
   text-decoration: none;
   display: inline-block;
-  height: 80px;
-  line-height: 80px;
+  height: 70px;
+  line-height: 70px;
   font-size: 18px;
   color: #888888 !important;
 }
