@@ -81,7 +81,6 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid black;
   }
   .wrapper {
     width: 70%;
