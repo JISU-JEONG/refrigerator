@@ -47,7 +47,7 @@ header h1 a {
   line-height: 70px;
   font-size: 25px;
   font-family: 'Gugi', cursive;
-  color: black !important;
+  color: #555 !important;
 }
 header nav {
   display: inline-block;
@@ -69,14 +69,14 @@ header nav li a {
   height: 70px;
   line-height: 70px;
   font-size: 18px;
-  color: black !important;
+  color: #555 !important;
 }
 .header-transparent {
   background: transparent;
   border-bottom: none;
 }
 .header-transparent a {
-  color:black !important;
+  color: #555 !important;
 }
 @media (max-width: 850px) {
   header nav li {
