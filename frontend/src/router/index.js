@@ -5,7 +5,7 @@ import main from "../view/main";
 import RecipeList from "../view/RecipeList";
 import VuexExample from "../view/VuexExample";
 import RecipeDetail from "../view/RecipeDetail";
-import RecipeRecommendation from "../view/RecipeRecommendation";
+import RecipeRecommendationIcon from "../view/RecipeRecommendationIcon";
 
 Vue.use(Router);
 
@@ -25,7 +25,7 @@ export default new Router({
     {
       path: "/RecipeRecommendation",
       name: "RecipeRecommendation",
-      component: RecipeRecommendation
+      component: RecipeRecommendationIcon
     },
     {
       path: "/RecipeDetail/:id",

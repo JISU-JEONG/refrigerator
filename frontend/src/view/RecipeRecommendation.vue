@@ -23,14 +23,13 @@
     <div class="material-container">
       <div class="material-card">
         <p>Select materials</p>
-        <div class="hello-container"></div>
         <ul @click="onClcikMaterial">
-          <li v-for="material in materials" :key="material" >
-            {{material}}
+          <div class="hello-container"></div>
+          <li v-for="material in materials" :key="material">
+            {{ material }}
           </li>
         </ul>
       </div>
-
     </div>
   </div>
 </template>
@@ -44,7 +43,34 @@ export default {
     uploadedImage: new FormData(),
     picked: [],
     show: true,
-    materials : ['salt', 'sugar', 'pepper', 'sauce1', 'sauce1', 'sauce1', 'sauce1', 'sauce1', 'sauce1', 'sauce1', 'sauce1', 'sauce1', 'sauce1', 'sauce1', 'sauce1', 'sauce1', 'sauce1', 'sauce1', 'sauce1', 'sauce1', 'sauce1', 'sauce1', 'sauce1', 'sauce1', 'sauce1', 'sauce1'],
+    materials: [
+      "salt",
+      "sugar",
+      "pepper",
+      "sauce1",
+      "sauce1",
+      "sauce1",
+      "sauce1",
+      "sauce1",
+      "sauce1",
+      "sauce1",
+      "sauce1",
+      "sauce1",
+      "sauce1",
+      "sauce1",
+      "sauce1",
+      "sauce1",
+      "sauce1",
+      "sauce1",
+      "sauce1",
+      "sauce1",
+      "sauce1",
+      "sauce1",
+      "sauce1",
+      "sauce1",
+      "sauce1",
+      "sauce1"
+    ],
     main: [],
     sub: []
   }),
@@ -52,8 +78,8 @@ export default {
     onFileChange(e) {
       var files = e.target.files || e.dataTransfer.files;
       if (!files.length) return;
-      this.uploadedImage.append('image', files[0])
-      console.log(this.uploadedImage.get('image'))
+      this.uploadedImage.append("image", files[0]);
+      console.log(this.uploadedImage.get("image"));
       this.createImage(files[0]);
     },
     createImage(file) {
@@ -70,20 +96,22 @@ export default {
       this.image = "";
     },
     onSubmitImage() {
-      const imageFormData = new FormData()
-
+      const imageFormData = new FormData();
     },
     onClcikMaterial() {
-      const target = event.target
-      if (target.nodeName === 'LI') {
-        const material = target.innerText
-        if (target.classList.contains('on')) {
-          this.sub.splice(this.sub.findIndex(elm => elm === material), 1)
+      const target = event.target;
+      if (target.nodeName === "LI") {
+        const material = target.innerText;
+        if (target.classList.contains("on")) {
+          this.sub.splice(
+            this.sub.findIndex(elm => elm === material),
+            1
+          );
         } else {
-          this.sub.push(material)
+          this.sub.push(material);
         }
-        console.log(this.sub)
-        target.classList.toggle('on')
+        console.log(this.sub);
+        target.classList.toggle("on");
       }
     }
   }
@@ -91,9 +119,17 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  div { box-sizing: border-box; }
-  .container { width: 100%; height: 100vh; margin:0; padding: 70px 0 0 0; background: #f1f1f1; }
-  /* .picture-container { width:100%; height: 40%; position:relative; box-sizing: border-box; border: 1px green solid;}
+div {
+  box-sizing: border-box;
+}
+.container {
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  padding: 70px 0 0 0;
+  background: #f1f1f1;
+}
+/* .picture-container { width:100%; height: 40%; position:relative; box-sizing: border-box; border: 1px green solid;}
   .before-take { width:100%; height: 100%; position: relative; text-align: center; }
   .before-take>div { margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
   .before-take>div input { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip:rect(0,0,0,0); border: 0; }
@@ -104,20 +140,54 @@ export default {
   .option p { margin: 0;}
   .left { left: 5%; }
   .right { right:5%;  } */
-  .material-card { height: 100%; text-align: center; }
-  .material-card>p { margin: 0; font-size: 24px; font-weight: 700; color:rgb(65, 65, 65);}
-  .material-card ul { width: 100%; max-height: 85%; margin: 8px 0 0 0; padding:0; margin-top:8px; display: flex; flex-wrap: wrap; justify-content: space-between; overflow: scroll; /*border: solid 1px red;*/ }
-  .material-card li { width:90px; height: 55px; margin: 8px; box-sizing: border-box; list-style: none; line-height: 51px; box-shadow: 4px 4px 8px #cbced1,-4px -4px 8px #ffffff; border-radius: 10px; color:rgb(124, 124, 124); font-weight: 600;}
-  .material-card li.on { box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px #ffffff; color:black; }
+.material-card {
+  height: 100%;
+  text-align: center;
+}
+.material-card > p {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: rgb(65, 65, 65);
+}
+.material-card ul {
+  width: 100%;
+  max-height: 85%;
+  margin: 8px 0 0 0;
+  padding: 0;
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  overflow: scroll; /*border: solid 1px red;*/
+}
+.material-card li {
+  width: 90px;
+  height: 55px;
+  margin: 8px;
+  box-sizing: border-box;
+  list-style: none;
+  line-height: 51px;
+  box-shadow: 4px 4px 8px #cbced1, -4px -4px 8px #ffffff;
+  border-radius: 10px;
+  color: rgb(124, 124, 124);
+  font-weight: 600;
+}
+.material-card li.on {
+  box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px #ffffff;
+  color: black;
+}
 
-  .hello-container {
-    width:100px; 
-    height:100px;     
-    mask-image: url('../assets/ingredients/salt.svg');
-    background-color: gray;
-    position: relative;
-  }
-  .hello-container:hover{ background-color: red; }
+.hello-container {
+  width: 100px;
+  height: 100px;
+  mask-image: url("../assets/ingredients/salt.svg");
+  background-color: gray;
+  position: relative;
+}
+.hello-container:hover {
+  background-color: red;
+}
 /* .img {
   width: 100%;
   height: 100vh;
