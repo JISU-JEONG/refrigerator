@@ -98,6 +98,6 @@ export default {
 .recipe-list-container {
   width: 100%;
   height: 100vh;
-  padding-top: 80px;
+  padding-top: 70px;
 }
 </style>

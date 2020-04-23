@@ -29,7 +29,7 @@ header {
   height: 70px;
   width: 100%;
   max-width: 600px;
-  background: #ffffff;
+  background: #f1f1f1;
   position: fixed;
   top: 0;
   z-index: 100;
