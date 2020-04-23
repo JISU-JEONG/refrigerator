@@ -1,36 +1,50 @@
 <template>
   <div class="container">
+    <RecipeRecommendationMaterial />
     <div class="row">
       <div
         v-for="material in Object.keys(materials)"
         :class="material"
         :key="material"
-        @click="click(material)"
+        @click="click(material, materials[material])"
       >
-        <div class="container-icon" :style="test(material)"></div>
-        <div class="container-title">{{ materials[material] }}</div>
+        <div class="container-icon" :style="test(materials[material])"></div>
+        <div class="container-title">{{ material }}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import RecipeRecommendationMaterial from "../components/RecipeRecommendationMaterial";
+
 export default {
   name: "RecipeRecommendationIcon",
-  components: {},
+  components: {
+    RecipeRecommendationMaterial
+  },
   data: () => ({
     materials: {
-      flour: "밀가루",
-      ketchup: "케찹",
-      lemon: "레몬소스",
-      mayonnaise: "마요네즈",
-      oil: "참기름/들기름",
-      pepper: "고춧가루",
-      salt: "소금/후추/설탕",
-      sauce: "굴소스",
-      soy: "간장",
-      syrup: "물엿/올리고당",
-      water: "물/식용유"
+      소금: "salt",
+      밀가루: "flour",
+      올리고당: "syrup",
+      식용유: "water",
+      버터: "butter",
+      식초: "soy",
+      케찹: "ketchup",
+      레몬소스: "lemon",
+      마요네즈: "mayonnaise",
+      부침가루: "flour",
+      후추: "salt",
+      참기름: "oil",
+      고춧가루: "pepper",
+      굴소스: "sauce",
+      간장: "soy",
+      카레가루: "flour",
+      물엿: "syrup",
+      물: "water",
+      들기름: "oil",
+      설탕: "salt"
     }
   }),
   methods: {
@@ -54,9 +68,9 @@ export default {
       seasoningData.forEach((v, i) => {
         if (v.style.backgroundColor === "red") {
           if (data === undefined) {
-            data = Object.values(this.materials)[i];
+            data = Object.keys(this.materials)[i];
           } else {
-            data.push(Object.values(this.materials)[i]);
+            data.push(Object.keys(this.materials)[i]);
           }
         }
       });
