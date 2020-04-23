@@ -1,5 +1,6 @@
 <template>
   <div class="main-container">
+    <Loading v-if="loading"/>
     <div class="wrapper">
       <div class="logo" >
         <label for="ex_file">
@@ -10,31 +11,35 @@
       <div class="intro">
         <p>이곳에는 이런 저런 설명이 들어 갈거고 위에 카메라 버튼을 누르면 바로 사진을 찍을 겁니다.</p>
       </div>
-      
-      
     </div>
-    <!-- <RecipeCategory /> -->
-    <!-- <input type="file" /> -->
   </div>
 </template>
 <script>
-// import RecipeCategory from "../components/RecipeCategory";
+import Loading from '../components/Loading'
+import http from '../services/http-common.js'
+
 export default {
   name: "Main",
   components: {
-    // RecipeCategory
+    Loading
   },
   data() {
     return {
       uploadedImage: new FormData(),    
+      loading: false,
     }
   },
   methods: {
     onFileChange(e) {
+      this.loading = !this.loading
       var files = e.target.files || e.dataTransfer.files;
       if (!files.length) return;
-      this.uploadedImage.append('image', files[0])
-      console.log(this.uploadedImage.get('image'))
+      this.uploadedImage.append('file', files[0])
+      http.post('/recipes/image_upload/', this.uploadedImage)
+        .then((res) => {
+          this.loading = !this.loading
+          console.log(res)
+        })
     },
     addTransparentClass() { // nav 조작하던거. 이제 빼도 될 듯?
       const navClassList = document.querySelector("header").classList;
@@ -104,6 +109,7 @@ export default {
     margin-top: 24px;
     font-size: 20px;
     font-weight: 700;
+    color: #555;
     border: 1px solid black;
   }
 </style>

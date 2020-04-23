@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    <div>카메라 바로가기</div>
+    <div>홈 바로가기</div>
     <div>어떤 메뉴</div>
   </div>
 </template>
