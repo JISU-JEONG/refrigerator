@@ -14,7 +14,13 @@ def basicinfo(request):
   serializer = RecipeBasicInfoSerializer(recipebasic, many=True)
   # embed()
   return Response(serializer.data)
-  
+
+@api_view(['GET'])  
+def get_dish_by_id(request, dish_pk):
+  dish = RecipeBasicInfo.objects.filter(basic_code=dish_pk)
+  serializer = RecipeBasicInfoSerializer(dish, many=True)
+  return Response(serializer.data)
+
 @api_view(['GET'])
 def materialinfo(request, basic_pk):
   materials = RecipeMaterialInfo.objects.filter(material_code=basic_pk)
@@ -69,16 +75,31 @@ import cv2
 def image_upload(request):
   img = request.FILES.get('file').read()
   img = cv2.imdecode(np.frombuffer(img, np.uint8), -1)
-  S = detect.detect(img)
-  embed()
-  for get_label, get_prob in S:
-    print(get_label,':', get_prob*100)
-  # 배열 변환
   
+  # 재료 분석
+  labels_materials = detect.detect(img)
+  # get_materials = []
+
+  # 기준 % 이상 재료만 담기
+  for get_label, get_prob in labels_materials:
+    # if get_prob * 100 > 10:
+      # get_materials.append(get_label)
+    print(get_label,':', get_prob*100)
   
   # 사진에서 인식한 재료
   get_materials = ['계란','전분', '부침가루', '밀가루', '배추', '호박', '대파', '다짐육', '콩', '마늘']
-  # 사용자가 선택할 조미료
+  data = {'materials': get_materials}
+  return Response(data)
+
+import json
+@api_view(['POST'])
+def get_dishes(request):
+  # 사용자가 선택한 재료와 조미료
+  get_materials = request.data.get('materials')
+  get_cond = request.data.get('condiments')
+
+  # 사용자가 선택한 재료와 조미료(임시)
+  get_materials = ['계란','전분', '부침가루', '밀가루', '배추', '호박', '대파', '다짐육', '콩', '마늘']
   get_cond = ['설탕', '소금', '후추', '참기름']
   all_materials = set(get_materials + get_cond)
 
@@ -99,5 +120,3 @@ def image_upload(request):
   dish_list = RecipeBasicInfo.objects.filter(basic_code__in=dish_list)
   serializer = RecipeBasicInfoSerializer(dish_list, many=True)
   return Response(serializer.data)
-
-  
