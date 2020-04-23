@@ -83,11 +83,7 @@ export default {
 
 <style scoped lang="scss">
 .container {
-  width: 100%;
-  height: 100vh;
-  margin: 0;
-  padding: 70px 0 0 0;
-  background: #f1f1f1;
+  padding: 30px 0 0 0;
 }
 
 .container-icon {
