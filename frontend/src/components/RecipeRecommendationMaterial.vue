@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- {{material}} -->
     <main>
       <h2>냉장고에서 꺼낸 재료</h2>
 
@@ -37,7 +36,7 @@ h2 {
   margin-bottom: 0.5em;
 }
 
-ul li {
+/* ul li {
   font-family: "Cute Font", cursive;
   list-style-type: none;
   margin-left: -1.3em;
@@ -48,6 +47,12 @@ li {
   font-family: "Handlee", cursive;
   font-size: 1.2em;
   line-height: 2em;
+  letter-spacing: 1px;
+} */
+.material {
+  font-family: "Cute Font", cursive;
+  font-size: 1.4em;
+  font-weight: bold;
   letter-spacing: 1px;
 }
 

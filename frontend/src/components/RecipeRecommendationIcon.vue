@@ -98,7 +98,6 @@ export default {
 h2 {
   display: flex;
   justify-content: center;
-
   font-family: "Cute Font", cursive;
   font-size: 2em;
   margin-bottom: 0.5em;

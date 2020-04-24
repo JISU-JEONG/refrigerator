@@ -1,5 +1,6 @@
 <template>
-  <div class="main-container">
+  <RecipeRecommendation v-if="showMaterialPage" :materials="materials" />
+  <div class="main-container" v-else>
     <Loading v-if="loading"/>
     <div class="wrapper">
       <div class="logo" :class="{ rotate: rotate }" >
@@ -23,19 +24,22 @@
 </template>
 <script>
 import Loading from '../components/Loading'
+import RecipeRecommendation from '../components/RecipeRecommendation'
 import http from '../services/http-common.js'
+
 
 export default {
   name: "Main",
   components: {
-    Loading
+    Loading,
+    RecipeRecommendation
   },
   data() {
     return {
       materials: [],
       uploadedImage: new FormData(),    
       loading: false,
-      afterTake: false,
+      showMaterialPage: false,
       rotate: false
     }
   },
@@ -56,26 +60,28 @@ export default {
         .then((res) => {
           this.loading = !this.loading
           this.materials = res.data.materials
+          this.showMaterialPage = !this.showMaterialPage 
+          this.removeTransparentClass()
           console.log(res.data.materials)
         })
     },
-    addTransparentClass() { // nav 조작하던거. 이제 빼도 될 듯?
+    addTransparentClass() {
       const navClassList = document.querySelector("header").classList;
       navClassList.add("header-transparent");
     },
-    removeTransparentClass() { // nav 조작하던거. 이제 빼도 될 듯?
+    removeTransparentClass() {
       const navClassList = document.querySelector("header").classList;
       if (navClassList.contains("header-transparent")) {
         navClassList.remove("header-transparent");
       }
     },
-    onScroll() { // nav 조작하던거. 이제 빼도 될 듯?
-      if (window.scrollY > 300) {
-        this.removeTransparentClass();
-      } else {
-        this.addTransparentClass();
-      }
-    }
+    // onScroll() {
+    //   if (window.scrollY > 300) {
+    //     this.removeTransparentClass();
+    //   } else {
+    //     this.addTransparentClass();
+    //   }
+    // }
   },
   mounted() {
     this.addTransparentClass();
