@@ -1,6 +1,12 @@
 <template>
   <RecipeRecommendation v-if="showMaterialPage" :materials="materials" />
   <div class="main-container" v-else>
+    <div class="possible">
+      <span>현재 판별가능한 재료 목록</span>
+      <div class="possibleList">
+        정지수, 정영훈, 정지수, 김기은, 김태우
+      </div>
+    </div>
     <Loading v-if="loading"/>
     <div class="wrapper">
       <div class="logo" :class="{ rotate: rotate }" >
@@ -104,6 +110,7 @@ export default {
     background-size: cover;
     background-position: center;
     padding-top:70px;
+    position:relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -119,6 +126,28 @@ export default {
     background: -webkit-radial-gradient(center, ellipse cover,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.4) 100%);
     background: radial-gradient(ellipse at center,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.4) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#66000000',GradientType=1 );
+  }
+  .possible {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    color: white;
+    text-decoration: underline;
+  }
+  .possibleList {
+    width: 200px;
+    height: 70px;
+    padding: 10px;
+    position: absolute;
+    top: -70px;
+    display: none;
+    background-color: rgba(255, 255, 255, 0.75);
+    border-radius: 5px;
+    color: #555;
+    font-weight: 700;
+  }
+  .possible:hover .possibleList {
+    display: block;
   }
   .wrapper {
     width: 70%;
