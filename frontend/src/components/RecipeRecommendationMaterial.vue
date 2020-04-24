@@ -2,12 +2,17 @@
   <div>
     <main>
       <h2>냉장고에서 꺼낸 재료</h2>
-
-      <ul v-for="materials in materialItem" :key="materials" class="row">
-        <li class="col" v-for="material in materials" :key="material">
+      <ul v-for="material in materials" :key="material" class="row">
+        <li class="col">
           {{ material }}
         </li>
       </ul>
+
+      <!-- <ul v-for="(materials, i) in materialItem" :key="i" class="row">
+        <li class="col" v-for="(material, i) in materials" :key="i">
+          {{ material }}
+        </li>
+      </ul> -->
     </main>
   </div>
 </template>
@@ -16,6 +21,11 @@
 export default {
   name: "RecipeRecommendationMaterial",
   components: {},
+  props: {
+    materials: {
+      type: Array
+    }
+  },
   data: () => ({
     materialItem: [
       ["계란", "전분", "부침가루"],
@@ -36,7 +46,7 @@ h2 {
   margin-bottom: 0.5em;
 }
 
-/* ul li {
+ul li {
   font-family: "Cute Font", cursive;
   list-style-type: none;
   margin-left: -1.3em;
@@ -48,7 +58,8 @@ li {
   font-size: 1.2em;
   line-height: 2em;
   letter-spacing: 1px;
-} */
+}
+
 .material {
   font-family: "Cute Font", cursive;
   font-size: 1.4em;

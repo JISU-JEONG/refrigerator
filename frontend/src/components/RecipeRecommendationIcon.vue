@@ -42,7 +42,8 @@ export default {
       물: "water",
       들기름: "oil",
       설탕: "salt"
-    }
+    },
+    data: []
   }),
   methods: {
     test(material) {
@@ -71,8 +72,7 @@ export default {
           }
         }
       });
-
-      console.log(data);
+      this.$emit("icondata", data);
     }
   }
 };
@@ -92,7 +92,6 @@ export default {
 
 .container-title {
   font-family: "Cute Font", cursive;
-
   text-align: center;
 }
 h2 {
