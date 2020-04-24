@@ -194,5 +194,5 @@ export default {
     background-color: rgba(255, 255, 255, 0.7);
     border-radius: 10px;
     box-shadow: 2px 4px 8px gray;
-  }
+  } 
 </style>
