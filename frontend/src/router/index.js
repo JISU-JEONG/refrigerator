@@ -5,7 +5,7 @@ import main from "../view/main";
 import RecipeList from "../view/RecipeList";
 import VuexExample from "../view/VuexExample";
 import RecipeDetail from "../view/RecipeDetail";
-import RecipeRecommendationIcon from "../view/RecipeRecommendation";
+import RecipeRecommendationIcon from "../components/RecipeRecommendation";
 import Loading from "../components/Loading";
 
 Vue.use(Router);
