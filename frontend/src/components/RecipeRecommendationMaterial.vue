@@ -4,27 +4,10 @@
     <main>
       <h2>냉장고에서 꺼낸 재료</h2>
 
-      <!-- <ul v-for="material in materials" :key="material" class="row">
-        <li class="col">{{material}}</li>
-      </ul>-->
-
-      <ul class="row">
-        <li class="col">게란</li>
-        <li class="col">전분</li>
-      </ul>
-      <ul class="row">
-        <li class="col">전분</li>
-        <li class="col">밀가루</li>
-      </ul>
-
-      <ul class="row">
-        <li class="col">호박</li>
-        <li class="col">대파</li>
-      </ul>
-
-      <ul class="row">
-        <li class="col">다짐육</li>
-        <li class="col">콩</li>
+      <ul v-for="materials in materialItem" :key="materials" class="row">
+        <li class="col" v-for="material in materials" :key="material">
+          {{ material }}
+        </li>
       </ul>
     </main>
   </div>
@@ -35,17 +18,11 @@ export default {
   name: "RecipeRecommendationMaterial",
   components: {},
   data: () => ({
-    materials: [
-      "계란",
-      "전분",
-      "부침가루",
-      "밀가루",
-      "배추",
-      "호박",
-      "대파",
-      "다짐육",
-      "콩",
-      "마늘"
+    materialItem: [
+      ["계란", "전분", "부침가루"],
+      ["밀가루", "배추", "호박"],
+      ["대파", "다짐육", "콩"],
+      ["마늘"]
     ]
   }),
   methods: {}
