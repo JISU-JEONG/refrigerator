@@ -29,11 +29,12 @@ header {
   height: 70px;
   width: 100%;
   max-width: 600px;
-  background: #f1f1f1;
+  background: white;
   position: fixed;
   top: 0;
   z-index: 100;
-  border-bottom: 1px solid #dbdbdb;
+  border-bottom: 1px solid #cacaca;
+  box-shadow: 1px 2px 4px rgba(180, 180, 180, 0.3);
 }
 header h1 {
   display: inline-block;
@@ -47,7 +48,7 @@ header h1 a {
   line-height: 70px;
   font-size: 25px;
   font-family: 'Gugi', cursive;
-  color: white !important;
+  color: rgba(0, 0, 0, 0.9) !important;
 }
 header nav {
   display: inline-block;
@@ -69,11 +70,12 @@ header nav li a {
   height: 70px;
   line-height: 70px;
   font-size: 18px;
-  color: white !important;
+  color: rgba(0, 0, 0, 0.9) !important;
 }
 .header-transparent {
   background: transparent;
   border-bottom: none;
+  box-shadow: none;
 }
 .header-transparent a {
   color: white !important;
