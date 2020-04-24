@@ -3,9 +3,8 @@ import Router from "vue-router";
 
 import main from "../view/main";
 import RecipeList from "../view/RecipeList";
-import VuexExample from "../view/VuexExample";
 import RecipeDetail from "../view/RecipeDetail";
-import RecipeRecommendationIcon from "../components/RecipeRecommendation";
+import RecipeRecommendation from "../components/RecipeRecommendation";
 import Loading from "../components/Loading";
 
 Vue.use(Router);
@@ -26,17 +25,12 @@ export default new Router({
     {
       path: "/RecipeRecommendation",
       name: "RecipeRecommendation",
-      component: RecipeRecommendationIcon
+      component: RecipeRecommendation
     },
     {
       path: "/RecipeDetail/:id",
       name: "RecipeDetail",
       component: RecipeDetail
-    },
-    {
-      path: "/VuexExample",
-      name: "VuexExample",
-      component: VuexExample
     },
     {
       path: "/test",
