@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <RecipeRecommendationMaterial />
+    <RecipeRecommendationMaterial :materials="materials"/>
     <RecipeRecommendationIcon />
     <br />
     <v-btn class="btn" color="light-green">레시피 검색하기</v-btn>
@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import RecipeRecommendationMaterial from "../components/RecipeRecommendationMaterial";
-import RecipeRecommendationIcon from "../components/RecipeRecommendationIcon";
+import RecipeRecommendationMaterial from "./RecipeRecommendationMaterial";
+import RecipeRecommendationIcon from "./RecipeRecommendationIcon";
 
 export default {
   name: "RecipeRecommendation",
@@ -17,14 +17,19 @@ export default {
     RecipeRecommendationMaterial,
     RecipeRecommendationIcon
   },
-  data: () => ({})
+  data: () => ({}),
+  props: {
+    materials : {
+      type: Array,
+      required: true
+    }
+  },
 };
 </script>
 
 <style scoped lang="scss">
 .container {
-  margin-top: 40px;
-  justify-content: center;
+  margin-top: 50px;
   text-align: center;
 }
 .btn {

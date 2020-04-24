@@ -1,14 +1,13 @@
 <template>
   <div>
-    <!-- {{material}} -->
     <main>
       <h2>냉장고에서 꺼낸 재료</h2>
-
-      <!-- <ul v-for="material in materials" :key="material" class="row">
-        <li class="col">{{material}}</li>
-      </ul>-->
-
-      <ul class="row">
+      <v-row>
+        <v-col class="material" cols="4" v-for="material in materials" :key="material">
+          {{material}}
+        </v-col>
+      </v-row>
+      <!-- <ul class="row">
         <li class="col">게란</li>
         <li class="col">전분</li>
       </ul>
@@ -25,7 +24,7 @@
       <ul class="row">
         <li class="col">다짐육</li>
         <li class="col">콩</li>
-      </ul>
+      </ul> -->
     </main>
   </div>
 </template>
@@ -34,20 +33,13 @@
 export default {
   name: "RecipeRecommendationMaterial",
   components: {},
-  data: () => ({
-    materials: [
-      "계란",
-      "전분",
-      "부침가루",
-      "밀가루",
-      "배추",
-      "호박",
-      "대파",
-      "다짐육",
-      "콩",
-      "마늘"
-    ]
-  }),
+  data: () => ({ }),
+  props: {
+    materials : {
+      type: Array,
+      required: true
+    }
+  },
   methods: {}
 };
 </script>
@@ -60,7 +52,7 @@ h2 {
   margin-bottom: 0.5em;
 }
 
-ul li {
+/* ul li {
   font-family: "Cute Font", cursive;
   list-style-type: none;
   margin-left: -1.3em;
@@ -71,6 +63,12 @@ li {
   font-family: "Handlee", cursive;
   font-size: 1.2em;
   line-height: 2em;
+  letter-spacing: 1px;
+} */
+.material {
+  font-family: "Cute Font", cursive;
+  font-size: 1.4em;
+  font-weight: bold;
   letter-spacing: 1px;
 }
 
