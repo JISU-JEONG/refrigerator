@@ -5,7 +5,7 @@ import main from "../view/main";
 import RecipeList from "../view/RecipeList";
 import VuexExample from "../view/VuexExample";
 import RecipeDetail from "../view/RecipeDetail";
-import RecipeRecommendationIcon from "../view/RecipeRecommendationIcon";
+import RecipeRecommendationIcon from "../view/RecipeRecommendation";
 import Loading from "../components/Loading";
 
 Vue.use(Router);
@@ -42,7 +42,6 @@ export default new Router({
       path: "/test",
       name: "test",
       component: Loading
-    },
-
+    }
   ]
 });

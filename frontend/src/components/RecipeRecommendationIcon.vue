@@ -1,28 +1,25 @@
 <template>
-  <div class="container">
-    <RecipeRecommendationMaterial />
-    <div class="row">
-      <div
-        v-for="material in Object.keys(materials)"
-        :class="material"
-        :key="material"
-        @click="click(material, materials[material])"
-      >
-        <div class="container-icon" :style="test(materials[material])"></div>
-        <div class="container-title">{{ material }}</div>
+  <div>
+    <main>
+      <h2>양념을 선택해주세요</h2>
+      <div class="row">
+        <div
+          v-for="material in Object.keys(materials)"
+          :class="material"
+          :key="material"
+          @click="click(material, materials[material])"
+        >
+          <div class="container-icon" :style="test(materials[material])"></div>
+          <div class="container-title">{{ material }}</div>
+        </div>
       </div>
-    </div>
+    </main>
   </div>
 </template>
 
 <script>
-import RecipeRecommendationMaterial from "../components/RecipeRecommendationMaterial";
-
 export default {
   name: "RecipeRecommendationIcon",
-  components: {
-    RecipeRecommendationMaterial
-  },
   data: () => ({
     materials: {
       소금: "salt",
@@ -58,7 +55,7 @@ export default {
 
       document.querySelector(
         "." + material + " .container-icon"
-      ).style.backgroundColor = red === "red" ? "gray" : "red";
+      ).style.backgroundColor = red === "yellowgreen" ? "gray" : "yellowgreen";
 
       this.seasoning();
     },
@@ -66,7 +63,7 @@ export default {
       const seasoningData = document.querySelectorAll(".container-icon");
       let data = [];
       seasoningData.forEach((v, i) => {
-        if (v.style.backgroundColor === "red") {
+        if (v.style.backgroundColor === "yellowgreen") {
           if (data === undefined) {
             data = Object.keys(this.materials)[i];
           } else {
@@ -82,22 +79,35 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.container {
-  padding: 30px 0 0 0;
-}
-
 .container-icon {
   width: 50px;
   height: 50px;
-  margin: 20px;
+  margin: 10px;
   background-color: gray;
 }
 
 .container-icon-color {
-  background-color: red;
+  background-color: yellowgreen;
 }
 
 .container-title {
+  font-family: "Cute Font", cursive;
+
   text-align: center;
+}
+h2 {
+  display: flex;
+  justify-content: center;
+
+  font-family: "Cute Font", cursive;
+  font-size: 2em;
+  margin-bottom: 0.5em;
+}
+
+main {
+  background-color: white;
+  padding: 0 1.3em;
+  margin: 1em auto;
+  max-width: 90%;
 }
 </style>
