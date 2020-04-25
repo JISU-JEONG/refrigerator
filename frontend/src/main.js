@@ -4,6 +4,7 @@ import router from "./router/index";
 import vuetify from "./plugins/vuetify";
 import AxiosPlugin from "vue-axios-cors";
 import store from "./store";
+import './registerServiceWorker'
 
 Vue.config.productionTip = false;
 Vue.use(AxiosPlugin);
