@@ -7,7 +7,7 @@
         정지수, 서용재, 정영훈, 김기은, 정영길, 김태우
       </div>
     </div>
-    <Loading v-if="loading"/>
+    <Loading v-if="loading" />
     <div class="wrapper">
       <div class="logo" :class="{ rotate: rotate }">
         <label class="white-round front" for="ex_file">
@@ -64,13 +64,20 @@ export default {
     },
     onMultiLabel() {
       this.loading = !this.loading;
-      http.post("/recipes/image_upload/", this.uploadedImage).then(res => {
-        this.loading = !this.loading;
-        this.materials = res.data.materials;
-        this.showMaterialPage = !this.showMaterialPage;
-        this.removeTransparentClass();
-        console.log(res.data.materials);
-      });
+      http
+        .post("/recipes/image_upload/", this.uploadedImage)
+        .then(res => {
+          this.loading = !this.loading;
+          this.materials = res.data.materials;
+          this.showMaterialPage = !this.showMaterialPage;
+          this.removeTransparentClass();
+          console.log(res.data.materials);
+        })
+        .catch(e => {
+          alert(e);
+          this.loading = false;
+          (this.rotate = !this.rotate), (this.uploadedImage = new FormData());
+        });
     },
     addTransparentClass() {
       const navClassList = document.querySelector("header").classList;
@@ -101,66 +108,80 @@ export default {
 };
 </script>
 <style scoped>
-  * {
-    box-sizing: border-box;
-  }
-  .main-container {
-    width: 100%;
-    height: 100%;
-    background-image: url('https://i.pinimg.com/564x/b9/26/90/b92690a0d83b7c15a7d00b5f97a1a170.jpg');
-    background-size: cover;
-    background-position: center;
-    padding-top:70px;
-    position:relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .main-container::before {
-    content: ' ';
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: -moz-radial-gradient(center, ellipse cover,  rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%);
-    background: -webkit-radial-gradient(center, ellipse cover,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.4) 100%);
-    background: radial-gradient(ellipse at center,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.4) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#66000000',GradientType=1 );
-  }
-  .possible {
-    position: absolute;
-    left: 20px;
-    bottom: 20px;
-    color: white;
-    text-decoration: underline;
-  }
-  .possibleList {
-    width: 200px;
-    height: 70px;
-    padding: 10px;
-    position: absolute;
-    top: -70px;
-    display: none;
-    background-color: rgba(255, 255, 255, 0.75);
-    border-radius: 5px;
-    color: #555;
-    font-weight: 700;
-  }
-  .possible:hover .possibleList {
-    display: block;
-  }
-  .wrapper {
-    width: 70%;
-    height: 80%;
-    perspective: 1000px;
-    /* border: 1px blue solid; */
-  }
-  .logo {
-    width:100%;
-    padding-bottom:100%;
-    position:relative;
-    /* border: 1px solid red; */
+* {
+  box-sizing: border-box;
+}
+.main-container {
+  width: 100%;
+  height: 100%;
+  background-image: url("https://i.pinimg.com/564x/b9/26/90/b92690a0d83b7c15a7d00b5f97a1a170.jpg");
+  background-size: cover;
+  background-position: center;
+  padding-top: 70px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.main-container::before {
+  content: " ";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: -moz-radial-gradient(
+    center,
+    ellipse cover,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  background: -webkit-radial-gradient(
+    center,
+    ellipse cover,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#66000000',GradientType=1 );
+}
+.possible {
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  color: white;
+  text-decoration: underline;
+}
+.possibleList {
+  width: 200px;
+  height: 70px;
+  padding: 10px;
+  position: absolute;
+  top: -70px;
+  display: none;
+  background-color: rgba(255, 255, 255, 0.75);
+  border-radius: 5px;
+  color: #555;
+  font-weight: 700;
+}
+.possible:hover .possibleList {
+  display: block;
+}
+.wrapper {
+  width: 70%;
+  height: 80%;
+  perspective: 1000px;
+  /* border: 1px blue solid; */
+}
+.logo {
+  width: 100%;
+  padding-bottom: 100%;
+  position: relative;
+  /* border: 1px solid red; */
 
   transition: 1s;
   transform-style: preserve-3d;
