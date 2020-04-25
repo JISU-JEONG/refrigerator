@@ -3,15 +3,20 @@
     <main>
       <h2>양념을 선택해주세요</h2>
       <div class="row">
-        <div
+        <v-row
           v-for="material in Object.keys(materials)"
-          :class="material"
           :key="material"
-          @click="click(material, materials[material])"
+          :class="material"
+          @click="seasoningSelection(material, materials[material])"
         >
-          <div class="container-icon" :style="test(materials[material])"></div>
-          <div class="container-title">{{ material }}</div>
-        </div>
+          <v-col cols="12">
+            <div
+              class="container-icon"
+              :style="getCondimentsPath(materials[material])"
+            ></div>
+            <div class="container-title">{{ material }}</div>
+          </v-col>
+        </v-row>
       </div>
     </main>
   </div>
@@ -19,7 +24,7 @@
 
 <script>
 export default {
-  name: "RecipeRecommendationIcon",
+  name: "RecipeRecommendationCondiments",
   data: () => ({
     materials: {
       소금: "salt",
@@ -46,17 +51,19 @@ export default {
     data: []
   }),
   methods: {
-    test(material) {
+    getCondimentsPath(material) {
       let img = require("../assets/ingredients/" + material + ".svg");
       return "mask-image: url(" + img + "); ";
     },
-    click(material) {
-      const red = document.querySelector("." + material + " .container-icon")
-        .style.backgroundColor;
+    seasoningSelection(material) {
+      const yellowgreen = document.querySelector(
+        "." + material + " .container-icon"
+      ).style.backgroundColor;
 
       document.querySelector(
         "." + material + " .container-icon"
-      ).style.backgroundColor = red === "yellowgreen" ? "gray" : "yellowgreen";
+      ).style.backgroundColor =
+        yellowgreen === "yellowgreen" ? "gray" : "yellowgreen";
 
       this.seasoning();
     },
@@ -72,13 +79,13 @@ export default {
           }
         }
       });
-      this.$emit("icondata", data);
+      this.$emit("condimentsData", data);
     }
   }
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 .container-icon {
   width: 50px;
   height: 50px;
@@ -94,6 +101,7 @@ export default {
   font-family: "Cute Font", cursive;
   text-align: center;
 }
+
 h2 {
   display: flex;
   justify-content: center;

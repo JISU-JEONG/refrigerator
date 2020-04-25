@@ -17,32 +17,11 @@ export default {
   components: {
     RecipeCard
   },
-  props: {
-    recipeInfoArr: {
-      type: Array
+  computed: {
+    recipeInfoArr() {
+      return this.$store.state.data;
     }
   },
-  data: () => ({
-    // recipeInfoArr: []
-  }),
-  methods: {
-    getRecipeData() {
-      http
-        .get("/recipes/basicinfo/")
-        .then(res => {
-          for (let i = 1000; i < 1010; i++) {
-            console.log(res.data[i]);
-            this.recipeInfoArr.push(res.data[i]);
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
-  },
-  // beforeMount() {
-  //   this.getRecipeData();
-  // },
   mounted: () => {
     // document.querySelector('header').style.background = 'red'
     // document.querySelector('header').classList.remove('test-red')

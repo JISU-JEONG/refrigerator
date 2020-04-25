@@ -1,34 +1,30 @@
 <template>
   <div class="container">
-    <RecipeList v-if="showListPage" :recipeInfoArr="recipeInfoArr" />
-    <div v-else>
-      <RecipeRecommendationMaterial :materials="materials" />
-      <RecipeRecommendationIcon @icondata="parents" />
-      <br />
-      <v-btn class="btn" color="light-green" @click="searchRecipe"
-        >레시피 검색하기</v-btn
-      >
-    </div>
+    <RecipeRecommendationMaterial :materials="materials" />
+    <RecipeRecommendationCondiments @condimentsData="getCondiments" />
+    <v-btn
+      class="search-recipe-button"
+      color="light-green"
+      @click="searchRecipe"
+      >레시피 검색하기</v-btn
+    >
   </div>
 </template>
 
 <script>
-import RecipeRecommendationMaterial from "./RecipeRecommendationMaterial";
-import RecipeRecommendationIcon from "./RecipeRecommendationIcon";
-import RecipeList from "../view/RecipeList";
 import http from "../services/http-common.js";
+import RecipeRecommendationMaterial from "./RecipeRecommendationMaterial";
+import RecipeRecommendationCondiments from "./RecipeRecommendationCondiments";
 
 export default {
   name: "RecipeRecommendation",
   components: {
     RecipeRecommendationMaterial,
-    RecipeRecommendationIcon,
-    RecipeList
+    RecipeRecommendationCondiments
   },
+
   data: () => ({
-    condiments: [],
-    recipeInfoArr: [],
-    showListPage: false
+    condiments: []
   }),
   props: {
     materials: {
@@ -36,42 +32,38 @@ export default {
     }
   },
   methods: {
-    parents(name) {
-      this.components = name;
-      console.log(name);
+    getCondiments(data) {
+      this.condiments = data;
+      console.log(data);
     },
     searchRecipe() {
       const data = {
+        // 상위 컴포넌트에서 가져온 것 (냉장고에서 찾은 재료)
         materials: this.materials,
+
+        // 하위 컴포넌트에서 가져온 것 (사용자가 선택한 양념정보)
         condiments: this.components
-        // condiments: ["설탕", "소금", "후추", "참기름"]
       };
       http.post("/recipes/get_dishes/", data).then(res => {
-        this.recipeInfoArr = res.data;
-        this.showListPage = !this.showListPage;
-        console.log(res);
-      });
-    },
-    onMultiLabel() {
-      this.loading = !this.loading;
-      http.post("/recipes/image_upload/", this.uploadedImage).then(res => {
-        this.loading = !this.loading;
-        this.materials = res.data.materials;
-        this.showMaterialPage = !this.showMaterialPage;
-        this.removeTransparentClass();
-        console.log(res.data.materials);
+        const payload = {
+          // 찾은 레시피정보 vuex에 저장
+          recipeInfoArr: res.data
+        };
+        this.$store.dispatch("recipeInfo", payload);
+        this.$router.push("/RecipeList");
       });
     }
   }
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 .container {
   margin-top: 50px;
   text-align: center;
 }
-.btn {
+.search-recipe-button {
+  margin-top: 30px;
   font-family: "Cute Font", cursive;
 }
 </style>

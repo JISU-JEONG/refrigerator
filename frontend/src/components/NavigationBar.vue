@@ -11,9 +11,6 @@
         <li>
           <router-link to="/RecipeRecommendation">B</router-link>
         </li>
-        <li>
-          <router-link to="/VuexExample">C</router-link>
-        </li>
       </ul>
     </nav>
   </header>
@@ -24,7 +21,7 @@ export default {
   name: "NavigationBar"
 };
 </script>
-<style >
+<style>
 header {
   height: 70px;
   width: 100%;
@@ -47,7 +44,7 @@ header h1 a {
   height: 70px;
   line-height: 70px;
   font-size: 25px;
-  font-family: 'Gugi', cursive;
+  font-family: "Gugi", cursive;
   color: rgba(0, 0, 0, 0.9) !important;
 }
 header nav {
