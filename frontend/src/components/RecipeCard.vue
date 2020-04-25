@@ -1,5 +1,5 @@
 <template>
-  <div class="recipe-container" @click="recipeDetail($event, recipeInfo)">
+  <div class="recipe-container" @click="recipeDetail(recipeInfo)">
     <div
       class="recipe-card"
       :style="{ backgroundImage: `url(${recipeInfo.basic_imgurl})` }"
@@ -25,7 +25,7 @@ export default {
     }
   },
   methods: {
-    recipeDetail(event, recipeInfo) {
+    recipeDetail(recipeInfo) {
       this.$router.push({
         name: "RecipeDetail",
         params: { id: recipeInfo.basic_code }

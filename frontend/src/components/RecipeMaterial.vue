@@ -3,12 +3,12 @@
     <div class="meterial-container">
       <div class="meterial-container-title">
         <b>재료</b>
-        <span>Meterial</span>
+        <span>Material</span>
       </div>
       <div class="meterial-list">
-        <li v-for="(meterial, i) in recipeMeterial" :key="i">
-          {{ meterial.material_name }}
-          <span class="meterial-unit">{{ meterial.material_volume }}</span>
+        <li v-for="(material, i) in recipeMaterial" :key="i">
+          {{ material.material_name }}
+          <span class="meterial-unit">{{ material.material_volume }}</span>
         </li>
       </div>
     </div>
@@ -17,9 +17,9 @@
 
 <script>
 export default {
-  name: "RecipeMeterial",
+  name: "RecipeMaterial",
   props: {
-    recipeMeterial: {
+    recipeMaterial: {
       type: Array
     }
   }

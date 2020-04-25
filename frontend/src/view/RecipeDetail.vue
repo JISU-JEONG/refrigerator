@@ -4,23 +4,23 @@
       :style="{ backgroundImage: `url(${imagePath})` }"
       class="thumbnail"
     ></div>
-    <RecipeMeterial :recipeMeterial="recipeMeterial" />
+    <RecipeMaterial :recipeMaterial="recipeMaterial" />
     <RecipeSequence :recipeSequence="recipeSequence" />
   </div>
 </template>
 <script>
 import http from "../services/http-common.js";
-import RecipeMeterial from "../components/RecipeMeterial";
+import RecipeMaterial from "../components/RecipeMaterial";
 import RecipeSequence from "../components/RecipeSequence";
 
 export default {
   name: "RecipeDetail",
   components: {
-    RecipeMeterial,
+    RecipeMaterial,
     RecipeSequence
   },
   data: () => ({
-    recipeMeterial: null,
+    recipeMaterial: null,
     recipeSequence: null,
     imagePath: null
   }),
@@ -31,9 +31,9 @@ export default {
       });
     },
 
-    getRecipeMeterial() {
+    getRecipeMaterial() {
       http.get(`/recipes/materialinfo/${this.$route.params.id}`).then(res => {
-        this.recipeMeterial = res.data;
+        this.recipeMaterial = res.data;
       });
     },
 
@@ -46,7 +46,7 @@ export default {
   beforeMount() {
     console.log(this.$route.params.id);
     this.getRecipeSequence();
-    this.getRecipeMeterial();
+    this.getRecipeMaterial();
     this.getImgPath();
   }
 };
@@ -61,5 +61,8 @@ export default {
 .thumbnail {
   width: 100%;
   height: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 </style>
