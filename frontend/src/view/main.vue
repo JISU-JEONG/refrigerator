@@ -4,7 +4,7 @@
     <div class="possible">
       <span>현재 판별가능한 재료 목록</span>
       <div class="possibleList">
-        정지수, 정영훈, 정지수, 김기은, 김태우
+        정지수, 서용재, 정영훈, 김기은, 정영길, 김태우
       </div>
     </div>
     <Loading v-if="loading"/>
