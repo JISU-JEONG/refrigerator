@@ -71,13 +71,38 @@ import tensorflow as tf
 from keras.preprocessing.image import img_to_array
 import numpy as np
 import cv2
+
+
+import keras
+from keras.preprocessing.image import img_to_array
+from keras.models import load_model
+import numpy as np
+import argparse
+import imutils
+import pickle
+import cv2
+import os
+from IPython import embed
+model = None
+mlb = None
+
 @api_view(['POST'])
 def image_upload(request):
+  global model, mlb
   img = request.FILES.get('file').read()
   img = cv2.imdecode(np.frombuffer(img, np.uint8), -1)
   
   # 재료 분석
-  labels_materials = detect.detect(img)
+  # labels_materials = detect.detect(img, model, mlb)
+  image = cv2.resize(img, (299, 299))
+  image = image.astype("float") / 255.0
+  image = img_to_array(image)
+  image = np.expand_dims(image, axis=0)
+  if model == None:
+    model = load_model('fashion.model')
+    mlb = pickle.loads(open('mlb.pickle', "rb").read())
+  proba = model.predict(image)[0]
+  labels_materials = zip(mlb.classes_, proba)
   # get_materials = []
 
   # 기준 % 이상 재료만 담기
