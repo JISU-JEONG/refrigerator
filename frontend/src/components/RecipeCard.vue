@@ -51,7 +51,7 @@ export default {
   position: absolute;
   background-repeat: no-repeat;
   background-size: cover;
-  /* background-position: center; */
+  background-position: center;
   transition: transform 0.2s linear;
 }
 .recipe-info {
