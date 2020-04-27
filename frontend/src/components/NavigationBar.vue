@@ -3,16 +3,6 @@
     <h1>
       <router-link to="/">냉장고를 부탁해</router-link>
     </h1>
-    <nav>
-      <ul>
-        <li>
-          <router-link to="/RecipeList">A</router-link>
-        </li>
-        <li>
-          <router-link to="/RecipeRecommendation">B</router-link>
-        </li>
-      </ul>
-    </nav>
   </header>
 </template>
 
@@ -45,28 +35,6 @@ header h1 a {
   line-height: 70px;
   font-size: 25px;
   font-family: "Gugi", cursive;
-  color: rgba(0, 0, 0, 0.9) !important;
-}
-header nav {
-  display: inline-block;
-  position: absolute;
-  top: 0;
-  right: 24px;
-}
-header nav li {
-  list-style: none;
-  float: left;
-  padding: 0 10px;
-}
-header nav li:last-child {
-  padding-right: 0;
-}
-header nav li a {
-  text-decoration: none;
-  display: inline-block;
-  height: 70px;
-  line-height: 70px;
-  font-size: 18px;
   color: rgba(0, 0, 0, 0.9) !important;
 }
 .header-transparent {

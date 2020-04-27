@@ -1,6 +1,6 @@
 <template>
   <div class="loading-background">
-    <div class="wrapper">
+    <div class="loading-wrapper">
       <div class="box-wrap">
         <div class="box one"></div>
         <div class="box two"></div>
@@ -34,13 +34,13 @@
   background-color: rgba(128, 128, 128, 0.5);
   z-index: 2;
 }
-.wrapper {
+.loading-wrapper {
   margin: 100px;
-	width: 200px;
-	height: 200px;
-	background-color: transparent;
-	border: none;
-	-webkit-user-select: none;
+    width: 200px;
+    height: 200px;
+    background-color: transparent;
+    border: none;
+    -webkit-user-select: none;
 }
 .box-wrap {
   width: 70%;
