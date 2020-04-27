@@ -9,6 +9,7 @@
 
 <script>
 import http from "../services/http-common.js";
+import Loading from "./Loading";
 import RecipeRecommendationMaterial from "./RecipeRecommendationMaterial";
 import RecipeRecommendationCondiments from "./RecipeRecommendationCondiments";
 import Loading from "../components/Loading";
@@ -50,7 +51,7 @@ export default {
       };
 
       http.post("/recipes/get_dishes/", data).then(res => {
-        console.log(res);
+        this.loading = !this.loading;
         const payload = {
           // 찾은 레시피정보 vuex에 저장
           recipeInfoArr: res.data

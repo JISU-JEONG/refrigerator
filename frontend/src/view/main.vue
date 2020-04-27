@@ -98,13 +98,6 @@ export default {
         navClassList.remove("header-transparent");
       }
     }
-    // onScroll() {
-    //   if (window.scrollY > 300) {
-    //     this.removeTransparentClass();
-    //   } else {
-    //     this.addTransparentClass();
-    //   }
-    // }
   },
   mounted() {
     this.addTransparentClass();
