@@ -1,13 +1,13 @@
 <template>
-  <RecipeRecommendation v-if="showMaterialPage" :materials="materials" />
+  <RecipeRecommendation v-if="showMaterialPage" :materials="materials" :uploadedImage="uploadedImage" :imageUrl="imageUrl"/>
   <div class="main-container" v-else>
+    <Loading v-if="loading" />
     <div class="possible">
       <span>현재 판별가능한 재료 목록</span>
       <div class="possibleList">
         정지수, 서용재, 정영훈, 김기은, 정영길, 김태우
       </div>
     </div>
-    <Loading v-if="loading" />
     <div class="wrapper">
       <div class="logo" :class="{ rotate: rotate }">
         <label class="white-round front" for="ex_file">
@@ -47,6 +47,7 @@ export default {
     return {
       materials: [],
       uploadedImage: new FormData(),
+      imageUrl: 'asdasd',
       loading: false,
       showMaterialPage: false,
       rotate: false
@@ -68,6 +69,7 @@ export default {
         .post("/recipes/image_upload/", this.uploadedImage)
         .then(res => {
           this.loading = !this.loading;
+          this.changeBackground()
           this.materials = res.data.materials;
           this.showMaterialPage = !this.showMaterialPage;
           this.removeTransparentClass();
@@ -78,6 +80,15 @@ export default {
           this.loading = false;
           (this.rotate = !this.rotate), (this.uploadedImage = new FormData());
         });
+    },
+    changeBackground() {
+      const image =  this.uploadedImage.get('file')
+      var reader = new FileReader();
+      reader.readAsDataURL( image )
+      reader.onloadend = () => {
+        this.imageUrl = reader.result
+      }
+
     },
     addTransparentClass() {
       const navClassList = document.querySelector("header").classList;
@@ -244,5 +255,12 @@ export default {
   background-color: rgba(255, 255, 255, 0.7);
   border-radius: 10px;
   box-shadow: 2px 4px 8px gray;
+  cursor: pointer;
+}
+.test {
+  width: 100%;
+  height: 200px;
+  background-color: red;
+  background-image: ;
 }
 </style>

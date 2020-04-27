@@ -1,6 +1,8 @@
 <template>
   <div class="container">
     <Loading v-if="loading" />
+    <div class="image" :style="{ backgroundImage: `url(${imageUrl}` }"></div>
+
     <RecipeRecommendationMaterial :materials="materials" />
     <RecipeRecommendationCondiments @condimentsData="getCondiments" />
     <v-btn
@@ -33,6 +35,9 @@ export default {
   props: {
     materials: {
       type: Array
+    },
+    imageUrl: {
+      type: String
     }
   },
   methods: {
@@ -58,18 +63,27 @@ export default {
         this.$store.dispatch("recipeInfo", payload);
         this.$router.push("/RecipeList");
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
 .container {
-  margin-top: 50px;
+  width: 100%;
+  height: 100%;
+  margin-top: 70px;
   text-align: center;
 }
 .search-recipe-button {
   margin-top: 30px;
   font-family: "Cute Font", cursive;
+}
+.image {
+  width: 100%;
+  height: 240px;
+  background-color: black;
+  background-size: contain;
+  background-position: center; 
 }
 </style>
