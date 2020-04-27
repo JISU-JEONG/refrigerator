@@ -1,11 +1,9 @@
 <template>
-  <RecipeRecommendation v-if="showMaterialPage" :materials="materials" />
+  <RecipeRecommendation v-if="showMaterialPage" :materials="materials" :percentages="percentages" />
   <div class="main-container" v-else>
     <div class="possible">
       <span>현재 판별가능한 재료 목록</span>
-      <div class="possibleList">
-        정지수, 서용재, 정영훈, 김기은, 정영길, 김태우
-      </div>
+      <div class="possibleList">정지수, 서용재, 정영훈, 김기은, 정영길, 김태우</div>
     </div>
     <Loading v-if="loading" />
     <div class="wrapper">
@@ -16,17 +14,26 @@
         <div class="white-round back">
           <div class="center">
             <v-icon style="font-size:140px">mdi-image-area</v-icon>
-            <p>사진촬영 완료 <br />하단 버튼을 눌러 재료를 탐색하세요</p>
+            <p>
+              사진촬영 완료
+              <br />하단 버튼을 눌러 재료를 탐색하세요
+            </p>
           </div>
         </div>
         <input type="file" @change="onFileChange" id="ex_file" />
       </div>
       <div class="intro">
         <div class="intro-button" @click="onMultiLabel" v-if="rotate">
-          <span> Multi-<br />label</span>
+          <span>
+            Multi-
+            <br />label
+          </span>
         </div>
         <div class="intro-button" @click="onClick" v-if="rotate">
-          <span>Mask <br />R-CNN</span>
+          <span>
+            Mask
+            <br />R-CNN
+          </span>
         </div>
       </div>
     </div>
@@ -46,6 +53,7 @@ export default {
   data() {
     return {
       materials: [],
+      percentages: [],
       uploadedImage: new FormData(),
       loading: false,
       showMaterialPage: false,
@@ -69,9 +77,10 @@ export default {
         .then(res => {
           this.loading = !this.loading;
           this.materials = res.data.materials;
+          this.percentages = res.data.percentages;
           this.showMaterialPage = !this.showMaterialPage;
           this.removeTransparentClass();
-          console.log(res.data.materials);
+          console.log(res.data);
         })
         .catch(e => {
           alert(e);
