@@ -99,33 +99,39 @@ def image_upload(request):
   image = img_to_array(image)
   image = np.expand_dims(image, axis=0)
   if model == None:
-    model = load_model('fashion.model')
+    model = load_model('multilabel.model')
     mlb = pickle.loads(open('mlb.pickle', "rb").read())
   proba = model.predict(image)[0]
   labels_materials = zip(mlb.classes_, proba)
-  # get_materials = []
-
+  get_materials = []
+  get_percentages = []
   # 기준 % 이상 재료만 담기
   for get_label, get_prob in labels_materials:
     # if get_prob * 100 > 10:
-      # get_materials.append(get_label)
+    get_materials.append(get_label)
+    get_percentages.append(round(get_prob * 100, 4))
     print(get_label,':', get_prob*100)
   
   # 사진에서 인식한 재료
-  get_materials = ['계란','전분', '부침가루', '밀가루', '배추', '호박', '대파', '다짐육', '콩', '마늘']
-  data = {'materials': get_materials}
+  # get_materials = ['계란','전분', '부침가루', '밀가루', '배추', '호박', '대파', '다짐육', '콩', '마늘']
+  data = {
+    'materials': get_materials,
+    'percentages': get_percentages
+    }
   return Response(data)
 
 import json
 @api_view(['POST'])
 def get_dishes(request):
   # 사용자가 선택한 재료와 조미료
+  # embed()
   get_materials = request.data.get('materials')
   get_cond = request.data.get('condiments')
-
+  print(get_materials)
+  print(get_cond)
   # 사용자가 선택한 재료와 조미료(임시)
-  get_materials = ['계란','전분', '부침가루', '밀가루', '배추', '호박', '대파', '다짐육', '콩', '마늘']
-  get_cond = ['설탕', '소금', '후추', '참기름']
+  # get_materials = ['계란','전분', '부침가루', '밀가루', '배추', '호박', '대파', '다짐육', '콩', '마늘']
+  # get_cond = ['설탕', '소금', '후추', '참기름']
   all_materials = set(get_materials + get_cond)
 
   all_dishes = RecipeBasicInfo.objects.all()
@@ -135,13 +141,12 @@ def get_dishes(request):
     cnt = 0
     for r_m in recipe_materials:
       for a_m in all_materials:
-        # 마늘과 다진마늘은 같은 마늘로 취급 검색.
-        if a_m in r_m.material_name:
+        if a_m == r_m.material_name:
           cnt += 1
 
     if len(recipe_materials) == cnt:
       dish_list.append(dish.basic_code)
-  # embed()
+
   dish_list = RecipeBasicInfo.objects.filter(basic_code__in=dish_list)
   serializer = RecipeBasicInfoSerializer(dish_list, many=True)
   return Response(serializer.data)
