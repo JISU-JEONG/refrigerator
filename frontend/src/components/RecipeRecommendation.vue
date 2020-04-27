@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <Loading v-if="loading" />
     <RecipeRecommendationMaterial :materials="materials" />
     <RecipeRecommendationCondiments @condimentsData="getCondiments" />
     <v-btn
@@ -13,18 +14,21 @@
 
 <script>
 import http from "../services/http-common.js";
+import Loading from "./Loading";
 import RecipeRecommendationMaterial from "./RecipeRecommendationMaterial";
 import RecipeRecommendationCondiments from "./RecipeRecommendationCondiments";
 
 export default {
   name: "RecipeRecommendation",
   components: {
+    Loading,
     RecipeRecommendationMaterial,
     RecipeRecommendationCondiments
   },
 
   data: () => ({
-    condiments: []
+    loading: false,
+    condiments: [],
   }),
   props: {
     materials: {
@@ -37,6 +41,7 @@ export default {
       console.log(data);
     },
     searchRecipe() {
+      this.loading = !this.loading;
       const data = {
         // 상위 컴포넌트에서 가져온 것 (냉장고에서 찾은 재료)
         materials: this.materials,
@@ -45,6 +50,7 @@ export default {
         condiments: this.components
       };
       http.post("/recipes/get_dishes/", data).then(res => {
+        this.loading = !this.loading;
         const payload = {
           // 찾은 레시피정보 vuex에 저장
           recipeInfoArr: res.data

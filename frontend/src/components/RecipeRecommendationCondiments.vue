@@ -1,7 +1,7 @@
 <template>
   <div>
     <main>
-      <h2>양념을 선택해주세요</h2>
+      <h2>보유중인 조미료를 선택해주세요.</h2>
       <div class="row">
         <v-row
           v-for="material in Object.keys(materials)"
