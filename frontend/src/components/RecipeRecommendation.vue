@@ -14,7 +14,6 @@ import http from "../services/http-common.js";
 import Loading from "./Loading";
 import RecipeRecommendationMaterial from "./RecipeRecommendationMaterial";
 import RecipeRecommendationCondiments from "./RecipeRecommendationCondiments";
-import Loading from "../components/Loading";
 
 export default {
   name: "RecipeRecommendation",
