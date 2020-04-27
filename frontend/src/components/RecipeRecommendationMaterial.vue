@@ -3,13 +3,8 @@
     <main>
       <h2>냉장고에서 꺼낸 재료</h2>
       <v-row class="row">
-        <v-col
-          v-for="material in materials"
-          :key="material"
-          cols="4"
-          class="col"
-        >
-          {{ material }}
+        <v-col v-for="(material, i) in materials" :key="i" cols="4" class="col">
+          <img class="container-icon" :src="getCondimentsPath(material, i)" />
         </v-col>
       </v-row>
     </main>
@@ -22,22 +17,43 @@ export default {
   props: {
     materials: {
       type: Array
+    },
+    percentages: {
+      type: Array
     }
   },
   data: () => ({
     // materialItem: [
-    //   "계란",
-    //   "전분",
-    //   "부침가루",
-    //   "밀가루",
-    //   "배추",
-    //   "호박",
-    //   "대파",
-    //   "다짐육",
-    //   "콩",
-    //   "마늘"
+    // "감자", "고추", "사과", "스팸", "양파", "계란"
     // ]
-  })
+    materialItem: {
+      감자: "potato",
+      고추: "chili",
+      사과: "apple",
+      스팸: "spam",
+      양파: "onion",
+      계란: "egg"
+    }
+  }),
+  methods: {
+    getCondimentsPath(material, i) {
+      let img = null;
+      if (this.percentages[i] > 90) {
+        img = require("../assets/ingredients/" +
+          this.materialItem[material] +
+          "_color.svg");
+      } else {
+        img = require("../assets/ingredients/" +
+          this.materialItem[material] +
+          ".svg");
+      }
+      return img;
+    }
+  },
+  beforeMounted() {
+    this.percentages.push(0);
+    this.materials.push("계란");
+  }
 };
 </script>
 
@@ -67,5 +83,11 @@ h2 {
   font-size: 1.4em;
   font-weight: bold;
   letter-spacing: 1px;
+}
+
+.container-icon {
+  width: 50px;
+  height: 50px;
+  margin: 10px;
 }
 </style>

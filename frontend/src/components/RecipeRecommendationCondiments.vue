@@ -1,7 +1,7 @@
 <template>
   <div>
     <main>
-      <h2>양념을 선택해주세요</h2>
+      <h2>집에있는 조미료를 선택해주세요</h2>
       <div class="row">
         <v-row
           v-for="material in Object.keys(materials)"
@@ -10,10 +10,7 @@
           @click="seasoningSelection(material, materials[material])"
         >
           <v-col cols="12">
-            <div
-              class="container-icon"
-              :style="getCondimentsPath(materials[material])"
-            ></div>
+            <div class="container-icon" :style="getCondimentsPath(materials[material])"></div>
             <div class="container-title">{{ material }}</div>
           </v-col>
         </v-row>
