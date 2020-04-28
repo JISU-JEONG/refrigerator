@@ -4,12 +4,10 @@
       <h2>냉장고에서 꺼낸 재료</h2>
       <v-row class="row">
         <v-col v-for="(material, i) in materials" :key="i" cols="4" class="col">
-          <div class="test">
-            <div class="test2" :style="test(material, i)">
-              <img class="test3" :src="getMaterialsColorPath(material, i)" />
-            </div>
-          </div>
-          <img class="material-icon" :src="getMaterialsPath(material, i)" />
+          <v-img class="image" :src="getMaterialsPath(material, i)">
+            <div class="forward"></div>
+          </v-img>
+          <!-- <img class="material-icon" :src="getMaterialsPath(material, i)" /> -->
           <div
             class="container-title"
             :style="getMaterialStyle(material, i)"
@@ -41,11 +39,12 @@ export default {
       사과: "apple",
       스팸: "spam",
       양파: "onion",
-      계란: "egg"
+      계란: "egg5"
     }
   }),
   methods: {
     getMaterialsPath(material, i) {
+      console.log(this.materialItem[material]);
       let img = null;
       img = require("../assets/ingredients/" +
         this.materialItem[material] +
@@ -111,13 +110,26 @@ h2 {
   margin: 10px;
 }
 
-.test {
-  position: absolute;
+.image {
+  width: 50px;
+  height: 50px;
+  margin: 10px;
 }
 
-.test3 {
-  width: 50px;
-  margin: 10px 10px 10px 48.1px;
+.forward {
+  height: 40px;
+  background: #ffffff33;
+  animation-duration: 1s;
+  animation-name: slideToBottom;
+}
+
+@keyframes slideToBottom {
+  from {
+    height: 0px;
+  }
+
+  to {
+    height: 50px;
+  }
 }
 </style>
-

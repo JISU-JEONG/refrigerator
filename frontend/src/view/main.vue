@@ -1,5 +1,11 @@
 <template>
-  <RecipeRecommendation v-if="showMaterialPage" :materials="materials" :uploadedImage="uploadedImage" :percentages="percentages" :imageUrl="imageUrl"/>
+  <RecipeRecommendation
+    v-if="showMaterialPage"
+    :materials="materials"
+    :uploadedImage="uploadedImage"
+    :percentages="percentages"
+    :imageUrl="imageUrl"
+  />
   <div class="main-container" v-else>
     <Loading v-if="loading" />
     <div class="possible">
@@ -55,7 +61,7 @@ export default {
       materials: [],
       percentages: [],
       uploadedImage: new FormData(),
-      imageUrl: 'asdasd',
+      imageUrl: "asdasd",
       loading: false,
       showMaterialPage: false,
       rotate: false
@@ -77,7 +83,7 @@ export default {
         .post("/recipes/image_upload/", this.uploadedImage)
         .then(res => {
           this.loading = !this.loading;
-          this.changeBackground()
+          this.changeBackground();
           this.materials = res.data.materials;
           this.percentages = res.data.percentages;
           this.showMaterialPage = !this.showMaterialPage;
@@ -91,13 +97,12 @@ export default {
         });
     },
     changeBackground() {
-      const image =  this.uploadedImage.get('file')
+      const image = this.uploadedImage.get("file");
       var reader = new FileReader();
-      reader.readAsDataURL( image )
+      reader.readAsDataURL(image);
       reader.onloadend = () => {
-        this.imageUrl = reader.result
-      }
-
+        this.imageUrl = reader.result;
+      };
     },
     addTransparentClass() {
       const navClassList = document.querySelector("header").classList;

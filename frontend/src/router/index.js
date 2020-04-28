@@ -5,8 +5,8 @@ import main from "../view/main";
 import RecipeList from "../view/RecipeList";
 import RecipeDetail from "../view/RecipeDetail";
 import RecipeRecommendation from "../components/RecipeRecommendation";
-import Loading from "../components/Loading";
-
+import RecipeNotFound from "../components/RecipeNotFound";
+import test from "../components/test";
 Vue.use(Router);
 
 export default new Router({
@@ -35,7 +35,12 @@ export default new Router({
     {
       path: "/test",
       name: "test",
-      component: Loading
+      component: test
+    },
+    {
+      path: "/RecipeNotFound",
+      name: "RecipeNotFound",
+      component: RecipeNotFound
     }
   ]
 });
