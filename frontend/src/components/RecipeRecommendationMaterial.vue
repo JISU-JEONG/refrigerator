@@ -3,6 +3,11 @@
     <main>
       <v-row class="row">
         <v-col v-for="(material, i) in materials" :key="i" cols="4" class="col">
+          <div class="test">
+            <div class="test2" :style="test(material, i)">
+              <img class="test3" :src="getMaterialsColorPath(material, i)" />
+            </div>
+          </div>
           <img class="material-icon" :src="getMaterialsPath(material, i)" />
 
           <div class="container-title" :style="getMaterialStyle(material, i)">
@@ -38,15 +43,18 @@ export default {
   methods: {
     getMaterialsPath(material, i) {
       let img = null;
-      if (this.percentages[i] > 80) {
-        img = require("../assets/ingredients/" +
-          this.materialItem[material] +
-          "_color.svg");
-      } else {
-        img = require("../assets/ingredients/" +
-          this.materialItem[material] +
-          ".svg");
-      }
+      img = require("../assets/ingredients/" +
+        this.materialItem[material] +
+        ".svg");
+      return img;
+    },
+
+    getMaterialsColorPath(material, i) {
+      let img = null;
+      img = require("../assets/ingredients/" +
+        this.materialItem[material] +
+        "_color.svg");
+
       return img;
     },
 
@@ -99,9 +107,8 @@ h2 {
   height: 130px;
 }
 
-
 .container-title {
-  position:absolute;
+  position: absolute;
   left: 50%;
   transform: translateX(-50%);
   bottom: 0;
@@ -123,6 +130,7 @@ h2 {
   top: 40%;
   transform: translate(-50%, -50%);
 }
+
 .test3 {
   width: 50px;
   height: 50px;

@@ -30,8 +30,9 @@
         <input type="file" @change="onFileChange" id="ex_file" />
       </div>
       <div class="intro">
-        <div class="intro-txt" v-if="!rotate" >
-          인공지능을 활용한 어쩌구 저쩌구 서비스에 대한 소개를 조금 쓰면 빈칸이 채워져서 좋을 것 같아요.
+        <div class="intro-txt" v-if="!rotate">
+          인공지능을 활용한 어쩌구 저쩌구 서비스에 대한 소개를 조금 쓰면 빈칸이
+          채워져서 좋을 것 같아요.
         </div>
         <!-- <div class="explain"> 설명을 써 말어...
           Multi-lavel <br>
@@ -81,15 +82,6 @@ export default {
       this.rotate = !this.rotate;
     },
     onMultiLabel() {
-      http
-        .post("/recipes/image_test/", this.uploadedImage)
-        .then(res => {
-          console.log(res.data);
-        })
-        .catch(e => {
-          alert(e);
-        });
-
       this.loading = !this.loading;
       http
         .post("/recipes/image_upload/", this.uploadedImage)
