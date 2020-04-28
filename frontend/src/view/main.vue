@@ -10,35 +10,38 @@
     <Loading v-if="loading" />
     <div class="possible">
       <span>현재 판별가능한 재료 목록</span>
-      <div class="possibleList">정지수, 서용재, 정영훈, 김기은, 정영길, 김태우</div>
+      <div class="possibleList">감자, 계란, 고추, 사과, 스팸, 양파</div>
     </div>
     <div class="wrapper">
       <div class="logo" :class="{ rotate: rotate }">
         <label class="white-round front" for="ex_file">
-          <v-icon class="center" style="font-size:140px">mdi-camera</v-icon>
+          <v-icon class="center" >mdi-camera</v-icon>
         </label>
         <div class="white-round back">
           <div class="center">
-            <v-icon style="font-size:140px">mdi-image-area</v-icon>
+            <v-icon >mdi-image-area</v-icon>
             <p>
               사진촬영 완료
-              <br />하단 버튼을 눌러 재료를 탐색하세요
+              <br />하단 버튼을 눌러 <br> 재료를 탐색하세요
             </p>
           </div>
         </div>
         <input type="file" @change="onFileChange" id="ex_file" />
       </div>
       <div class="intro">
+        <!-- <div class="explain"> 설명을 써 말어...
+          Multi-lavel <br>
+          Mask R-CNN
+        </div>
+        <v-icon v-if="rotate">mdi-help-box</v-icon> -->
         <div class="intro-button" @click="onMultiLabel" v-if="rotate">
           <span>
-            Multi-
-            <br />label
+            Multi-<br>label
           </span>
         </div>
         <div class="intro-button" @click="onClick" v-if="rotate">
           <span>
-            Mask
-            <br />R-CNN
+            Mask<br>R-CNN
           </span>
         </div>
       </div>
@@ -61,7 +64,7 @@ export default {
       materials: [],
       percentages: [],
       uploadedImage: new FormData(),
-      imageUrl: "asdasd",
+      imageUrl: '',
       loading: false,
       showMaterialPage: false,
       rotate: false
@@ -137,9 +140,9 @@ export default {
   background-position: center;
   padding-top: 70px;
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /* display: flex; */
+  /* justify-content: center;
+  align-items: center; */
 }
 .main-container::before {
   content: " ";
@@ -190,8 +193,9 @@ export default {
   display: block;
 }
 .wrapper {
-  width: 70%;
+  width: 55%;
   height: 80%;
+  margin: 50px auto 0 auto;
   perspective: 1000px;
   /* border: 1px blue solid; */
 }
@@ -217,11 +221,16 @@ export default {
   box-shadow: 2px 4px 8px gray;
   backface-visibility: hidden;
 }
+.white-round i {
+  color: rgb(32, 32, 32);
+  font-size: 140px;
+}
 .white-round p {
   margin-top: -10px;
   text-align: center;
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 22px;
+  font-family: 'Jua', sans-serif;
+  font-weight: bold;
 }
 .front {
   z-index: 1;
@@ -250,31 +259,67 @@ export default {
 }
 .intro {
   width: 100%;
-  height: 30%;
-  margin-top: 72px;
+  margin-top: 80px;
   font-size: 20px;
   font-weight: 700;
   color: rgba(0, 0, 0, 0.9);
-  /* border: 1px solid red; */
+  /* border: 1px solid green; */
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-wrap: wrap;
+  position: relative;
+}
+.explain {
+  position: absolute;
+  width: 100%;
+  height: 80%;
+  padding: 10px;
+  display: block;
+  background-color: rgb(83, 96, 173);
+  border: solid 1px #3F51B5;
+  color: white;
+  border-radius: 10px;
+  z-index: 2;
+}
+.intro i {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 40px;
+  color: #E8F5E9;
+}
+.intro i:hover .intro i {
+  color: red;
 }
 .intro-button {
-  width: 110px;
-  height: 110px;
+  width: 120px;
+  height: 120px;
+  margin: 50px 0 50px 0;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: rgba(255, 255, 255, 0.7);
+  font-size: 24px;
+  color: black;
   border-radius: 10px;
   box-shadow: 2px 4px 8px gray;
   cursor: pointer;
 }
-.test {
-  width: 100%;
-  height: 200px;
-  background-color: red;
-  background-image: ;
+@media (max-width: 500px) {
+  .wrapper {
+    width: 70%;
+  }
+  .white-round i {
+    font-size: 130px;
+  }
+  .white-round p  {
+    font-size: 18px;
+  }
+  .intro-button {
+    width: 100px;
+    height: 100px;
+    font-size: 20px;
+  }
 }
+
 </style>
