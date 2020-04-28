@@ -1,19 +1,13 @@
 <template>
   <div>
     <main>
-      <h2>냉장고에서 꺼낸 재료</h2>
       <v-row class="row">
         <v-col v-for="(material, i) in materials" :key="i" cols="4" class="col">
-          <div class="test">
-            <div class="test2" :style="test(material, i)">
-              <img class="test3" :src="getMaterialsColorPath(material, i)" />
-            </div>
-          </div>
           <img class="material-icon" :src="getMaterialsPath(material, i)" />
-          <div
-            class="container-title"
-            :style="getMaterialStyle(material, i)"
-          >{{material}} ({{percentages[i]}}%)</div>
+
+          <div class="container-title" :style="getMaterialStyle(material, i)">
+            {{ material }}<br />({{ percentages[i] }}%)
+          </div>
         </v-col>
       </v-row>
     </main>
@@ -32,9 +26,6 @@ export default {
     }
   },
   data: () => ({
-    // materialItem: [
-    // "감자", "고추", "사과", "스팸", "양파", "계란"
-    // ]
     materialItem: {
       감자: "potato",
       고추: "chili",
@@ -47,17 +38,15 @@ export default {
   methods: {
     getMaterialsPath(material, i) {
       let img = null;
-      img = require("../assets/ingredients/" +
-        this.materialItem[material] +
-        ".svg");
-      return img;
-    },
-    getMaterialsColorPath(material, i) {
-      let img = null;
-      img = require("../assets/ingredients/" +
-        this.materialItem[material] +
-        "_color.svg");
-
+      if (this.percentages[i] > 80) {
+        img = require("../assets/ingredients/" +
+          this.materialItem[material] +
+          "_color.svg");
+      } else {
+        img = require("../assets/ingredients/" +
+          this.materialItem[material] +
+          ".svg");
+      }
       return img;
     },
 
@@ -139,4 +128,3 @@ h2 {
   height: 50px;
 }
 </style>
-

@@ -15,14 +15,15 @@
     <div class="wrapper">
       <div class="logo" :class="{ rotate: rotate }">
         <label class="white-round front" for="ex_file">
-          <v-icon class="center" >mdi-camera</v-icon>
+          <v-icon class="center">mdi-camera</v-icon>
         </label>
         <div class="white-round back">
           <div class="center">
-            <v-icon >mdi-image-area</v-icon>
+            <v-icon>mdi-image-area</v-icon>
             <p>
               사진촬영 완료
-              <br />하단 버튼을 눌러 <br> 재료를 탐색하세요
+              <br />하단 버튼을 눌러 <br />
+              재료를 탐색하세요
             </p>
           </div>
         </div>
@@ -38,14 +39,10 @@
         </div>
         <v-icon v-if="rotate">mdi-help-box</v-icon> -->
         <div class="intro-button" @click="onMultiLabel" v-if="rotate">
-          <span>
-            Multi-<br>label
-          </span>
+          <span> Multi-<br />label </span>
         </div>
         <div class="intro-button" @click="onClick" v-if="rotate">
-          <span>
-            Mask<br>R-CNN
-          </span>
+          <span> Mask<br />R-CNN </span>
         </div>
       </div>
     </div>
@@ -67,7 +64,7 @@ export default {
       materials: [],
       percentages: [],
       uploadedImage: new FormData(),
-      imageUrl: '',
+      imageUrl: "",
       loading: false,
       showMaterialPage: false,
       rotate: false
@@ -84,6 +81,15 @@ export default {
       this.rotate = !this.rotate;
     },
     onMultiLabel() {
+      http
+        .post("/recipes/image_test/", this.uploadedImage)
+        .then(res => {
+          console.log(res.data);
+        })
+        .catch(e => {
+          alert(e);
+        });
+
       this.loading = !this.loading;
       http
         .post("/recipes/image_upload/", this.uploadedImage)
@@ -232,7 +238,7 @@ export default {
   margin-top: -10px;
   text-align: center;
   font-size: 22px;
-  font-family: 'Jua', sans-serif;
+  font-family: "Jua", sans-serif;
   font-weight: bold;
 }
 .front {
@@ -284,7 +290,7 @@ export default {
   padding: 10px;
   display: block;
   background-color: rgb(83, 96, 173);
-  border: solid 1px #3F51B5;
+  border: solid 1px #3f51b5;
   color: white;
   border-radius: 10px;
   z-index: 2;
@@ -294,7 +300,7 @@ export default {
   right: 0;
   bottom: 0;
   font-size: 40px;
-  color: #E8F5E9;
+  color: #e8f5e9;
 }
 .intro i:hover .intro i {
   color: red;
@@ -320,7 +326,7 @@ export default {
   .white-round i {
     font-size: 130px;
   }
-  .white-round p  {
+  .white-round p {
     font-size: 18px;
   }
   .intro-button {
@@ -329,5 +335,4 @@ export default {
     font-size: 20px;
   }
 }
-
 </style>
