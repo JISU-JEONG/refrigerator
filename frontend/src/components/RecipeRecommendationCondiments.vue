@@ -10,7 +10,10 @@
           @click="seasoningSelection(condiment)"
         >
           <v-col cols="12">
-            <div class="container-icon" :style="getCondimentsPath(condiments[condiment])"></div>
+            <div
+              class="container-icon"
+              :style="getCondimentsPath(condiments[condiment])"
+            ></div>
             <div class="container-title">{{ condiment }}</div>
           </v-col>
         </v-row>
