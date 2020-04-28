@@ -2,9 +2,13 @@
   <div class="container">
     <Loading v-if="loading" />
     <div class="image" :style="{ backgroundImage: `url(${imageUrl}` }"></div>
-    <RecipeRecommendationMaterial :materials="materials" :percentages="percentages" />
+    <RecipeRecommendationMaterial
+      :materials="materials"
+      :percentages="percentages"
+      class="content"
+    />
 
-    <RecipeRecommendationCondiments @condimentsData="getCondiments" />
+    <RecipeRecommendationCondiments @condimentsData="getCondiments" class="content" />
     <v-btn class="search-recipe-button" color="light-green" @click="searchRecipe">레시피 검색하기</v-btn>
   </div>
 </template>
@@ -25,7 +29,8 @@ export default {
 
   data: () => ({
     loading: false,
-    condiments: []
+    condiments: [],
+    selectmaterials: []
   }),
   props: {
     materials: {
@@ -46,13 +51,20 @@ export default {
     searchRecipe() {
       this.loading = !this.loading;
 
+      this.percentages.forEach((v, i) => {
+        if (v > 80) {
+          this.selectmaterials.push(this.materials[i]);
+        }
+      });
+
       const data = {
         // 상위 컴포넌트에서 가져온 것 (냉장고에서 찾은 재료)
-        materials: this.materials,
+        materials: this.selectmaterials,
 
         // 하위 컴포넌트에서 가져온 것 (사용자가 선택한 양념정보)
         condiments: this.condiments
       };
+      console.log(data);
 
       http.post("/recipes/get_dishes/", data).then(res => {
         this.loading = !this.loading;
@@ -65,8 +77,8 @@ export default {
         this.$store.dispatch("recipeInfo", payload);
         this.$router.push("/RecipeList");
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -86,6 +98,11 @@ export default {
   height: 240px;
   background-color: black;
   background-size: contain;
-  background-position: center; 
+  background-position: center;
+}
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

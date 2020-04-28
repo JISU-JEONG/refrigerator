@@ -4,14 +4,14 @@
       <h2>집에있는 조미료를 선택해주세요</h2>
       <div class="row">
         <v-row
-          v-for="material in Object.keys(materials)"
-          :key="material"
-          :class="material"
-          @click="seasoningSelection(material, materials[material])"
+          v-for="condiment in Object.keys(condiments)"
+          :key="condiment"
+          :class="condiment"
+          @click="seasoningSelection(condiment)"
         >
           <v-col cols="12">
-            <div class="container-icon" :style="getCondimentsPath(materials[material])"></div>
-            <div class="container-title">{{ material }}</div>
+            <div class="container-icon" :style="getCondimentsPath(condiments[condiment])"></div>
+            <div class="container-title">{{ condiment }}</div>
           </v-col>
         </v-row>
       </div>
@@ -23,7 +23,7 @@
 export default {
   name: "RecipeRecommendationCondiments",
   data: () => ({
-    materials: {
+    condiments: {
       소금: "salt",
       밀가루: "flour",
       올리고당: "syrup",
@@ -44,21 +44,20 @@ export default {
       물: "water",
       들기름: "oil",
       설탕: "salt"
-    },
-    data: []
+    }
   }),
   methods: {
-    getCondimentsPath(material) {
-      let img = require("../assets/ingredients/" + material + ".svg");
+    getCondimentsPath(condiment) {
+      let img = require("../assets/ingredients/" + condiment + ".svg");
       return "mask-image: url(" + img + "); ";
     },
-    seasoningSelection(material) {
+    seasoningSelection(condiment) {
       const yellowgreen = document.querySelector(
-        "." + material + " .container-icon"
+        "." + condiment + " .container-icon"
       ).style.backgroundColor;
 
       document.querySelector(
-        "." + material + " .container-icon"
+        "." + condiment + " .container-icon"
       ).style.backgroundColor =
         yellowgreen === "yellowgreen" ? "gray" : "yellowgreen";
 
@@ -70,9 +69,9 @@ export default {
       seasoningData.forEach((v, i) => {
         if (v.style.backgroundColor === "yellowgreen") {
           if (data === undefined) {
-            data = Object.keys(this.materials)[i];
+            data = Object.keys(this.condiments)[i];
           } else {
-            data.push(Object.keys(this.materials)[i]);
+            data.push(Object.keys(this.condiments)[i]);
           }
         }
       });
