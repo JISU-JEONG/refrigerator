@@ -30,6 +30,9 @@
         <input type="file" @change="onFileChange" id="ex_file" />
       </div>
       <div class="intro">
+        <div class="intro-txt" v-if="!rotate" >
+          인공지능을 활용한 어쩌구 저쩌구 서비스에 대한 소개를 조금 쓰면 빈칸이 채워져서 좋을 것 같아요.
+        </div>
         <!-- <div class="explain"> 설명을 써 말어...
           Multi-lavel <br>
           Mask R-CNN
@@ -274,6 +277,11 @@ export default {
   justify-content: space-between;
   flex-wrap: wrap;
   position: relative;
+}
+.intro-txt {
+  color: rgb(255, 255, 255);
+  font-family: "Gugi", cursive;
+  text-align: center;
 }
 .explain {
   position: absolute;

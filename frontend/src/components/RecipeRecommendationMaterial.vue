@@ -63,6 +63,13 @@ export default {
       }
 
       return style;
+    },
+    test(material, i) {
+      let height = 50 * (this.percentages[i] / 100);
+      console.log(height);
+      return (
+        "position: relative; overflow: hidden; max-height: " + height + "px"
+      );
     }
   }
 };
@@ -86,9 +93,38 @@ h2 {
   font-family: "Cute Font", cursive;
   font-weight: bold;
 }
+.col {
+  position: relative;
+  width: 140px;
+  height: 130px;
+}
+
+
+.container-title {
+  position:absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+}
+
+.test {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+}
 .material-icon {
   width: 50px;
   height: 50px;
-  margin: 10px;
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+}
+.test3 {
+  width: 50px;
+  height: 50px;
 }
 </style>
