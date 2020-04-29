@@ -5,8 +5,7 @@ from rest_framework.response import Response
 from .models import *
 from .serializers import *
 # Create your views here.
-import detect
-
+from django.http import HttpResponse
 
 @api_view(['GET'])
 def basicinfo(request):
@@ -150,3 +149,50 @@ def get_dishes(request):
   dish_list = RecipeBasicInfo.objects.filter(basic_code__in=dish_list)
   serializer = RecipeBasicInfoSerializer(dish_list, many=True)
   return Response(serializer.data)
+
+
+import mrcnn.Inspect_Food_model as val
+@api_view(['POST'])
+def mask_rcnn(request):
+  img = request.FILES.get('file').read()
+  masked_image, masked_materials = val.distinct(img)
+  # plt.imshow(masked_image)
+  # plt.show()
+  # embed()
+  print(masked_materials)
+  get_materials = []
+  get_percentages = []
+
+  for get_label, get_prob in masked_materials:
+    # if get_prob * 100 > 10:
+    get_materials.append(get_label)
+    get_percentages.append(round(get_prob * 100, 4))
+    print(get_label,':', get_prob*100)
+  
+  material_set = ['감자', '계란', '고추', '사과', '스팸', '양파']
+  for mat in material_set:
+    if mat not in get_materials:
+      get_materials.append(mat)
+      get_percentages.append(0)
+
+  # 사진에서 인식한 재료
+  # get_materials = ['계란','전분', '부침가루', '밀가루', '배추', '호박', '대파', '다짐육', '콩', '마늘']
+  data = {
+    'materials': get_materials,
+    'percentages': get_percentages
+    }
+  # masked_image = masked_image.tobytes()
+
+  # plt.imshow(masked_image)
+  # plt.show()
+
+  return Response(data)
+  # return HttpResponse(masked_image, content_type="image/jpeg")
+
+# import base64
+# import matplotlib.image as mpimg
+# @api_view(['POST'])
+# def image_test(request):
+#   img = request.FILES.get('file').read()
+  
+#   return HttpResponse(img, content_type="image/jpeg")
