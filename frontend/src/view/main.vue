@@ -22,8 +22,8 @@
             <v-icon>mdi-image-area</v-icon>
             <p>
               사진촬영 완료
-              <br />하단 버튼을 눌러 <br />
-              재료를 탐색하세요
+              <br />하단 버튼을 눌러
+              <br />재료를 탐색하세요
             </p>
           </div>
         </div>
@@ -38,12 +38,18 @@
           Multi-lavel <br>
           Mask R-CNN
         </div>
-        <v-icon v-if="rotate">mdi-help-box</v-icon> -->
+        <v-icon v-if="rotate">mdi-help-box</v-icon>-->
         <div class="intro-button" @click="onMultiLabel" v-if="rotate">
-          <span> Multi-<br />label </span>
+          <span>
+            Multi-
+            <br />label
+          </span>
         </div>
         <div class="intro-button" @click="onClick" v-if="rotate">
-          <span> Mask<br />R-CNN </span>
+          <span>
+            Mask
+            <br />R-CNN
+          </span>
         </div>
       </div>
     </div>
@@ -60,6 +66,7 @@ export default {
     Loading,
     RecipeRecommendation
   },
+
   data() {
     return {
       materials: [],
@@ -73,7 +80,24 @@ export default {
   },
   methods: {
     onClick() {
-      (this.rotate = !this.rotate), (this.uploadedImage = new FormData());
+      // (this.rotate = !this.rotate), (this.uploadedImage = new FormData());
+      this.loading = !this.loading;
+      http
+        .post("/recipes/mask_rcnn/", this.uploadedImage)
+        .then(res => {
+          this.loading = !this.loading;
+          this.changeBackground();
+          this.materials = res.data.materials;
+          this.percentages = res.data.percentages;
+          this.showMaterialPage = !this.showMaterialPage;
+          this.removeTransparentClass();
+          console.log(res.data);
+        })
+        .catch(e => {
+          alert(e);
+          this.loading = false;
+          (this.rotate = !this.rotate), (this.uploadedImage = new FormData());
+        });
     },
     onFileChange(e) {
       var files = e.target.files || e.dataTransfer.files;

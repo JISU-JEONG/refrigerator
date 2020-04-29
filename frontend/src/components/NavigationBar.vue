@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1>
+    <h1 @click="home">
       <router-link to="/">냉장고를 부탁해</router-link>
     </h1>
   </header>
@@ -8,7 +8,12 @@
 
 <script>
 export default {
-  name: "NavigationBar"
+  name: "NavigationBar",
+  methods: {
+    home() {
+      location.reload();
+    }
+  }
 };
 </script>
 <style>
