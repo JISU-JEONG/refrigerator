@@ -32,7 +32,7 @@ from samples.food import food
 MODEL_DIR = os.path.join(ROOT_DIR, "logs")
 
 config = food.FoodConfig()
-weights_path = "./mask_rcnn_food_0080.h5"
+weights_path = "./mask_rcnn_food_0060.h5"
 
 class InferenceConfig(config.__class__):
     # Run detection on one image at a time
@@ -42,7 +42,7 @@ class InferenceConfig(config.__class__):
 config = InferenceConfig()
 config.display()
 
-class_names = ['BG', '감자', '양파', '스팸']
+class_names = ['BG', '감자', '양파', '스팸', '계란', '고추', '사과']
 
 def get_ax(rows=1, cols=1, size=16):
     """Return a Matplotlib Axes array to be used in
