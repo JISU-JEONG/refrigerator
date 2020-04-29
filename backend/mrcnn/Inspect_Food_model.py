@@ -26,7 +26,7 @@ from mrcnn.model import log
 
 from samples.food import food
 
-matplotlib.use('tkagg')
+# matplotlib.use('tkagg')
 
 # Directory to save logs and trained model
 MODEL_DIR = os.path.join(ROOT_DIR, "logs")
