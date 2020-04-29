@@ -1,7 +1,7 @@
 <template>
   <header>
     <h1 @click="home">
-      <router-link to="/">냉장고를 부탁해</router-link>
+      <a>냉장고를 부탁해</a>
     </h1>
   </header>
 </template>
@@ -11,7 +11,11 @@ export default {
   name: "NavigationBar",
   methods: {
     home() {
-      location.reload();
+      if (this.$router.history.current.name === 'main') {
+        location.reload();
+      } else {
+        this.$router.push('/')
+      }
     }
   }
 };
