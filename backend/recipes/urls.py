@@ -25,6 +25,6 @@ urlpatterns = [
   path('image_upload/', views.image_upload),
   path('get_dishes/', views.get_dishes),
   path('mask_rcnn/', views.mask_rcnn),
-  path('image_test/', views.image_test),
+#   path('image_test/', views.image_test),
   path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='swagger'),
 ]

@@ -189,10 +189,10 @@ def mask_rcnn(request):
   return Response(data)
   # return HttpResponse(masked_image, content_type="image/jpeg")
 
-import base64
-import matplotlib.image as mpimg
-@api_view(['POST'])
-def image_test(request):
-  img = request.FILES.get('file').read()
+# import base64
+# import matplotlib.image as mpimg
+# @api_view(['POST'])
+# def image_test(request):
+#   img = request.FILES.get('file').read()
   
-  return HttpResponse(img, content_type="image/jpeg")
+#   return HttpResponse(img, content_type="image/jpeg")
