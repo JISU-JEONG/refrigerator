@@ -15,34 +15,35 @@
     <div class="wrapper">
       <div class="logo" :class="{ rotate: rotate }">
         <label class="white-round front" for="ex_file">
-          <v-icon class="center" >mdi-camera</v-icon>
+          <v-icon class="center">mdi-camera</v-icon>
         </label>
         <div class="white-round back">
           <div class="center">
-            <v-icon >mdi-image-area</v-icon>
+            <v-icon>mdi-image-area</v-icon>
             <p>
               사진촬영 완료
-              <br />하단 버튼을 눌러 <br> 재료를 탐색하세요
+              <br />하단 버튼을 눌러 <br />
+              재료를 탐색하세요
             </p>
           </div>
         </div>
         <input type="file" @change="onFileChange" id="ex_file" />
       </div>
       <div class="intro">
+        <div class="intro-txt" v-if="!rotate">
+          인공지능을 활용한 어쩌구 저쩌구 서비스에 대한 소개를 조금 쓰면 빈칸이
+          채워져서 좋을 것 같아요.
+        </div>
         <!-- <div class="explain"> 설명을 써 말어...
           Multi-lavel <br>
           Mask R-CNN
         </div>
         <v-icon v-if="rotate">mdi-help-box</v-icon> -->
         <div class="intro-button" @click="onMultiLabel" v-if="rotate">
-          <span>
-            Multi-<br>label
-          </span>
+          <span> Multi-<br />label </span>
         </div>
         <div class="intro-button" @click="onClick" v-if="rotate">
-          <span>
-            Mask<br>R-CNN
-          </span>
+          <span> Mask<br />R-CNN </span>
         </div>
       </div>
     </div>
@@ -64,7 +65,7 @@ export default {
       materials: [],
       percentages: [],
       uploadedImage: new FormData(),
-      imageUrl: '',
+      imageUrl: "",
       loading: false,
       showMaterialPage: false,
       rotate: false
@@ -229,7 +230,7 @@ export default {
   margin-top: -10px;
   text-align: center;
   font-size: 22px;
-  font-family: 'Jua', sans-serif;
+  font-family: "Jua", sans-serif;
   font-weight: bold;
 }
 .front {
@@ -269,6 +270,11 @@ export default {
   flex-wrap: wrap;
   position: relative;
 }
+.intro-txt {
+  color: rgb(255, 255, 255);
+  font-family: "Gugi", cursive;
+  text-align: center;
+}
 .explain {
   position: absolute;
   width: 100%;
@@ -276,7 +282,7 @@ export default {
   padding: 10px;
   display: block;
   background-color: rgb(83, 96, 173);
-  border: solid 1px #3F51B5;
+  border: solid 1px #3f51b5;
   color: white;
   border-radius: 10px;
   z-index: 2;
@@ -286,7 +292,7 @@ export default {
   right: 0;
   bottom: 0;
   font-size: 40px;
-  color: #E8F5E9;
+  color: #e8f5e9;
 }
 .intro i:hover .intro i {
   color: red;
@@ -312,7 +318,7 @@ export default {
   .white-round i {
     font-size: 130px;
   }
-  .white-round p  {
+  .white-round p {
     font-size: 18px;
   }
   .intro-button {
@@ -321,5 +327,4 @@ export default {
     font-size: 20px;
   }
 }
-
 </style>

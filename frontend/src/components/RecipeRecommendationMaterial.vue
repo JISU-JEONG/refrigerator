@@ -1,7 +1,6 @@
 <template>
   <div>
     <main>
-      <h2>냉장고에서 꺼낸 재료</h2>
       <v-row class="row">
         <v-col v-for="(material, i) in materials" :key="i" cols="4" class="col">
           <div class="test">
@@ -10,10 +9,10 @@
             </div>
           </div>
           <img class="material-icon" :src="getMaterialsPath(material, i)" />
-          <div
-            class="container-title"
-            :style="getMaterialStyle(material, i)"
-          >{{material}} ({{percentages[i]}}%)</div>
+
+          <div class="container-title" :style="getMaterialStyle(material, i)">
+            {{ material }}<br />({{ percentages[i] }}%)
+          </div>
         </v-col>
       </v-row>
     </main>
@@ -32,9 +31,6 @@ export default {
     }
   },
   data: () => ({
-    // materialItem: [
-    // "감자", "고추", "사과", "스팸", "양파", "계란"
-    // ]
     materialItem: {
       감자: "potato",
       고추: "chili",
@@ -52,6 +48,7 @@ export default {
         ".svg");
       return img;
     },
+
     getMaterialsColorPath(material, i) {
       let img = null;
       img = require("../assets/ingredients/" +
@@ -76,7 +73,7 @@ export default {
       return style;
     },
     test(material, i) {
-      let height = 50 * (this.percentages[i] / 100) + 10;
+      let height = 50 * (this.percentages[i] / 100);
       console.log(height);
       return (
         "position: relative; overflow: hidden; max-height: " + height + "px"
@@ -104,20 +101,38 @@ h2 {
   font-family: "Cute Font", cursive;
   font-weight: bold;
 }
+.col {
+  position: relative;
+  width: 140px;
+  height: 130px;
+}
 
-.material-icon {
-  width: 50px;
-  height: 50px;
-  margin: 10px;
+.container-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
 }
 
 .test {
   position: absolute;
+  width: 50px;
+  height: 50px;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+}
+.material-icon {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
 }
 
 .test3 {
   width: 50px;
-  margin: 10px 10px 10px 48.1px;
+  height: 50px;
 }
 </style>
-
