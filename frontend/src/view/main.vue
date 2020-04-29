@@ -31,8 +31,7 @@
       </div>
       <div class="intro">
         <div class="intro-txt" v-if="!rotate">
-          인공지능을 활용한 어쩌구 저쩌구 서비스에 대한 소개를 조금 쓰면 빈칸이
-          채워져서 좋을 것 같아요.
+          딥러닝을 활용해 사진 속 <br> 식재료를 분석해 레시피를 <br> 추천해드립니다.
         </div>
         <!-- <div class="explain"> 설명을 써 말어...
           Multi-lavel <br>
@@ -298,6 +297,13 @@ export default {
   color: rgb(255, 255, 255);
   font-family: "Gugi", cursive;
   text-align: center;
+  font-size: 28px;
+  padding: 12px;
+  margin: 0 auto;
+  background: -moz-radial-gradient(center, ellipse cover,  rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 90%, rgba(0,0,0,0) 91%); /* FF3.6-15 */
+  background: -webkit-radial-gradient(center, ellipse cover,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 90%,rgba(0,0,0,0) 91%); /* Chrome10-25,Safari5.1-6 */
+  background: radial-gradient(ellipse at center,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 90%,rgba(0,0,0,0) 91%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 .explain {
   position: absolute;
@@ -348,6 +354,9 @@ export default {
   .intro-button {
     width: 100px;
     height: 100px;
+    font-size: 20px;
+  }
+  .intro-txt {
     font-size: 20px;
   }
 }
