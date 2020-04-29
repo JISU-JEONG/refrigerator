@@ -38,30 +38,30 @@ def processinfo(request, basic_pk):
   # embed()
   return Response(serializer.data)
 
-@api_view(['GET'])
-def materialcheck(request):
-  # 사진에서 인식한 재료
-  get_materials = ['베이컨', '양배추', '소고기', '대파', '쌀', '고구마 큰거', '올리브유', '소면', '물', '포도']
-  # 사용자가 선택할 조미료
-  get_cond = ['설탕', '소금']
-  all_materials = set(get_materials + get_cond)
+# @api_view(['GET'])
+# def materialcheck(request):
+#   # 사진에서 인식한 재료
+#   get_materials = ['베이컨', '양배추', '소고기', '대파', '쌀', '고구마 큰거', '올리브유', '소면', '물', '포도']
+#   # 사용자가 선택할 조미료
+#   get_cond = ['설탕', '소금']
+#   all_materials = set(get_materials + get_cond)
 
-  all_dishes = RecipeBasicInfo.objects.all()
-  dish_list = []
-  for dish in all_dishes:
-    recipe_materials = RecipeMaterialInfo.objects.filter(material_code=dish.basic_code)
-    cnt = 0
-    for r_m in recipe_materials:
-      for a_m in all_materials:
-        if r_m.material_name == a_m:
-          cnt += 1
+#   all_dishes = RecipeBasicInfo.objects.all()
+#   dish_list = []
+#   for dish in all_dishes:
+#     recipe_materials = RecipeMaterialInfo.objects.filter(material_code=dish.basic_code)
+#     cnt = 0
+#     for r_m in recipe_materials:
+#       for a_m in all_materials:
+#         if r_m.material_name == a_m:
+#           cnt += 1
 
-    if len(recipe_materials) == cnt:
-      dish_list.append(dish.basic_code)
-  # embed()
-  dish_list = RecipeBasicInfo.objects.filter(basic_code__in=dish_list)
-  serializer = RecipeBasicInfoSerializer(dish_list, many=True)
-  return Response(serializer.data)
+#     if len(recipe_materials) == cnt:
+#       dish_list.append(dish.basic_code)
+#   # embed()
+#   dish_list = RecipeBasicInfo.objects.filter(basic_code__in=dish_list)
+#   serializer = RecipeBasicInfoSerializer(dish_list, many=True)
+#   return Response(serializer.data)
 
 from .forms import *
 import matplotlib.pyplot as plt
@@ -126,6 +126,7 @@ def get_dishes(request):
   # embed()
   get_materials = request.data.get('materials')
   get_cond = request.data.get('condiments')
+  get_cond.append('물')
   print(get_materials)
   print(get_cond)
   # 사용자가 선택한 재료와 조미료(임시)
@@ -162,13 +163,20 @@ def mask_rcnn(request):
   print(masked_materials)
   get_materials = []
   get_percentages = []
-
+  material_dict = dict()
   for get_label, get_prob in masked_materials:
-    # if get_prob * 100 > 10:
-    get_materials.append(get_label)
-    get_percentages.append(round(get_prob * 100, 4))
-    print(get_label,':', get_prob*100)
+    if get_label not in material_dict:
+      material_dict[get_label] = get_prob
+    else:
+      if material_dict[get_label] < get_prob:
+        material_dict[get_label] = get_prob
+  print(material_dict)
+
+  for mat, per in material_dict.items():
+    get_materials.append(mat)
+    get_percentages.append(round(per * 100, 4))
   
+  # mask rcnn은 없는 재료는 아예 식별하지 않기 때문에 따로 0%로 추가해준다.
   material_set = ['감자', '계란', '고추', '사과', '스팸', '양파']
   for mat in material_set:
     if mat not in get_materials:

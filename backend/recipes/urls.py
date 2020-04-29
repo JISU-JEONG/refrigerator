@@ -21,7 +21,7 @@ urlpatterns = [
   path('basicinfo/<int:dish_pk>/', views.get_dish_by_id),
   path('materialinfo/<int:basic_pk>/', views.materialinfo),
   path('processinfo/<int:basic_pk>/', views.processinfo),
-  path('materialcheck/', views.materialcheck),
+#   path('materialcheck/', views.materialcheck),
   path('image_upload/', views.image_upload),
   path('get_dishes/', views.get_dishes),
   path('mask_rcnn/', views.mask_rcnn),

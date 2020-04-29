@@ -69,10 +69,10 @@ class FoodConfig(Config):
     IMAGES_PER_GPU = 1
 
     # Number of classes (including background)
-    NUM_CLASSES = 1 + 3  # Background + balloon
+    NUM_CLASSES = 1 + 6  # Background + balloon
 
     # Number of training steps per epoch
-    STEPS_PER_EPOCH = 120
+    STEPS_PER_EPOCH = 100
 
     # Skip detections with < 90% confidence
     DETECTION_MIN_CONFIDENCE = 0.9
@@ -93,6 +93,9 @@ class FoodDataset(utils.Dataset):
         self.add_class("food", 1, "감자")
         self.add_class("food", 2, "양파")
         self.add_class("food", 3, "스팸")
+        self.add_class("food", 4, "계란")
+        self.add_class("food", 5, "고추")
+        self.add_class("food", 6, "사과")
 
         # Train or validation dataset?
         assert subset in ["train", "val"]
@@ -204,7 +207,7 @@ def train(model):
     print("Training network heads")
     model.train(dataset_train, dataset_val,
                 learning_rate=config.LEARNING_RATE,
-                epochs=80,
+                epochs=60,
                 layers='heads')
 
 
