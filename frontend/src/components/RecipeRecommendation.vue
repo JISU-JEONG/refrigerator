@@ -49,8 +49,6 @@ export default {
       console.log(data);
     },
     searchRecipe() {
-      this.loading = !this.loading;
-
       this.percentages.forEach((v, i) => {
         if (v > 80) {
           this.selectmaterials.push(this.materials[i]);
@@ -65,18 +63,22 @@ export default {
         condiments: this.condiments
       };
       console.log(data);
-
-      http.post("/recipes/get_dishes/", data).then(res => {
+      if (data.condiments.length === 0) {
+        alert("재료를 1개이상 선택해 주세요.");
+      } else {
         this.loading = !this.loading;
-        const payload = {
-          // 찾은 레시피정보 vuex에 저장
-          recipeInfoArr: res.data
-        };
-        this.loading = !this.loading;
+        http.post("/recipes/get_dishes/", data).then(res => {
+          this.loading = !this.loading;
+          const payload = {
+            // 찾은 레시피정보 vuex에 저장
+            recipeInfoArr: res.data
+          };
+          this.loading = !this.loading;
 
-        this.$store.dispatch("recipeInfo", payload);
-        this.$router.push("/RecipeList");
-      });
+          this.$store.dispatch("recipeInfo", payload);
+          this.$router.push("/RecipeList");
+        });
+      }
     }
   }
 };

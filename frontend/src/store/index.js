@@ -5,7 +5,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    data: null
+    data: null,
+    showMaterialPage: false
   },
   mutations: {
     setValue(state, payload) {

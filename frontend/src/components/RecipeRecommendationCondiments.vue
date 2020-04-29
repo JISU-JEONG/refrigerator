@@ -10,10 +10,7 @@
           @click="seasoningSelection(condiment)"
         >
           <v-col cols="12">
-            <div
-              class="container-icon"
-              :style="getCondimentsPath(condiments[condiment])"
-            ></div>
+            <div class="container-icon" :style="getCondimentsPath(condiments[condiment])"></div>
             <div class="container-title">{{ condiment }}</div>
           </v-col>
         </v-row>
@@ -44,7 +41,7 @@ export default {
       간장: "soy",
       카레가루: "flour",
       물엿: "syrup",
-      물: "water",
+      // 물: "water",
       들기름: "oil",
       설탕: "salt"
     }
