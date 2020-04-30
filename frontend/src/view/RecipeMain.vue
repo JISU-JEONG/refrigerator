@@ -14,10 +14,10 @@
     </div>
     <div class="wrapper">
       <div class="logo" :class="{ rotate: rotate }">
-        <label class="white-round front" for="ex_file">
+        <label class="white-round front" for="ex_file" v-if="!rotate">
           <v-icon class="center">mdi-camera</v-icon>
         </label>
-        <div class="white-round back">
+        <div class="white-round back" v-if="rotate">
           <div class="center">
             <v-icon>mdi-image-area</v-icon>
             <p>
@@ -231,12 +231,12 @@ export default {
   position: relative;
   /* border: 1px solid red; */
 
-  transition: 1s;
-  transform-style: preserve-3d;
+  /* transition: 1s;
+  transform-style: preserve-3d; */
 }
-.rotate {
+/* .rotate {
   transform: rotateY(-180deg);
-}
+} */
 .white-round {
   position: absolute;
   display: inline-block;
@@ -245,7 +245,7 @@ export default {
   background-color: rgba(255, 255, 255, 0.7);
   border-radius: 50%;
   box-shadow: 2px 4px 8px gray;
-  backface-visibility: hidden;
+  /* backface-visibility: hidden; */
 }
 .white-round i {
   color: rgb(32, 32, 32);
@@ -258,13 +258,13 @@ export default {
   font-family: "Jua", sans-serif;
   font-weight: bold;
 }
-.front {
+/* .front {
   z-index: 1;
   cursor: pointer;
 }
 .back {
   transform: rotateY(180deg);
-}
+} */
 .logo input {
   position: absolute;
   width: 1px;
