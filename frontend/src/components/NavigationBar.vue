@@ -11,10 +11,10 @@ export default {
   name: "NavigationBar",
   methods: {
     home() {
-      if (this.$router.history.current.name === 'main') {
+      if (this.$router.history.current.name === "RecipeMain") {
         location.reload();
       } else {
-        this.$router.push('/')
+        this.$router.push("/");
       }
     }
   }

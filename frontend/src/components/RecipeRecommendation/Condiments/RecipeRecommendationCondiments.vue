@@ -2,19 +2,18 @@
   <div>
     <main>
       <p>집에있는 조미료를 선택해주세요</p>
-      <div class="row">
-        <v-row
+      <v-row class="row">
+        <v-col
           v-for="condiment in Object.keys(condiments)"
           :key="condiment"
           :class="condiment"
           @click="paintingSeasoning(condiment)"
+          cols="3"
         >
-          <v-col cols="12">
-            <div class="condiments-icon" :style="getCondimentsIconPath(condiments[condiment])"></div>
-            <div class="condiments-title">{{ condiment }}</div>
-          </v-col>
-        </v-row>
-      </div>
+          <div class="condiments-icon" :style="getCondimentsIconPath(condiments[condiment])"></div>
+          <div class="condiments-title">{{ condiment }}</div>
+        </v-col>
+      </v-row>
     </main>
   </div>
 </template>
