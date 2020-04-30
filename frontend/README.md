@@ -2,7 +2,7 @@
 
 ### 구조도
 
-![이미지](Structure.png)
+![이미지](./FrontEnd-Readme-Image/Structure.png)
 
 ### 통신
 
