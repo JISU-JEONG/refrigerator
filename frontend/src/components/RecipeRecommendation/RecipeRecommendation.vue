@@ -8,8 +8,16 @@
       class="content"
     />
 
-    <RecipeRecommendationCondiments @condimentsData="getCondiments" class="content" />
-    <v-btn class="search-recipe-button" color="light-green" @click="searchRecipe">레시피 검색하기</v-btn>
+    <RecipeRecommendationCondiments
+      @condimentsData="getCondiments"
+      class="content"
+    />
+    <v-btn
+      class="search-recipe-button"
+      color="light-green"
+      @click="searchRecipe"
+      >레시피 검색하기</v-btn
+    >
   </div>
 </template>
 
@@ -63,9 +71,9 @@ export default {
         condiments: this.condiments
       };
       if (data.condiments.length === 0) {
-        alert("재료를 1개이상 선택해 주세요.");
+        alert("앙념을 1개이상 선택해 주세요.");
       } else if (data.materials.length === 0) {
-        alert("80%이상 인식이 된 재료가 없습니다.");
+        alert("80%이상 판별된 재료가 없습니다.");
       } else {
         this.loading = !this.loading;
         http.post("/recipes/get_dishes/", data).then(res => {

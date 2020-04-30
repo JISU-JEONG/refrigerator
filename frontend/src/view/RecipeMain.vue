@@ -22,8 +22,7 @@
             <v-icon>mdi-image-area</v-icon>
             <p>
               사진촬영 완료
-              <br />하단 버튼을 눌러
-              <br />재료를 탐색하세요
+              <br />하단 버튼을 눌러 <br />재료를 탐색하세요
             </p>
           </div>
         </div>
@@ -32,8 +31,7 @@
       <div class="intro">
         <div class="intro-txt" v-if="!rotate">
           딥러닝을 활용해 사진 속
-          <br />식재료를 분석해 레시피를
-          <br />추천해드립니다.
+          <br />식재료를 분석해 레시피를 <br />추천해드립니다.
         </div>
         <!-- <div class="explain"> 설명을 써 말어...
           Multi-lavel <br>
@@ -46,7 +44,7 @@
             <br />label
           </span>
         </div>
-        <div class="intro-button" @click="onClick" v-if="rotate">
+        <div class="intro-button" @click="onMaskRCNN" v-if="rotate">
           <span>
             Mask
             <br />R-CNN
@@ -80,8 +78,7 @@ export default {
     };
   },
   methods: {
-    onClick() {
-      // (this.rotate = !this.rotate), (this.uploadedImage = new FormData());
+    onMaskRCNN() {
       this.loading = !this.loading;
       http
         .post("/recipes/mask_rcnn/", this.uploadedImage)
