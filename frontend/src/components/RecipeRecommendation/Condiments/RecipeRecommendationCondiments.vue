@@ -1,17 +1,17 @@
 <template>
   <div>
     <main>
-      <h2>집에있는 조미료를 선택해주세요</h2>
+      <p>집에있는 조미료를 선택해주세요</p>
       <div class="row">
         <v-row
           v-for="condiment in Object.keys(condiments)"
           :key="condiment"
           :class="condiment"
-          @click="seasoningSelection(condiment)"
+          @click="paintingSeasoning(condiment)"
         >
           <v-col cols="12">
-            <div class="container-icon" :style="getCondimentsPath(condiments[condiment])"></div>
-            <div class="container-title">{{ condiment }}</div>
+            <div class="condiments-icon" :style="getCondimentsIconPath(condiments[condiment])"></div>
+            <div class="condiments-title">{{ condiment }}</div>
           </v-col>
         </v-row>
       </div>
@@ -47,24 +47,26 @@ export default {
     }
   }),
   methods: {
-    getCondimentsPath(condiment) {
-      let img = require("../assets/ingredients/" + condiment + ".svg");
+    getCondimentsIconPath(condiment) {
+      let img = require("@/assets/ingredients/" + condiment + ".svg");
       return "mask-image: url(" + img + "); ";
     },
-    seasoningSelection(condiment) {
+
+    paintingSeasoning(condiment) {
       const yellowgreen = document.querySelector(
-        "." + condiment + " .container-icon"
+        "." + condiment + " .condiments-icon"
       ).style.backgroundColor;
 
       document.querySelector(
-        "." + condiment + " .container-icon"
+        "." + condiment + " .condiments-icon"
       ).style.backgroundColor =
         yellowgreen === "yellowgreen" ? "gray" : "yellowgreen";
 
-      this.seasoning();
+      this.sendSelectedSeasoning();
     },
-    seasoning() {
-      const seasoningData = document.querySelectorAll(".container-icon");
+
+    sendSelectedSeasoning() {
+      const seasoningData = document.querySelectorAll(".condiments-icon");
       let data = [];
       seasoningData.forEach((v, i) => {
         if (v.style.backgroundColor === "yellowgreen") {
@@ -81,35 +83,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.container-icon {
-  width: 50px;
-  height: 50px;
-  margin: 10px auto;
-  background-color: gray;
-}
-
-.container-icon-color {
-  background-color: yellowgreen;
-}
-
-.container-title {
-  font-family: "Cute Font", cursive;
-  text-align: center;
-}
-
-h2 {
-  display: flex;
-  justify-content: center;
-  font-family: "Cute Font", cursive;
-  font-size: 2em;
-  margin-bottom: 0.5em;
-}
-
-main {
-  background-color: white;
-  padding: 0 1.3em;
-  margin: 1em auto;
-  max-width: 90%;
-}
-</style>
+<style scoped src="./RecipeRecommendationCondiments.css">

@@ -15,8 +15,8 @@
 
 <script>
 import http from "../services/http-common";
-import RecipeCard from "../components/RecipeCard";
-import RecipeNotFound from "../components/RecipeNotFound";
+import RecipeCard from "../components/Recipe/List/RecipeCard";
+import RecipeNotFound from "../components/Recipe/RecipeNotFound";
 export default {
   name: "RecipeList",
   components: {

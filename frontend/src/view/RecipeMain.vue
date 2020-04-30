@@ -31,7 +31,9 @@
       </div>
       <div class="intro">
         <div class="intro-txt" v-if="!rotate">
-          딥러닝을 활용해 사진 속 <br> 식재료를 분석해 레시피를 <br> 추천해드립니다.
+          딥러닝을 활용해 사진 속
+          <br />식재료를 분석해 레시피를
+          <br />추천해드립니다.
         </div>
         <!-- <div class="explain"> 설명을 써 말어...
           Multi-lavel <br>
@@ -56,11 +58,11 @@
 </template>
 <script>
 import Loading from "../components/Loading";
-import RecipeRecommendation from "../components/RecipeRecommendation";
+import RecipeRecommendation from "../components/RecipeRecommendation/RecipeRecommendation";
 import http from "../services/http-common.js";
 
 export default {
-  name: "Main",
+  name: "RecipeMain",
   components: {
     Loading,
     RecipeRecommendation
@@ -300,9 +302,26 @@ export default {
   font-size: 28px;
   padding: 12px;
   margin: 0 auto;
-  background: -moz-radial-gradient(center, ellipse cover,  rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 90%, rgba(0,0,0,0) 91%); /* FF3.6-15 */
-  background: -webkit-radial-gradient(center, ellipse cover,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 90%,rgba(0,0,0,0) 91%); /* Chrome10-25,Safari5.1-6 */
-  background: radial-gradient(ellipse at center,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 90%,rgba(0,0,0,0) 91%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  background: -moz-radial-gradient(
+    center,
+    ellipse cover,
+    rgba(0, 0, 0, 0.65) 0%,
+    rgba(0, 0, 0, 0) 90%,
+    rgba(0, 0, 0, 0) 91%
+  ); /* FF3.6-15 */
+  background: -webkit-radial-gradient(
+    center,
+    ellipse cover,
+    rgba(0, 0, 0, 0.65) 0%,
+    rgba(0, 0, 0, 0) 90%,
+    rgba(0, 0, 0, 0) 91%
+  ); /* Chrome10-25,Safari5.1-6 */
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0.65) 0%,
+    rgba(0, 0, 0, 0) 90%,
+    rgba(0, 0, 0, 0) 91%
+  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 .explain {
