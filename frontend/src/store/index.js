@@ -5,17 +5,16 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    data: null,
-    showMaterialPage: false
+    data: null
   },
   mutations: {
-    setValue(state, payload) {
-      state.data = payload.recipeInfoArr;
+    setValue(state, recipedata) {
+      state.data = recipedata.recipeInfoArr;
     }
   },
   actions: {
-    recipeInfo(context, payload) {
-      context.commit("setValue", payload);
+    recipeInfo(context, recipedata) {
+      context.commit("setValue", recipedata);
     }
   }
 });

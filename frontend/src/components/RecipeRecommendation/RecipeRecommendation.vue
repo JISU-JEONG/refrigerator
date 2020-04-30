@@ -14,10 +14,10 @@
 </template>
 
 <script>
-import http from "../services/http-common.js";
-import Loading from "./Loading";
-import RecipeRecommendationMaterial from "./RecipeRecommendationMaterial";
-import RecipeRecommendationCondiments from "./RecipeRecommendationCondiments";
+import http from "@/services/http-common.js";
+import Loading from "@/components/Loading";
+import RecipeRecommendationMaterial from "./Meterial/RecipeRecommendationMaterial";
+import RecipeRecommendationCondiments from "./Condiments/RecipeRecommendationCondiments";
 
 export default {
   name: "RecipeRecommendation",
@@ -46,8 +46,8 @@ export default {
   methods: {
     getCondiments(data) {
       this.condiments = data;
-      console.log(data);
     },
+
     searchRecipe() {
       this.percentages.forEach((v, i) => {
         if (v > 80) {
@@ -62,9 +62,10 @@ export default {
         // 하위 컴포넌트에서 가져온 것 (사용자가 선택한 양념정보)
         condiments: this.condiments
       };
-      console.log(data);
       if (data.condiments.length === 0) {
         alert("재료를 1개이상 선택해 주세요.");
+      } else if (data.materials.length === 0) {
+        alert("80%이상 인식이 된 재료가 없습니다.");
       } else {
         this.loading = !this.loading;
         http.post("/recipes/get_dishes/", data).then(res => {

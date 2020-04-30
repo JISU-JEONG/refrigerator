@@ -1,12 +1,10 @@
 import Vue from "vue";
 import Router from "vue-router";
 
-import main from "../view/main";
+import RecipeMain from "../view/RecipeMain";
 import RecipeList from "../view/RecipeList";
 import RecipeDetail from "../view/RecipeDetail";
-import RecipeRecommendation from "../components/RecipeRecommendation";
-import RecipeNotFound from "../components/RecipeNotFound";
-import test from "../components/test";
+
 Vue.use(Router);
 
 export default new Router({
@@ -14,8 +12,8 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "main",
-      component: main
+      name: "RecipeMain",
+      component: RecipeMain
     },
     {
       path: "/RecipeList",
@@ -23,24 +21,9 @@ export default new Router({
       component: RecipeList
     },
     {
-      path: "/RecipeRecommendation",
-      name: "RecipeRecommendation",
-      component: RecipeRecommendation
-    },
-    {
       path: "/RecipeDetail/:id",
       name: "RecipeDetail",
       component: RecipeDetail
-    },
-    {
-      path: "/test",
-      name: "test",
-      component: test
-    },
-    {
-      path: "/RecipeNotFound",
-      name: "RecipeNotFound",
-      component: RecipeNotFound
     }
   ],
   scrollBehavior(to, from, savedPosition) {

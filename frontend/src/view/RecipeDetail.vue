@@ -1,17 +1,14 @@
 <template>
   <div class="recipe-detail-container">
-    <div
-      :style="{ backgroundImage: `url(${imagePath})` }"
-      class="thumbnail"
-    ></div>
+    <div :style="{ backgroundImage: `url(${imagePath})` }" class="thumbnail"></div>
     <RecipeMaterial :recipeMaterial="recipeMaterial" />
     <RecipeSequence :recipeSequence="recipeSequence" />
   </div>
 </template>
 <script>
 import http from "../services/http-common.js";
-import RecipeMaterial from "../components/RecipeMaterial";
-import RecipeSequence from "../components/RecipeSequence";
+import RecipeMaterial from "../components/Recipe/Meterial/RecipeMaterial";
+import RecipeSequence from "../components/Recipe/Sequence/RecipeSequence";
 
 export default {
   name: "RecipeDetail",
