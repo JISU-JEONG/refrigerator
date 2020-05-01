@@ -1,11 +1,9 @@
 import Vue from "vue";
 import Router from "vue-router";
 
-import main from "../view/main";
+import RecipeMain from "../view/RecipeMain";
 import RecipeList from "../view/RecipeList";
-import VuexExample from "../view/VuexExample";
 import RecipeDetail from "../view/RecipeDetail";
-import RecipeRecommendation from "../view/RecipeRecommendation";
 
 Vue.use(Router);
 
@@ -14,8 +12,8 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "main",
-      component: main
+      name: "RecipeMain",
+      component: RecipeMain
     },
     {
       path: "/RecipeList",
@@ -23,19 +21,12 @@ export default new Router({
       component: RecipeList
     },
     {
-      path: "/RecipeRecommendation",
-      name: "RecipeRecommendation",
-      component: RecipeRecommendation
-    },
-    {
       path: "/RecipeDetail/:id",
       name: "RecipeDetail",
       component: RecipeDetail
-    },
-    {
-      path: "/VuexExample",
-      name: "VuexExample",
-      component: VuexExample
     }
-  ]
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    return { x: 0, y: 0 };
+  }
 });

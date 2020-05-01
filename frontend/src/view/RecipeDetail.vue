@@ -1,90 +1,50 @@
 <template>
   <div class="recipe-detail-container">
-    <RecipeCarousel :recipeCarousel="recipeCarousel" />
-    <RecipeMeterial :recipeMeterial="recipeMeterial" />
+    <div :style="{ backgroundImage: `url(${imagePath})` }" class="thumbnail"></div>
+    <RecipeMaterial :recipeMaterial="recipeMaterial" />
     <RecipeSequence :recipeSequence="recipeSequence" />
   </div>
 </template>
 <script>
-import RecipeCarousel from "../components/RecipeCarousel";
-import RecipeMeterial from "../components/RecipeMeterial";
-import RecipeSequence from "../components/RecipeSequence";
+import http from "../services/http-common.js";
+import RecipeMaterial from "../components/Recipe/Meterial/RecipeMaterial";
+import RecipeSequence from "../components/Recipe/Sequence/RecipeSequence";
 
 export default {
   name: "RecipeDetail",
   components: {
-    RecipeCarousel,
-    RecipeMeterial,
+    RecipeMaterial,
     RecipeSequence
   },
   data: () => ({
-    recipeCarousel: null,
-    recipeMeterial: null,
-    recipeSequence: null
+    recipeMaterial: null,
+    recipeSequence: null,
+    imagePath: null
   }),
   methods: {
-    getRecipeImage(v) {
-      if (v.STRE_STEP_IMAGE_URL !== "") {
-        this.recipeCarousel.push(v.STRE_STEP_IMAGE_URL);
-        this.$axios
-          .get(`/recipes/materialinfo/${this.$route.params.id}`)
-          .then(res => {
-            this.recipeMeterial = res.data.process_imgurl;
-            console.log(res.data);
-          });
-      }
-    },
-
-    getRecipeCarousel() {
-      this.$axios
-        .get(`/recipes/processinfo/${this.$route.params.id}`)
-        .then(res => {
-          this.recipeCarousel = [];
-          this.recipeCarousel = res.data.map(v => {
-            return v.process_imgurl;
-          });
-        });
-    },
-
     getRecipeSequence() {
-      this.$axios
-        .get(`/recipes/processinfo/${this.$route.params.id}`)
-        .then(res => {
-          // console.log(res.data);
-          this.recipeSequence = res.data;
-        });
+      http.get(`/recipes/processinfo/${this.$route.params.id}`).then(res => {
+        this.recipeSequence = res.data;
+      });
     },
 
-    getRecipeMeterial() {
-      this.$axios
-        .get(`/recipes/materialinfo/${this.$route.params.id}`)
-        .then(res => {
-          // console.log(res.data);
-          this.recipeMeterial = res.data;
-        });
-    }
+    getRecipeMaterial() {
+      http.get(`/recipes/materialinfo/${this.$route.params.id}`).then(res => {
+        this.recipeMaterial = res.data;
+      });
+    },
 
-    // getRecipeMeterial() {
-    //   this.$axios
-    //     .get(
-    //       "/openapi/59bcdda005827dab577c5d693e6d162d49bd93d6c087f359d170465129ae5a5d/json/Grid_20150827000000000227_1/1/24"
-    //     )
-    //     .then(res => {
-    //       this.recipeMeterial = res.data.Grid_20150827000000000227_1.row.reduce(
-    //         (arr, v) => {
-    //           arr.push(v);
-    //           return arr;
-    //         },
-    //         []
-    //       );
-    //     });
-    // }
+    getImgPath() {
+      http.get(`/recipes/basicinfo/${this.$route.params.id}`).then(res => {
+        this.imagePath = res.data[0].basic_imgurl;
+      });
+    }
   },
   beforeMount() {
     console.log(this.$route.params.id);
     this.getRecipeSequence();
-    this.getRecipeMeterial();
-    this.getRecipeCarousel();
+    this.getRecipeMaterial();
+    this.getImgPath();
   }
 };
 </script>
@@ -93,6 +53,13 @@ export default {
 .recipe-detail-container {
   width: 100%;
   height: 100vh;
-  padding: 80px 80px 80px 80px;
+  padding: 70px 0 0 0;
+}
+.thumbnail {
+  width: 100%;
+  height: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 </style>

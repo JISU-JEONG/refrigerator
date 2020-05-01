@@ -233,3 +233,11 @@ public/
 
 # Image Files
 images/
+static/
+
+*.cnf
+
+# Machine Learning Model
+*.model
+*.pickle
+*.h5

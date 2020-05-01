@@ -1,38 +1,36 @@
 <template>
   <header>
-    <h1>
-      <router-link to="/">HOME</router-link>
+    <h1 @click="home">
+      <a>냉장고를 부탁해</a>
     </h1>
-    <nav>
-      <ul>
-        <li>
-          <router-link to="/RecipeList">레시피 목록</router-link>
-        </li>
-        <li>
-          <router-link to="/RecipeRecommendation">레시피 추천</router-link>
-        </li>
-        <li>
-          <router-link to="/VuexExample">상태관리테스트</router-link>
-        </li>
-      </ul>
-    </nav>
   </header>
 </template>
 
 <script>
 export default {
-  name: "NavigationBar"
+  name: "NavigationBar",
+  methods: {
+    home() {
+      if (this.$router.history.current.name === "RecipeMain") {
+        location.reload();
+      } else {
+        this.$router.push("/");
+      }
+    }
+  }
 };
 </script>
-<style >
+<style>
 header {
-  height: 80px;
+  height: 70px;
   width: 100%;
-  background: #ffffff;
+  max-width: 600px;
+  background: white;
   position: fixed;
   top: 0;
   z-index: 100;
-  border-bottom: 1px solid #dbdbdb;
+  border-bottom: 1px solid #cacaca;
+  box-shadow: 1px 2px 4px rgba(180, 180, 180, 0.3);
 }
 header h1 {
   display: inline-block;
@@ -42,35 +40,16 @@ header h1 {
 header h1 a {
   text-decoration: none;
   display: inline-block;
-  height: 80px;
-  line-height: 80px;
-  color: #888888 !important;
-}
-header nav {
-  display: inline-block;
-  position: absolute;
-  top: 0;
-  right: 24px;
-}
-header nav li {
-  list-style: none;
-  float: left;
-  padding: 0 10px;
-}
-header nav li:last-child {
-  padding-right: 0;
-}
-header nav li a {
-  text-decoration: none;
-  display: inline-block;
-  height: 80px;
-  line-height: 80px;
-  font-size: 18px;
-  color: #888888 !important;
+  height: 70px;
+  line-height: 70px;
+  font-size: 25px;
+  font-family: "Gugi", cursive;
+  color: rgba(0, 0, 0, 0.9) !important;
 }
 .header-transparent {
   background: transparent;
   border-bottom: none;
+  box-shadow: none;
 }
 .header-transparent a {
   color: white !important;

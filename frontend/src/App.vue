@@ -4,7 +4,6 @@
     <v-content>
       <RouterView />
     </v-content>
-    <Footer app />
   </v-app>
 </template>
 

@@ -5,16 +5,16 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    name: null
+    data: null
   },
   mutations: {
-    setValue(state, payload) {
-      state.name = payload.name;
+    setValue(state, recipedata) {
+      state.data = recipedata.recipeInfoArr;
     }
   },
   actions: {
-    VuexTest(context, payload) {
-      context.commit("setValue", payload);
+    recipeInfo(context, recipedata) {
+      context.commit("setValue", recipedata);
     }
   }
 });

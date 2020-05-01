@@ -1,20 +1,48 @@
 <!DOCTYPE html>
 <html lang="kr">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
-    <style>
-    </style>
-  
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="shortcut icon" type="image/png" href="/static/favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Kirang+Haerang&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+  <link rel="manifest" href="./manifest.json">
+
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/fullpage.js/dist/fullpage.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js"></script>
+  <script src="https://unpkg.com/vue-fullpage.js/dist/vue-fullpage.js"></script>
+  <title>냉장고를 부탁해</title>
+  <style>
+    body {
+      width: 100vw;
+      height: 100vh;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+  </style>
+
+</head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but 냉장고를부탁해 doesn't work properly without JavaScript enabled.
+      Please enable it to continue.</strong>
+  </noscript>
+  <div id="app"></div>
+</body>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('sw.js').then(function (registration) {
+        //console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      }, function (err) {
+        console.log('ServiceWorker registration failed: ', err);
+      });
+    });
+  }
+</script>
+
 </html>

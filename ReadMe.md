@@ -1,609 +1,909 @@
-# Sub02 - AI
+## Frontend
 
+### 구조도
 
+![이미지](./FrontEnd-Readme-Image/Structure.png)
 
-## req 1 이미지 데이터 전처리
+### 통신
 
-### req 1-1, 1-2 이미지 데이터 전처리 및 이미지 정규화
+```javascript
+//http-common.js
+import axios from "axios";
 
-```python
-def Standardization(encode_train, standard):
-
-	def image_load(image_path):
-		img = tf.io.read_file(image_path)
-		img = tf.image.decode_jpeg(img, channels=3)
-		img = tf.image.resize(img, (299, 299))
-		if standard:
-			img = tf.keras.applications.inception_v3.preprocess_input(img)
-		return img, image_path
-
-	image_dataset = tf.data.Dataset.from_tensor_slices(encode_train)
-	image_dataset = image_dataset.map(image_load, num_parallel_calls=tf.data.experimental.AUTOTUNE).batch(16)
-
-	return image_dataset
+export default axios.create({
+  baseURL: "http://i02b102.p.ssafy.io/",
+  headers: {
+    "Content-type": "application/json"
+  }
+});
 ```
 
-standard 값에 따라서 이미지의 정규화의 유무를 결정한다. 정규화된 이미지 데이터 들을 Dataset으로 저장을 하고 속도 향상을 위해서 batch를 16 크기로 반환을 해주었다.
-
-
-
-## req 2 텍스트 데이터 전처리
-
-### req 2-1, 2-2 텍스트 데이터 토큰화 및 Tokenizer 저장 및 불러오기
-
-```python
-def save_tokenizer(captions,top_k):
-	tokenizer = tf.keras.preprocessing.text.Tokenizer(num_words=top_k,
-	                                                  oov_token="<unk>",
-	                                                  filters='!"#$%&()*+.,-/:;=?@[\]^_`{|}~ ')
-	tokenizer.fit_on_texts((map(lambda x: '<start> '+x+' <end>', captions)))
-	
-	# tokenizer.word_index['<start>'] = 0
-	# tokenizer.index_word[0] = '<start>'
-	# tokenizer.word_index['<end>'] = 1
-	# tokenizer.index_word[1] = '<end>'
-	tokenizer.word_index['<pad>'] = 0
-	tokenizer.index_word[0] = '<pad>'
-	train_seqs = tokenizer.texts_to_sequences(captions)
-	with open("tokenizer.pickle","wb") as fw:
-		pickle.dump(tokenizer, fw)
-	return
+```javascript
+import http from "../services/http-common.js";
 ```
 
- 캡션과 top_k를 받아 top_k의 갯수만큼 단어를 토큰화 한다. 이때 포함되지 않은 단어들은 <unk>로 처리를 해주면서 캡션을 토큰화 하기 전에 문장들에 <start> '+x+' <end>' 처리를 해주어서 붙여준다.
-
- tokenizer.index_word[0]는 예약어로 유저가 설정할수 있으며 <pad>를 예약어 설정을 해주었다.  토큰화가 다 되었으면 pickle 파일로 저장해 주었다.
-
+axios라이브러리를 사용하여 통신을 진행했으며,<br>
+http-common.js파일로 모듈화하여 사용했습니다.<br>
 
 
-```python
-with open('tokenizer.pickle', 'rb') as f:
-		tokenizer = pickle.load(f)
 
-train_seqs = tokenizer.texts_to_sequences(train_captions)
-cap_vector = tf.keras.preprocessing.sequence.pad_sequences(train_seqs, padding='post',value=0)
+### 1. 냉장고 사진 찍기
+
+![이미지](./FrontEnd-Readme-Image/Sequence1.jpeg)
+
+
+
+### 2. AI 모듈 선택하기
+
+![이미지](./FrontEnd-Readme-Image/Sequence2.jpeg)
+
+
+
+### 3. 판별된 재료 확인
+
+![이미지](./FrontEnd-Readme-Image/Sequence3.jpeg)
+
+
+
+### 4. 양념 선택
+
+![이미지](./FrontEnd-Readme-Image/Sequence4.jpeg)
+
+
+
+### 5. 해당하는 레시피 확인
+
+![이미지](./FrontEnd-Readme-Image/Sequence5.jpeg)
+
+
+
+### 6. 조리 순서 확인
+
+![이미지](./FrontEnd-Readme-Image/Sequence6.jpeg)
+
+
+
+
+
+## DataBase
+
+### MySQL
+
+```xml
+참고 자료 : 공공 데이터 포털 사이트, 만개의 레시피
+만개의 레시피 사이트의 경우 Selenium을 통한 스크래핑
 ```
 
-토큰화된 데이터를 불러와서 길이를 가장 긴 문장의 길이로 통일을 해준다. 이때 짧은 문장들의 부족한 부분의 위에서 설정된 예약어 <pad>로 채워준다.
+
+- recipe_basic_info
+
+| basic_coce | basic_name    | basic_intro         | basic_typecode | basic_type | basic_classcode | basic_class | basic_time | basic_kcal | basic_volume | basic_diff | basic_materialclass | basic_price | basic_imgurl  | basic_detailurl |
+| :--------- | :------------ | :------------------ | :------------- | :--------- | :-------------- | :---------- | :--------- | :--------- | :----------- | :--------- | :------------------ | :---------- | :------------ | :-------------- |
+| ex)1       | ex)나물비빔밥 | ex)육수로지은 . . . | ex)3020001     | ex)한식    | ex)3010001      | ex)밥       | ex)60분    | ex)580kcal | ex)4인분     | ex)보통    | ex)곡류             | ex)5000원   | ex)http://... | ex)http://...   |
+
+---
+
+- recipe_material_info
+
+| material_code | material_number | material_name | material_volume | material_typecode | material_type |
+| :------------ | :-------------- | :------------ | :-------------- | :---------------- | :------------ |
+| ex)1          | ex)1            | ex)쌀         | ex)4컵          | ex)3060001        | ex)주재료     |
+
+---
+
+- recipe_process_info
+
+| process_code | process_order | process_info      | process_imgurl | process_tip          |
+| :----------- | :------------ | :---------------- | :------------- | :------------------- |
+| ex)1         | ex)1          | ex)양지머리 . . . | ex)http://...  | ex)차가운 물 부터... |
+
+---
+
+### Selenium
 
 
+- 만개의 레시피 사이트 자료를 통해 자동으로 쿼리문을 작성해주는 프로그램 작성
 
-## req 3 Dataset 생성 함수 구현
+```java
+public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
+public static final String WEB_DRIVER_PATH = "lib/selenium/chromedriver.exe";
 
-### req 3-1 tf.data.Dataset 생성
+public void query_set(){
+    File file1 = new File("C:\\Users\\Hoony\\Desktop\\basic.txt");
+	BufferedWriter bufferedWriter1 = new BufferedWriter(new FileWriter(file1));
 
-위에 Standardization 함수에서 처리함
+	File file2 = new File("C:\\Users\\Hoony\\Desktop\\material.txt");
+	BufferedWriter bufferedWriter2 = new BufferedWriter(new FileWriter(file2));
 
-### req 3-2 Image Data Augmentation
+	File file3 = new File("C:\\Users\\Hoony\\Desktop\\process.txt");
+	BufferedWriter bufferedWriter3 = new BufferedWriter(new FileWriter(file3));
 
-```python
-def Augmentation(img):
-	image = img.numpy()
-	x = image.reshape((1,) + image.shape)
-	datagen = ImageDataGenerator(
-        rotation_range=40,
-        width_shift_range=0.2,
-        height_shift_range=0.2,
-        shear_range=0.2,
-        zoom_range=0.2,
-        horizontal_flip=True,
-        fill_mode='nearest')
-	i = 0
-	lst = []
-	for batch in datagen.flow(x):
-		i += 1
-		if i > 3: break  # 이미지 20장을 생성하고 마칩니다
-		batch = batch.reshape(299,299,3)
-		lst.append(batch)
-	return lst
-```
-
-이미지를 받아서 매번 랜덤하고 다양하게 Augmentation 적용한 이미지 리스트를 반환해 준다. 학습시간 관계상 여기서는 3개의 변환된 이미지 리스트를 반환하게 했다.
-
-
-
-## req 4 이미지 모델(Encoder) 구현
-
-### req 4-1 Pre-trained 모델로 특성 추출
-
-```python
-image_model = tf.keras.applications.InceptionV3(include_top=False, weights='imagenet')
-
-new_input = image_model.input
-hidden_layer = image_model.layers[-1].output
-
-image_features_extract_model = tf.keras.Model(new_input, hidden_layer)
-
-# Get unique images
-encode_train = sorted(set(img_name_vector))
-
-image_dataset = utils.Standardization(encode_train,1)
-
-for imgs, paths in tqdm(image_dataset):
-	for img,path in zip(imgs,paths):
-		cnt = 0
-		for image in utils.Augmentation(img):
-			image = tf.reshape(image,(1,299,299,3))
-			batch_features = image_features_extract_model(image)
-			batch_features = tf.reshape(batch_features,(-1, batch_features.shape[3]))
-			path_of_feature = path.numpy().decode("utf-8")
-			np.save(path_of_feature+'_'+str(cnt), batch_fatures)
-			cnt += 1
-
-            
-image_features_extract_model.save('image_features_extract_model.h5')
-```
-
-Augmentation이 적용도니 이미지 (299,299,3)의 형태를 전처리 학습을 위해서 (1,299,299,3) 형태로 변환해 준다. 전처리 학습에 사용되어 리턴된 이미지는 (8,8,2048)의 모양을 가지며 이것을 (64,2048)의 형태로 변환하여 npy파일에 저장하여 준다. 이때 저장된 npy파일들의 이름은 이미지이름+_0,1,2 등의 파일이름으로 저장하여 준다.
-
-마지막으로 image_features_extract_model.h5 파일로 Pre-trained  모델을 저장 차 후 predict.py에서 사용을 한다.
-
-
-
-### req 4-2 Feature Encoder 구현
-
-```python
-class CNN_Encoder(tf.keras.Model):
-
-    # Since you have already extracted the features and dumped it using pickle
-    # This encoder passes those features through a Fully connected layer
-	def __init__(self, embedding_dim):
-
-		super(CNN_Encoder, self).__init__()
-        # shape after fc == (batch_size, 64, embedding_dim)
-		self.fc = tf.keras.layers.Dense(embedding_dim)
-	
-	def call(self, x):
-		x = self.fc(x)
-		x = tf.nn.relu(x)
-		return x
-    
-encoder = CNN_Encoder(embedding_dim)
-```
-
-RNN Decoder의 입력 형식에 맞추기 위해서 CNN_Enconder 구현
-
-
-
-## req 5 텍스트 모델(Decoder) 구현
-
-### req 5-1 임베딩 레이어 구현
-
-```python
-class BahdanauAttention(tf.keras.Model):
-	def __init__(self, units):
-		super(BahdanauAttention, self).__init__()
-		self.W1 = tf.keras.layers.Dense(units)
-		self.W2 = tf.keras.layers.Dense(units)
-		self.V = tf.keras.layers.Dense(1)
-	
-	def call(self, features, hidden):
-		# features(CNN_encoder output) shape == (batch_size, 64, embedding_dim)
-
-		# hidden shape == (batch_size, hidden_size)
-		# hidden_with_time_axis shape == (batch_size, 1, hidden_size)
-		hidden_with_time_axis = tf.expand_dims(hidden, 1)
-
-		# score shape == (batch_size, 64, hidden_size)
-		score = tf.nn.tanh(self.W1(features) + self.W2(hidden_with_time_axis))
-
-		# attention_weights shape == (batch_size, 64, 1)
-		# you get 1 at the last axis because you are applying score to self.V
-		attention_weights = tf.nn.softmax(self.V(score), axis=1)
-
-		# context_vector shape after sum == (batch_size, hidden_size)
-		context_vector = attention_weights * features
-		context_vector = tf.reduce_sum(context_vector, axis=1)
-		return context_vector, attention_weights
-
-class RNN_Decoder(tf.keras.Model):
-	def __init__(self, embedding_dim, units, vocab_size):
-		super(RNN_Decoder, self).__init__()
-		self.units = units
-
-		self.embedding = tf.keras.layers.Embedding(vocab_size, embedding_dim)
-		self.gru = tf.keras.layers.GRU(self.units,
-									return_sequences=True,
-									return_state=True,
-									recurrent_initializer='glorot_uniform')
-		self.fc1 = tf.keras.layers.Dense(self.units)
-		self.fc2 = tf.keras.layers.Dense(vocab_size)
-
-		self.attention = BahdanauAttention(self.units)
-
-	def call(self, x, features, hidden):
-		# defining attention as a separate model
-		context_vector, attention_weights = self.attention(features, hidden)
-
-		# x shape after passing through embedding == (batch_size, 1, embedding_dim)
-		x = self.embedding(x)
-
-		# x shape after concatenation == (batch_size, 1, embedding_dim + hidden_size)
-		x = tf.concat([tf.expand_dims(context_vector, 1), x], axis=-1)
-
-		# passing the concatenated vector to the GRU
-		output, state = self.gru(x)
-
-		# shape == (batch_size, max_length, hidden_size)
-		x = self.fc1(output)
-
-		# x shape == (batch_size * max_length, hidden_size)
-		x = tf.reshape(x, (-1, x.shape[2]))
-
-		# output shape == (batch_size * max_length, vocab)
-		x = self.fc2(x)
-	
-		return x, state, attention_weights
-	
-	def reset_state(self, batch_size):
-		return tf.zeros((batch_size, self.units))
-    
-decoder = RNN_Decoder(embedding_dim, units, vocab_size)
-```
-
-- InvolutionV3의 하위 컨벌루션 레이어에서 형상을 추출하여 모양 벡터 (8, 8, 2048)를 제공.
-- (64, 2048)의 모양으로 reshape.
-- 다음이벡터는 CNN 인코더 (단일 완전 연결된 레이어로 구성)를 통과.
-- RNN (여기서는 GRU)이 다음 단어를 예측하기 위해 이미지를 살펴봄.
-
-
-
-## req 6 train.py 구현
-
-
-
-```python
-loss_plot = []
-
-@tf.function
-def train_step(img_tensor, target):
-	loss = 0
-
-	# initializing the hidden state for each batch
-	# # because the captions are not related from image to image
-	hidden = decoder.reset_state(batch_size=target.shape[0])
-
-	dec_input = tf.expand_dims([tokenizer.word_index['<start>']] * target.shape[0], 1)
-	with tf.GradientTape() as tape:
-		features = encoder(img_tensor)
-		for i in range(1, target.shape[1]):
-			# passing the features through the decoder
-			predictions, hidden, _ = decoder(dec_input, features, hidden)
-			
-			loss += loss_function(target[:, i], predictions)
-			# using teacher forcing
-			dec_input = tf.expand_dims(target[:, i], 1)
-
-	total_loss = (loss / int(target.shape[1]))
-	trainable_variables = encoder.trainable_variables + decoder.trainable_variables
-	gradients = tape.gradient(loss, trainable_variables)
-	optimizer.apply_gradients(zip(gradients, trainable_variables))
-	
-	return loss, total_loss
-
-
-EPOCHS = 20
-
-for epoch in range(start_epoch, EPOCHS):
-	start = time.time()
-	total_loss = 0
-
-	for (batch, (img_tensor, target)) in enumerate(dataset):
-		batch_loss, t_loss = train_step(img_tensor, target)
-		total_loss += t_loss
+	recipe_crawling(bufferedWriter1, bufferedWriter2, bufferedWriter3);
 		
-		if batch % 100 == 0:
-			print ('Epoch {} Batch {} Loss {:.4f}'.format(
-				epoch + 1, batch, batch_loss.numpy() / int(target.shape[1])))
-    # storing the epoch end loss value to plot later
-	loss_plot.append(total_loss / num_steps)
-	
-	if epoch % 5 == 0:
-		ckpt_manager.save()
+	bufferedWriter1.close();
+	bufferedWriter2.close();
+	bufferedWriter3.close();
+}
 
-	print ('Epoch {} Loss {:.6f}'.format(epoch + 1,total_loss/num_steps))
-	print ('Time taken for 1 epoch {} sec\n'.format(time.time() - start))
+public void recipe_crawling(BufferedWriter bufferedWriter1, BufferedWriter bufferedWriter2, BufferedWriter bufferedWriter3){
 
-plt.plot(loss_plot)
-plt.xlabel('Epochs')
-plt.ylabel('Loss')
-plt.title('Loss Plot')
-plt.show()
+    ChromeOptions option = new ChromeOptions();
+	option.setHeadless(true);
+    WebDriver driver = new ChromeDriver(option);
+    //selenium setting
+
+    int page = 1;
+
+    while(true){
+        String url = "https://www.10000recipe.com/recipe/list.html?cat4=65&order=reco&page=" + page;
+    
+        driver.get(url);
+
+        WebElement webElement = driver.findElement(By.className("rcp_m_list2");
+
+        int index = 0;
+
+        while(true){
+            if(index == 44){
+                break;
+                //페이지별 Element 수가 44개가 될 경우 중지
+                //그 이상은 존재하지 않음
+            }
+            ...
+            생략
+            ...
+
+            bufferedWriter1.write("insert into recipe_basic_info...생략");
+			bufferedWriter1.newLine();
+				
+			for(int i=0; i<list.size(); i++) {
+				bufferedWriter2.write("insert into recipe_material_info...생략");
+				bufferedWriter2.newLine();
+			}
+				
+			for(int i=0; i<process.size(); i++) {
+				bufferedWriter3.write("insert into recipe_process_info...생략");
+				bufferedWriter3.newLine();
+			}
+        }
+    }
+}
 ```
 
-- 각 `.npy`파일에 저장된 기능을 추출한 다음 해당 기능을 인코더를 통해 전달합.
-- 엔코더 출력, 숨겨진 상태 (0으로 초기화 됨) 및 디코더 입력 (시작 토큰)은 디코더로 전달.
-- 디코더는 예측 및 디코더 숨겨진 상태를 반환.
-- 그런 다음 디코더 숨겨진 상태가 모델로 다시 전달되고 예측은 손실을 계산하는 데 사용.
-- 티쳐 포싱를 사용하여 디코더에 대한 다음 입력을 결정.
-- 티쳐 포싱는 대상 단어가 다음 입력으로 디코더에 전달하는 것.
-- 마지막 단계는 그라디언트를 계산하고이를 옵티 마이저 및 역전파에 적용.
+- JDBC를 활용하여 직접적으로 데이터를 Insert하면 시간적으로 손실을 줄일 수 있음.
+
+---
 
 
 
-## req 7,8 predict.py 구현 및 체크포인터 매니저
+## AWS
+
+### NginX
+
+- Web Server를 위한 프레임 워크이다.
+- http 통신을 위해 80포트로 열고, /recipes/ 주소로 시작하는 요청이 있을 경우 WSGI Server로 Reverse Proxy 해준다.
+
+```
+server {
+
+    listen      80;
+
+    server_name i02b102.p.ssafy.io;
+    #domain
+
+    charset utf-8;
+
+    root    /home/ubuntu/amt2/frontend/dist;
+    # front-end
+
+    index   index.html index.htm;
+    client_max_body_size 100M;
+    location / {
+        try_files $uri $uri/ @rewrites;
+    }
+
+    location @rewrites {
+        rewrite ^(.+)$ /index.html last;
+    }
+
+    location ~* \.(?:ico|css|js|gif|jpe?g|png)$ {
+        expires max;
+        add_header Pragma public;
+        add_header Cache-Control "public, must-revalidate, proxy-revalidate";
+    }
+
+    location /static/ {
+        alias /home/ubuntu/amt2/backend/static;
+    }
+
+    location /recipes/ {
+        proxy_pass      http://127.0.0.1:8085/recipes/;
+        # 주소 뒤에 /recipes/ 명령어로 호출시 내부 Gunicorn으로 동작중인
+        # Django 쪽으로 요청을 보냄
+    }
+}
+```
+
+
+
+### Gunicorn
+
+- Web Server인 Nginx와 Django 프로젝트가 통신하기 위한 WSGI Server 프레임 워크이다.
+- Nginx에서 들어오는 특정 요청에 대해 Django 프로젝트와 MySQL에서 로직을 처리하여 다신 전달해준다.
+- WSGI Server를 로컬로 열어 외부에서의 직접 접근을 차단하였다.
+
+```
+[Unit]
+Description=gunicorn daemon
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/amt2/backend
+ExecStart=/home/ubuntu/amt2/backend/venv/bin/gunicorn \
+        --workers 3 \
+        --bind 127.0.0.1:8085 \
+        amtai.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
+```
+
+
+
+## Backend
+
+### Swagger
+
+![image](https://user-images.githubusercontent.com/52814897/80553712-cdc60e00-8a05-11ea-9082-5bf25e5975ba.png)
+
+- basicinfo : 모든 요리 호출
+- basicinfo/{dish_pk} : 해당 요리 기본 정보
+- materialinfo/{basic_pk} : 해당 요리 재료 정보
+- processinfo/{basic_pk} : 해당 요리 레시피 정보
+- image_upload : 프론트에서 사진을 받아 multi-label 모델로 재료 식별
+- mask_rcnn : 프론트에서 사진을 받아 mask-rcnn 모델로 재료 식별
+- get_dishes : 재료와 조미료를 받은 후 알고리즘을 통해 일치하는 요리 제공
+
+### 모델링
+
+- DB Table에 맞춰 크게 3가지로 모델링 하였다.
+  1. 요리 상세 정보
+  2. 특정 요리의 재료
+  3. 특정 요리의 레시피
 
 ```python
-import config
-from data import preprocess 
-from utils import utils
-import random
-# # config 저장
-utils.save_config()
+class RecipeBasicInfo(models.Model):
+    basic_code = models.IntegerField(primary_key=True)
+    basic_name = models.CharField(max_length=2000, blank=True, null=True)
+    basic_intro = models.CharField(max_length=5000, blank=True, null=True)
+		...;
+    class Meta:
+        managed = False
+        db_table = 'recipe_basic_info'
 
-# # 이미지 경로 및 캡션 불러오기
-# img_paths, captions = preprocess.get_path_caption()
-# utils.save_tokenizer(captions)
-# dataset = utils.Dataset_setting(img_paths,captions)
-def load_image(image_path):
-		img = tf.io.read_file(image_path)
-		img = tf.image.decode_jpeg(img, channels=3)
-		img = tf.image.resize(img, (299, 299))
-		img = tf.keras.applications.inception_v3.preprocess_input(img)
-		return img, image_path
-# cnt =0
-# for x, y in dataset:
-#     if cnt==1: break
-#     print(x)
-#     utils.Augmentation(x)
-#     cnt+=1
+class RecipeMaterialInfo(models.Model):
+    recipe_material_id = models.AutoField(primary_key=True)
+    material_code = models.ForeignKey(RecipeBasicInfo, models.DO_NOTHING, db_column='material_code')
+    ...;
+    class Meta:
+        managed = False
+        db_table = 'recipe_material_info'
 
-# 전체 데이터셋을 분리해 저장하기
-# train_dataset_path, val_dataset_path = preprocess.dataset_split_save()
-
-# 저장된 데이터셋 불러오기
-# img_paths, caption = preprocess.get_data_file(train_dataset_path)
-
-# print(utils.Standardization(img_paths[0],1))
-
-# 데이터 샘플링
-# if config.do_sampling:
-#     img_paths, caption = preprocess.sampling_data(img_paths, caption, 1000)
-# 이미지와 캡션 시각화 하기
-# utils.visualize_img_caption(img_paths,caption,1)
-
-# preprocess.token(captions)
-
-import tensorflow as tf
-physical_devices = tf.config.experimental.list_physical_devices('GPU')
-assert len(physical_devices) > 0, "Not enough GPU hardware devices available"
-config = tf.config.experimental.set_memory_growth(physical_devices[0], True)
-import os
-os.environ["CUDA_VISIBLE_DEVICES"] = '1'
-# You'll generate plots of attention in order to see which parts of an image
-# our model focuses on during captioning
-import matplotlib.pyplot as plt
-
-from tqdm import tqdm
-# Scikit-learn includes many helpful utilities
-from sklearn.model_selection import train_test_split
-from sklearn.utils import shuffle
-
-import re
-import numpy as np
-import os
-import time
-import json
-from glob import glob
-from PIL import Image
-import pickle
-
-# Store captions and image names in vectors
-img_paths, captions = preprocess.get_path_caption()
-captions = list(map(lambda x: '<start> ' + x + ' <end>', captions))
-def calc_max_length(tensor):
-    return max(len(t) for t in tensor)
-
-# Calculates the max_length, which is used to store the attention weights
-max_length = calc_max_length(captions)
-
-class BahdanauAttention(tf.keras.Model):
-	def __init__(self, units):
-		super(BahdanauAttention, self).__init__()
-		self.W1 = tf.keras.layers.Dense(units)
-		self.W2 = tf.keras.layers.Dense(units)
-		self.V = tf.keras.layers.Dense(1)
-	
-	def call(self, features, hidden):
-		# features(CNN_encoder output) shape == (batch_size, 64, embedding_dim)
-
-		# hidden shape == (batch_size, hidden_size)
-		# hidden_with_time_axis shape == (batch_size, 1, hidden_size)
-		hidden_with_time_axis = tf.expand_dims(hidden, 1)
-
-		# score shape == (batch_size, 64, hidden_size)
-		score = tf.nn.tanh(self.W1(features) + self.W2(hidden_with_time_axis))
-
-		# attention_weights shape == (batch_size, 64, 1)
-		# you get 1 at the last axis because you are applying score to self.V
-		attention_weights = tf.nn.softmax(self.V(score), axis=1)
-
-		# context_vector shape after sum == (batch_size, hidden_size)
-		context_vector = attention_weights * features
-		context_vector = tf.reduce_sum(context_vector, axis=1)
-		return context_vector, attention_weights
-
-class CNN_Encoder(tf.keras.Model):
-
-    # Since you have already extracted the features and dumped it using pickle
-    # This encoder passes those features through a Fully connected layer
-	def __init__(self, embedding_dim):
-
-		super(CNN_Encoder, self).__init__()
-        # shape after fc == (batch_size, 64, embedding_dim)
-		self.fc = tf.keras.layers.Dense(embedding_dim)
-	
-	def call(self, x):
-		x = self.fc(x)
-		x = tf.nn.relu(x)
-		return x
-
-
-class RNN_Decoder(tf.keras.Model):
-	def __init__(self, embedding_dim, units, vocab_size):
-		super(RNN_Decoder, self).__init__()
-		self.units = units
-
-		self.embedding = tf.keras.layers.Embedding(vocab_size, embedding_dim)
-		self.gru = tf.keras.layers.GRU(self.units,
-									return_sequences=True,
-									return_state=True,
-									recurrent_initializer='glorot_uniform')
-		self.fc1 = tf.keras.layers.Dense(self.units)
-		self.fc2 = tf.keras.layers.Dense(vocab_size)
-
-		self.attention = BahdanauAttention(self.units)
-
-	def call(self, x, features, hidden):
-		# defining attention as a separate model
-		context_vector, attention_weights = self.attention(features, hidden)
-
-		# x shape after passing through embedding == (batch_size, 1, embedding_dim)
-		x = self.embedding(x)
-
-		# x shape after concatenation == (batch_size, 1, embedding_dim + hidden_size)
-		x = tf.concat([tf.expand_dims(context_vector, 1), x], axis=-1)
-
-		# passing the concatenated vector to the GRU
-		output, state = self.gru(x)
-
-		# shape == (batch_size, max_length, hidden_size)
-		x = self.fc1(output)
-
-		# x shape == (batch_size * max_length, hidden_size)
-		x = tf.reshape(x, (-1, x.shape[2]))
-
-		# output shape == (batch_size * max_length, vocab)
-		x = self.fc2(x)
-	
-		return x, state, attention_weights
-	
-	def reset_state(self, batch_size):
-		return tf.zeros((batch_size, self.units))
-embedding_dim = 256
-units = 512
-vocab_size = 5001
-with open('tokenizer.pickle', 'rb') as f:
-		tokenizer = pickle.load(f)
-
-image_features_extract_model = tf.keras.models.load_model('image_features_extract_model.h5')
-encoder = CNN_Encoder(embedding_dim)
-decoder = RNN_Decoder(embedding_dim, units, vocab_size)
-
-optimizer = tf.keras.optimizers.Adam()
-loss_object = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True, reduction='none')
-
-def loss_function(real, pred):
-	mask = tf.math.logical_not(tf.math.equal(real, 0))
-	loss_ = loss_object(real, pred)
-	mask = tf.cast(mask, dtype=loss_.dtype)
-	loss_ *= mask
-	
-	return tf.reduce_mean(loss_)
-
-checkpoint_path = "./checkpoints/train"
-ckpt = tf.train.Checkpoint(encoder=encoder,decoder=decoder, optimizer = optimizer)
-ckpt_manager = tf.train.CheckpointManager(ckpt, checkpoint_path, max_to_keep=5)
-
-start_epoch = 0
-if ckpt_manager.latest_checkpoint:
-	start_epoch = int(ckpt_manager.latest_checkpoint.split('-')[-1])
-
-	# restoring the latest checkpoint in checkpoint_path
-	ckpt.restore(ckpt_manager.latest_checkpoint)
-
-
-def evaluate(image):
-    attention_plot = np.zeros((max_length, 64))
-
-    hidden = decoder.reset_state(batch_size=1)
-
-    temp_input = tf.expand_dims(load_image(image)[0], 0)
-    img_tensor_val = image_features_extract_model(temp_input)
-    img_tensor_val = tf.reshape(img_tensor_val, (img_tensor_val.shape[0], -1, img_tensor_val.shape[3]))
-
-    features = encoder(img_tensor_val)
-
-    dec_input = tf.expand_dims([tokenizer.word_index['<start>']], 0)
-    result = []
-
-    for i in range(max_length):
-        predictions, hidden, attention_weights = decoder(dec_input, features, hidden)
-
-        attention_plot[i] = tf.reshape(attention_weights, (-1, )).numpy()
-
-        predicted_id = tf.random.categorical(predictions, 1)[0][0].numpy()
-        result.append(tokenizer.index_word[predicted_id])
-
-        if tokenizer.index_word[predicted_id] == '<end>':
-            return result, attention_plot
-
-        dec_input = tf.expand_dims([predicted_id], 0)
-
-    attention_plot = attention_plot[:len(result), :]
-    return result, attention_plot
-
-def plot_attention(image, result,caption):
-    temp_image = np.array(Image.open(image))
-    plt.title('Prediction Caption: '+' '.join(result)+'\n'+'Real Caption:'+''.join(caption))
-    plt.imshow(temp_image)
-    plt.show()
-
-idx = random.randrange(0,len(captions))
-image_path =img_paths[idx]
-# captions
-result, attention_plot = evaluate(image_path)
-plot_attention(image_path, result, captions[idx])
+class RecipeProcessInfo(models.Model):
+    recipe_process_id = models.AutoField(primary_key=True)
+    process_code = models.ForeignKey(RecipeBasicInfo, models.DO_NOTHING, db_column='process_code')
+		...;
+    class Meta:
+        managed = False
+        db_table = 'recipe_process_info'
 
 ```
 
-* image_features_extract_model = tf.keras.models.load_model('image_features_extract_model.h5') 를 통해서 전처리 되었던 모델을 불러온다.
-* 체크포인트에 저장되었던 encoder 및 decoder를 불러옴
-* 이미지를 받아서 예측 및 출력
+### 이미지 형식 변환
+
+- Vue에서 넘어온 Bytes 형식의 이미지를 인공지능 모델에서 식별할 수 있게 이미지의 형식을 Numpy array 형태로 변환해준다.
+
+```python
+img = request.FILES.get('file').read()
+img = cv2.imdecode(np.frombuffer(img, np.uint8), -1)
+image = cv2.resize(img, (299, 299))
+image = image.astype("float") / 255.0
+image = img_to_array(image)
+image = np.expand_dims(image, axis=0)
+```
+
+### 요리 추천 알고리즘
+
+- DB안에 있는 모든 음식의 재료와 사진에서 식별된 재료 및 조미료를 비교하여 일치하는 재료의 개수를 센 후, 일치하는 재료의 개수와 해당 레시피의 총 재료 개수가 같을 경우 해당 음식을 담는다.
+
+```python
+for dish in all_dishes:
+    recipe_materials = RecipeMaterialInfo.objects.filter(material_code=dish.basic_code)
+    cnt = 0
+    for r_m in recipe_materials:
+      for a_m in all_materials:
+        if a_m == r_m.material_name:
+          cnt += 1
+
+    if len(recipe_materials) == cnt:
+      dish_list.append(dish.basic_code)
+```
 
 
 
-## Req. 9. 팀별 인공지능 서비스 기획안 작성
 
-### Req. 9-1 데이터셋 검색 및 선정
+## MASK RCNN
 
-- [공공데이터포털](https://www.data.go.kr/) - 농수축산물 안심레시피 정보
+matterport / Mask_RCNN git source 사용
 
-### Req. 9-2 기존 서비스 검색
 
-- [만개의레시피](https://www.10000recipe.com/) - 원하는 음식의 레시피를 제공하는 사이트
 
-![image](https://user-images.githubusercontent.com/52814897/78846407-a43d4680-7a46-11ea-847a-28ac99cad86c.png)
+[train 모델 파일 - food.py 작성]
 
-- [Pic2Recipe](http://pic2recipe.csail.mit.edu/) - 음식 사진을 찍으면 해당 음식의 레시피를 알려주는 서비스
+- load trained weights file
 
-![image](https://user-images.githubusercontent.com/52814897/78952869-e67f8a00-7b11-11ea-833a-83584585ef71.png)
+coco 데이터 전처리 가중치를 train model의 base로 사용
 
-### Req. 9-3 팀만의 서비스 기획
+```python
+# Path to trained weights file
 
-현재의 상황처럼 외출이 자유롭지 않거나 배달 음식을 시킬 여건이 되지 않을 때, 이미지 분석 및 인공지능을 통해 냉장고 안의 활용가능한 재료를 분석하고 그 재료로 만들 수 있는 음식 및 레시피를 제공해주는 서비스
+COCO_WEIGHTS_PATH = os.path.join(ROOT_DIR, "mask_rcnn_coco.h5")
 
-#### 기술스택
 
-- Front-End - Vue.js
+```
 
-- Back-End - Django
 
-- DB - MySQL
 
-- Core - Tensorflow
+- train model configuration
 
-### Req. 9-4 개발 일정 수립
+  train model 설정
 
-#### 역할 분담
+  백그라운드 포함 감자, 양파, 스팸, 계란, 고추, 사과 로 총 1+6개의 class 지정
 
-- Front-End - 김태우, 정영길
-- Back-End - 김기은, 정영훈
-- Core - 서용재, 정지수(팀장)
+  train epoch를 100으로 설정
 
-#### 개발 일정
+```
+class FoodConfig(Config):
 
-1~2주차 : 제공 서비스 구체화, 핵심 기능 구현
+  """Configuration for training on the toy dataset.
 
-3주차 - 부가 기능 구현
+  Derives from the base Config class and overrides some values.
+
+  """
+
+  \# Give the configuration a recognizable name
+
+  NAME = "food"
+
+
+
+  \# We use a GPU with 12GB memory, which can fit two images.
+
+  \# Adjust down if you use a smaller GPU.
+
+  IMAGES_PER_GPU = 1
+
+
+
+  \# Number of classes (including background)
+
+  NUM_CLASSES = 1 + 6 # Background + balloon
+
+
+
+  \# Number of training steps per epoch
+
+  STEPS_PER_EPOCH = 100
+
+
+
+  \# Skip detections with < 90% confidence
+
+  DETECTION_MIN_CONFIDENCE = 0.9
+```
+
+
+
+- dataset configuration
+
+  train시킬 dataset 변수 설정
+
+  dataset class - 감자, 양파, 스팸, 계란, 고추, 사과
+
+  annotation file load - via_region_data.json
+
+  
+
+```python
+class FoodDataset(utils.Dataset):
+
+	def load_food(self, dataset_dir, subset):
+        self.add_class("food", 1, "감자")
+        self.add_class("food", 2, "양파")
+        self.add_class("food", 3, "스팸")
+        self.add_class("food", 4, "계란")
+        self.add_class("food", 5, "고추")
+        self.add_class("food", 6, "사과")
+
+	assert subset in ["train", "val"]
+	dataset_dir = os.path.join(dataset_dir, subset)
+
+
+	annotations = json.load(open(os.path.join(dataset_dir,"via_region_data.json"),encoding='UTF-8'))
+
+	annotations = list(annotations.values())
+	annotations = [a for a in annotations if a['regions']]
+
+	for a in annotations:
+		if type(a['regions']) is dict:
+			polygons = [r['shape_attributes'] for r in a['regions'].values()]
+		else:
+			polygons = [r['shape_attributes'] for r in a['regions']] 
+
+        foods = [s['region_attributes'] for s in a['regions']]
+
+		num_ids = [int(n['key']) for n in foods]
+		image_path = os.path.join(dataset_dir, a['filename'])
+		image = skimage.io.imread(image_path, plugin='matplotlib')
+		height, width = image.shape[:2]
+
+
+	self.add_image(
+		"food",
+		image_id=a['filename'], # use file name as a unique image id
+		path=image_path,
+		width=width, height=height,
+		polygons=polygons,
+		num_ids=num_ids)
+
+	def load_mask(self, image_id):
+		info = self.image_info[image_id]
+		if info["source"] != "food":
+			return super(self.__class__, self).load_mask(image_id)
+        
+		num_ids = info['num_ids']
+		mask = np.zeros([info["height"], info["width"], len(info["polygons"])],
+		dtype=np.uint8)
+        
+		for i, p in enumerate(info["polygons"]):
+			rr, cc = skimage.draw.polygon(p['all_points_y'], p['all_points_x'])
+			mask[rr, cc, i] = 1
+
+		num_ids = np.array(num_ids, dtype=np.int32)
+		return mask, num_ids
+```
+
+
+
+- make annotation json file - via_region_data_json
+
+  ![image-20200429164130158](./images/mask1.jpg)
+
+
+
+- set train model batch size
+
+  배치사이즈 설정 - epochs=60
+
+```python
+	def train(model):
+
+		dataset_train = FoodDataset()
+		dataset_train.load_food(args.dataset, "train")
+		dataset_train.prepare()
+
+		dataset_val = FoodDataset()
+		dataset_val.load_food(args.dataset, "val")
+		dataset_val.prepare()
+
+		print("Training network heads")
+
+		model.train(dataset_train, dataset_val,
+		learning_rate=config.LEARNING_RATE,
+		epochs=60,
+		layers='heads')
+```
+
+
+
+- train food mask-rcnn model
+
+```
+python food.py train --dataset=C:\Mask_RCNN-master\datasets\food --weights=coco
+```
+
+
+
+[trained 모델 검증 - Inspect_Food_model.py 작성]
+
+- load mask-rcnn model
+
+  MaskRCNN 모델 import
+
+```python
+import model as modellib
+ROOT_DIR = os.path.abspath("./")
+MODEL_DIR = os.path.join(ROOT_DIR, "logs")
+with tf.device(DEVICE):
+    model = modellib.MaskRCNN(mode="inference", model_dir=MODEL_DIR,
+    config=config)
+```
+
+
+
+- load trained weights file
+
+  모델에 훈련된 가중치 파일을 적용
+
+```python
+weights_path = "C:\\Mask_RCNN-master\\samples\\food\\logs\\food20200428T1903\\mask_rcnn_food_0060.h5"
+```
+
+```python
+model.load_weights(weights_path, by_name=True)
+```
+
+
+
+- run object model / visualize detected image and probability
+
+```python
+results = model.detect([image], verbose=1)
+
+ax = get_ax(1)
+
+r = results[0]
+s = r['scores'].tolist()
+j = 0
+for i in r['class_ids'].tolist() :
+	print(class_names[i], s[j])
+	j+=1
+
+visualize.display_instances(image, r['rois'], r['masks'], 	r['class_ids'],class_names, r['scores'])
+```
+
+![image-20200429170633689](./images/mask2.jpg)
+
+
+
+
+
+
+
+## Multi-label
+
+
+
+먼저 관련 케라스 모듈을 가져온 다음, `소형VGGNet` 클래스를 정의합니다.
+
+```
+class SmallerVGGNet:
+	@staticmethod
+	def build(width, height, depth, classes, finalAct="softmax"):
+		# 인풋 이미지의 차원과, 채널에 해당하는 축을 설정하여 모델을 초기화합니다
+		# "channels_last"는 채널의 축이 마지막에 오는 것을 의미합니다
+		model = Sequential()
+		inputShape = (height, width, depth)
+		chanDim = -1
+ 
+ 		# 만약 "channels_first"를 사용한다면, 인풋 이미지의 차원을
+		# 그에 맞게 바꿔줍니다
+		if K.image_data_format() == "channels_first":
+			inputShape = (depth, height, width)
+			chanDim = 1
+```
+
+모델의 정의부입니다. `build` 함수를 통해 CNN모델을 만들 수 있습니다.
+
+`build` 함수는 `width`, `height`, `depth`, `classes`의 총 네 가지 입력변수를 필요로 합니다. `depth`는 입력 이미지의 채널 수를 지정하며 `classes`는 범주/클래스의 개수(정수)입니다(클래스 라벨 자체는 아님). `train.py` 스크립트에서 이러한 매개변수를 사용하여 `299 x 299 x 3` 입력 볼륨을 갖는 모델을 만들 것입니다.
+
+또한 `finalAct`(기본값 `"softmax"`)라는 옵션을 추가적으로 줄 수 있으며, 이는 네트워크 아키텍처의 끝에서 사용됩니다. 이 값을 `"softmax"`에서 `"sigmoid"`로 변경하여 다중 라벨 분류를 수행할 수 있습니다. 해당 옵션을 통해 단순/다중 라벨 분류를 위한 모델들을 모두 만들 수 있습니다.
+
+모델은 디폴트 값인 `"channels_last"`를 기반으로 하고있으며, 코드 하단의 `if`문을 활용하면 `"channels_first"`으로 간편하게 설정 변경할 수 있습니다.
+
+다음은 첫 `CONV => RELU => POOL`블록을 만들어볼 차례입니다.
+
+```
+		# CONV => RELU => POOL
+		model.add(Conv2D(32, (3, 3), padding="same",
+			input_shape=inputShape))
+		model.add(Activation("relu"))
+		model.add(BatchNormalization(axis=chanDim))
+		model.add(MaxPooling2D(pool_size=(3, 3)))
+		model.add(Dropout(0.25))
+```
+
+위의 합성곱 계층은 32개의 필터와 3 x 3 크기의 커널을 가지며, 최종 값은 ReLU 활성화 함수를 거치게 됩니다.
+
+드롭아웃(Dropout)은 현재 계층과 다음 계층을 연결하는 노드들의 값을 무작위로 0으로 바꾸어주는 과정입니다(연결을 끊어주는 효과). 이러한 프로세스는 네트워크가 특정 클래스, 객체, 가장자리 또는 모서리를 예측하는데 있어 계층 내 어떠한 단일 노드에만 의존하지 않게 하여 네트워크의 과적합을 예방하는데 도움이 됩니다.
+
+그 후 모델은 두개의 `(CONV => RELU) * 2 => POOL`블록을 거치게 됩니다.
+
+```
+		# (CONV => RELU) * 2 => POOL
+		model.add(Conv2D(64, (3, 3), padding="same"))
+		model.add(Activation("relu"))
+		model.add(BatchNormalization(axis=chanDim))
+		model.add(Conv2D(64, (3, 3), padding="same"))
+		model.add(Activation("relu"))
+		model.add(BatchNormalization(axis=chanDim))
+		model.add(MaxPooling2D(pool_size=(2, 2)))
+		model.add(Dropout(0.25))
+ 
+		# (CONV => RELU) * 2 => POOL
+		model.add(Conv2D(128, (3, 3), padding="same"))
+		model.add(Activation("relu"))
+		model.add(BatchNormalization(axis=chanDim))
+		model.add(Conv2D(128, (3, 3), padding="same"))
+		model.add(Activation("relu"))
+		model.add(BatchNormalization(axis=chanDim))
+		model.add(MaxPooling2D(pool_size=(2, 2)))
+		model.add(Dropout(0.25))
+```
+
+여기서 주목해야 할 점은 필터의 개수와 커널의 크기, 그리고 풀링의 크기에 변화를 주어 공간의 크기는 점차 줄이지만, 깊이를 높인다는 것입니다.
+
+다음은 마지막 블록인 `FC => RELU`입니다.
+
+```
+		# FC => RELU
+		model.add(Flatten())
+		model.add(Dense(1024))
+		model.add(Activation("relu"))
+		model.add(BatchNormalization())
+		model.add(Dropout(0.5))
+ 
+ 		# 단일 라벨 분류는 *softmax* 활성화 함수를 사용합니다
+		# 다중 라벨 분류는 *sigmoid* 활성화 함수를 사용합니다
+		model.add(Dense(classes))
+		model.add(Activation(finalAct))
+ 
+ 		# 네트워크 아키텍처를 반환합니다
+		return model
+```
+
+완전하게 연결된 계층(Fully Connected layer)인 `Dense`는 모델의 마지막에 배치됩니다.
+
+`Dense`의 결과 값은 마지막 활성화 함수인 `finalAct`를 거치게 됩니다. `"softmax"`를 사용하면 단일 라벨 분류를 수행하는 모델을 만들 수 있습니다. 본 튜토리얼에서는 다중 라벨 분류를 위해 `"sigmoid"`를 사용합니다(`smallervggnet.py`와 `train.py` 참조).
+
+### 다중 라벨 분류를 위한 케라스 모델 구현
+
+이제 `소형VGGNet`을 구현했으니, `train.py`를 작성할 차례입니다. 이 스크립트는 다중 라벨 분류를 위해 케라스 모델을 학습시키는데 사용됩니다.
+
+
+
+이제 `train.py`파일을 만들어 아래와 같이 코드를 작성합니다.
+
+```
+# matplotlib의 백엔드를 설정하여 그림이 백그라운드에서 저장될 수 있게합니다
+import matplotlib
+matplotlib.use("Agg")
+ 
+# 필요한 패키지들을 가져옵니다
+from keras.preprocessing.image import ImageDataGenerator
+from keras.optimizers import Adam
+from keras.preprocessing.image import img_to_array
+from sklearn.preprocessing import MultiLabelBinarizer
+from sklearn.model_selection import train_test_split
+from pyimagesearch.smallervggnet import SmallerVGGNet
+import matplotlib.pyplot as plt
+from imutils import paths
+import numpy as np
+import argparse
+import random
+import pickle
+import cv2
+import os
+```
+
+
+
+```
+# construct the argument parse and parse the arguments
+ap = argparse.ArgumentParser()
+ap.add_argument("-d", "--dataset", required=True,
+	help="path to input dataset (i.e., directory of images)")
+ap.add_argument("-m", "--model", required=True,
+	help="path to output model")
+ap.add_argument("-l", "--labelbin", required=True,
+	help="path to output label binarizer")
+ap.add_argument("-p", "--plot", type=str, default="plot.png",
+	help="path to output accuracy/loss plot")
+args = vars(ap.par
+se_args())
+```
+
+위 스크립트에는 총 네 가지의 인수들이 있습니다.
+
+1. `--dataset` : 데이터 세트의 경로입니다.
+2. `--model` : 디스크에 저장된 케라스 모델의 경로입니다.
+3. `--labelbin` : 학습의 결과인 `MultiLabelBinarizer`가 저장될 경로입니다.
+4. `--plot` : 학습 손실 값과 정확도 값의 그래프가 저장될 경로입니다.
+
+
+
+다음은 학습 과정에서 중요한 역할을 수행하는 몇 가지 중요한 변수를 초기화하겠습니다.
+
+```
+# 학습을 위해 에폭과 초기 학습률, 배치 사이즈, 그리고 이미지의 차원을 초기화합니다
+EPOCHS = 75
+INIT_LR = 1e-3
+BS = 32
+IMAGE_DIMS = (299, 299, 3)
+```
+
+위의 변수들은 다음과 같은 의미를 갖습니다.
+
+- 네트워크는 75 `EPOCHS`동안 역전파를 통해 점진적으로 패턴을 학습합니다.
+- 초기 학습률(Learning rate)은 `1e-3`(Adam 옵티마이저의 기본값)입니다.
+- 배치 크기는 `32`입니다. GPU를 사용하는 경우 GPU 성능에 따라 이 값을 조정해야 하지만, 이번 프로젝트에는 `32`의 배치 크기로 좋은 결과를 얻을 수 있습니다.
+- 위에서 설명한 바와 같이 이미지의 크기는 `299 x 299`이며 3개의 채널을 가지고 있습니다.
+- 
+
+이 다음 두 개의 코드 블록은 학습 데이터 로드와 전처리를 수행합니다.
+
+```
+# 이미지 경로를 섞어줍니다
+print("[INFO] loading images...")
+imagePaths = sorted(list(paths.list_images(args["dataset"])))
+random.seed(42)
+random.shuffle(imagePaths)
+ 
+# 데이터와 라벨을 초기화합니다
+data = []
+labels = []
+```
+
+여기서는 `imagePaths`(영상 경로)를 읽어와 무작위로 섞어준 다음, 데이터와 라벨 목록을 초기화합니다.
+
+그런 다음 `imagePaths`의 각각의 경로에 대해 이미지 데이터를 전처리하며 다중 클래스 라벨을 추출합니다.
+
+```
+# 인풋 이미지들에 대해 아래의 반복문을 수행합니다
+for imagePath in imagePaths:
+	# 이미지를 로드하고, 전처리한 후 데이터 리스트에 저장합니다
+	image = cv2.imread(imagePath)
+	image = cv2.resize(image, (IMAGE_DIMS[1], IMAGE_DIMS[0]))
+	image = img_to_array(image)
+	data.append(image)
+ 
+ 	# 이미지 경로에서 라벨을 추출한 후, 라벨 리스트를 업데이트합니다
+	l = label = imagePath.split(os.path.sep)[-2].split("_")
+	labels.append(l)
+```
+
+먼저 `cv2.imread(imagePath)`를 통해 각 이미지를 메모리에 로드합니다. 그 다음 두 줄에서는 딥러닝 파이프라인의 중요한 단계인 전처리를 수행합니다. `data.append(image)`는 처리된 이미지를 데이터에 추가합니다. 다음 줄의 `split`은 다중 라벨 분류 작업을 위해 이미지 경로를 여러 라벨로 분할합니다. 해당 라인의 실행 결과로 2개의 원소를 갖는 리스트가 생성된 후, 라벨 리스트에 추가됩니다.
+
+다음은 위의 작업을 터미널에서 단계별로 수행해 본 예시로, 다중 라벨 파싱이 어떻게 진행되는지 자세히 알 수 있습니다.
+
+
+
+전처리 과정은 아직 끝나지 않았습니다.
+
+```
+# 모든 픽셀 값이 [0, 1]의 범위 내에 오도록 변환합니다 
+data = np.array(data, dtype="float") / 255.0
+labels = np.array(labels)
+print("[INFO] data matrix: {} images ({:.2f}MB)".format(
+	len(imagePaths), data.nbytes / (1024 * 1000.0)))
+```
+
+`data` 리스트에는 NumPy 배열로 저장된 이미지들이 포함되어 있습니다. 코드 한 줄에서 리스트를 NumPy 배열로 변환하고, 픽셀 강도를 범위 `[0, 1]`로 조정합니다.
+
+또한 라벨을 NumPy 배열로 변환합니다.
+
+이제 라벨을 이진화해 봅시다. 아래 블록은 이번 포스트의 다중 클래스 분류 개념에 있어 매우 중요합니다.
+
+```
+# scikit-learn의 다중 라벨 이진화 함수를 사용해 라벨을 이진화 합니다
+print("[INFO] class labels:")
+mlb = MultiLabelBinarizer()
+labels = mlb.fit_transform(labels)
+ 
+# 나올 수 있는 모든 라벨들을 출력합니다
+for (i, label) in enumerate(mlb.classes_):
+	print("{}. {}".format(i + 1, label))
+```
+
+다중 클래스 분류를 위해 라벨을 이진화하려면, scikit-learn 라이브러리의 [MultiLabelBinarizer](http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MultiLabelBinarizer.html) 클래스를 활용해야 합니다. 다중 클래스 분류에는 표준 `LabelBinariser` 클래스를 사용할 수 없습니다. 위의 과정을 거쳐 사람이 읽을 수 있는 라벨들을 각 이미지가 어떤 클래스들에 속하는지 나타내는 벡터 값으로 인코딩합니다.
+
+`One-hot` 인코딩은 범주형 라벨을 단일 정수에서 벡터로 변환합니다. 같은 개념은 위의 과정에도 적용됩니다(위의 경우 `Two-hot`이긴 합니다).
+
+
+
+이제 학습 및 테스트 분할을 구성하고, 데이터를 증강하기 위한 `ImageDataGenerator`를 초기화합니다.
+
+```
+# 데이터의 80%를 학습에, 나머지 20%를 테스트에 사용하기 위해
+# 데이터를 나누는 과정입니다
+(trainX, testX, trainY, testY) = train_test_split(data,
+	labels, test_size=0.2, random_state=42)
+ 
+# 이미지 오그멘테이션을 위한 제너레이터를 초기화합니다
+aug = ImageDataGenerator(rotation_range=25, width_shift_range=0.1,
+	height_shift_range=0.1, shear_range=0.2, zoom_range=0.2,
+	horizontal_flip=True, fill_mode="nearest")
+```
+
+학습과 테스트를 위해 데이터를 분할하는 것은 머신러닝을 적용하는데 있어 일반적인 과정입니다. 위 코드 블록에서는 scikit-learn의 `train_test_split`을 통해 이미지의 80%를 학습 데이터에 할당하고, 20%를 테스트 데이터에 할당하였습니다.
+
+`ImageDataGenerator`는 데이터 분할 이후에 초기화합니다. 클래스당 1,000개 미만의 이미지로 작업하는 경우 데이터 증강은 거의 항상 "반드시" 해야하는 작업입니다.
+
+다음으로 모델을 만들고 Adam 옵티마이저를 초기화해 봅니다.
+
+```
+# 다중 라벨 분류를 수행할 수 있도록 sigmoid 활성화 함수를
+# 네트워크의 마지막 레이어로 설정합니다
+print("[INFO] compiling model...")
+model = SmallerVGGNet.build(
+	width=IMAGE_DIMS[1], height=IMAGE_DIMS[0],
+	depth=IMAGE_DIMS[2], classes=len(mlb.classes_),
+	finalAct="sigmoid")
+
+# 옵티마이저를 초기화합니다
+opt = Adam(lr=INIT_LR, decay=INIT_LR / EPOCHS)
+```
+
+위 코드에서 `SmallerVGGNet.build`로 `소형VGGNet`모델을 빌드합니다. 이 때 `finalAct="sigmoid"`는 이 모델로 다중 라벨 분류를 수행할 것임을 나타냅니다.
+
+이제 모델을 컴파일하고 학습을 시작합니다(하드웨어에 따라 시간이 좀 걸릴 수 있습니다).
+
+```
+# 각각의 결과 라벨을 독립적인 베르누이 분포로 취급하기 위해
+# 범주형 교차 엔트로피 대신 이진 교차 엔트로피를 사용하여 모델을 컴파일합니다
+model.compile(loss="binary_crossentropy", optimizer=opt,
+	metrics=["accuracy"])
+ 
+# 네트워크를 학습시킵니다
+print("[INFO] training network...")
+H = model.fit_generator(
+	aug.flow(trainX, trainY, batch_size=BS),
+	validation_data=(testX, testY),
+	steps_per_epoch=len(trainX) // BS,
+	epochs=EPOCHS, verbose=1)
+```
+
+`model.compile`로 모델을 컴파일할 때, **범주형 교차 엔트로피(categorical cross-entropy)**대신 **이진 교차 엔트로피(binary cross-entropy)**를 사용합니다.
+
+이것은 다중 라벨 분류에 있어 직관에 어긋나는 것처럼 보일 수 있지만, 이는 각각의 결과 라벨을 독립적인 베르누이 분포로 취급하기 위함입니다. 이를 통해 각각의 결과 노드들을 독립적으로 학습시킬 수 있습니다.
+
+모델 빌드 후에는 증강된 데이터를 사용하여 학습을 시작합니다.
+
+학습이 끝난 후에는 모델과 `MultiLabelBinarizer`를 디스크에 저장할 수 있습니다.
+
+```
+# 모델을 디스크에 저장합니다
+print("[INFO] serializing network...")
+model.save(args["model"])
+ 
+# `MultiLabelBinarizer`를 디스크에 저장합니다
+print("[INFO] serializing label binarizer...")
+f = open(args["labelbin"], "wb")
+f.write(pickle.dumps(mlb))
+f.close()
+```
+
+이제 정확도와 손실 값을 그래프로 나타내 봅니다.
+
+```
+# 학습 로스와 정확도를 그래프로 그려줍니다
+plt.style.use("ggplot")
+plt.figure()
+N = EPOCHS
+plt.plot(np.arange(0, N), H.history["loss"], label="train_loss")
+plt.plot(np.arange(0, N), H.history["val_loss"], label="val_loss")
+plt.plot(np.arange(0, N), H.history["acc"], label="train_acc")
+plt.plot(np.arange(0, N), H.history["val_acc"], label="val_acc")
+plt.title("Training Loss and Accuracy")
+plt.xlabel("Epoch #")
+plt.ylabel("Loss/Accuracy")
+plt.legend(loc="upper left")
+plt.savefig(args["plot"])
+```
+
+학습과 검증 과정의 정확도와 손실 값은 `plt.plot`으로 그릴 수 있으며, 이를 `plt.savefig`로 이미지 파일로 저장할 수 있습니다.
+
+저는 학습 과정을 그래프로 나타내는 것은 모델 자체 만큼이나 중요하다고 생각합니다. 저는 보통 블로그에 결과물을 올려 여러분과 공유하기 전에 몇 차례에 걸쳐 학습과 그 그래프를 그려 확인하는 과정을 거칩니다.
 

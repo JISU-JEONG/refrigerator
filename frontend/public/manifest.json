@@ -1,0 +1,21 @@
+{
+  "short_name": "냉장고를 부탁해",
+  "name": "냉장고를 부탁해",
+  "icons": [
+    {
+      "src": "/img/icons/android-chrome-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/img/icons/android-chrome-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#3367D6",
+  "display": "standalone",
+  "theme_color": "#3367D6",
+  "scope": "/"
+}
