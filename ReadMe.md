@@ -479,7 +479,7 @@ class FoodDataset(utils.Dataset):
 
 - make annotation json file - via_region_data_json
 
-  ![image-20200429164130158](./images/mask1.jpg)
+  ![image-20200429164130158](./FrontEnd-Readme-Image/mask1.jpg)
 
 
 
@@ -564,7 +564,7 @@ for i in r['class_ids'].tolist() :
 visualize.display_instances(image, r['rois'], r['masks'], 	r['class_ids'],class_names, r['scores'])
 ```
 
-![image-20200429170633689](./images/mask2.jpg)
+![image-20200429170633689](./FrontEnd-Readme-Image/mask2.jpg)
 
 
 
