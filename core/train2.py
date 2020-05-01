@@ -1,5 +1,5 @@
 # USAGE
-# python train2.py --dataset dataset --model fashion.model --labelbin mlb.pickle
+# python train.py --dataset dataset --model fashion.model --labelbin mlb.pickle
 
 # set the matplotlib backend so figures can be saved in the background
 import matplotlib
@@ -9,6 +9,7 @@ matplotlib.use("Agg")
 from keras.preprocessing.image import ImageDataGenerator
 from keras.optimizers import Adam
 from keras.preprocessing.image import img_to_array
+from keras.callbacks import ModelCheckpoint
 from sklearn.preprocessing import MultiLabelBinarizer
 from sklearn.model_selection import train_test_split
 from pyimagesearch.smallervggnet import SmallerVGGNet
@@ -21,6 +22,7 @@ import pickle
 import cv2
 import os
 import json
+
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
 ap.add_argument("-d", "--dataset", required=True,
@@ -35,9 +37,9 @@ args = vars(ap.parse_args())
 
 # initialize the number of epochs to train for, initial learning rate,
 # batch size, and image dimensions
-EPOCHS = 75
+EPOCHS = 80
 INIT_LR = 1e-3
-BS = 8
+BS = 32
 IMAGE_DIMS = (299, 299, 3)
 
 # grab the image paths and randomly shuffle them
@@ -51,7 +53,7 @@ random.shuffle(imagePaths)
 # initialize the data and labels
 data = []
 labels = []
-
+nums =dict()
 # loop over the input images
 path = 'dataset\\'
 for imagePath in imagePaths:
@@ -66,8 +68,11 @@ for imagePath in imagePaths:
 	# # labels list
 	l = label.split(',')
 	labels.append(l)
-
+	for i in l:
+		if nums.get(i): nums[i] +=1
+		else:nums[i] = 1
 # scale the raw pixel intensities to the range [0, 1]
+print(nums)
 data = np.array(data, dtype="float") / 255.0
 labels = np.array(labels)
 print("[INFO] data matrix: {} images ({:.2f}MB)".format(
@@ -82,12 +87,13 @@ labels = mlb.fit_transform(labels)
 
 # loop over each of the possible class labels and show them
 for (i, label) in enumerate(mlb.classes_):
+	
 	print("{}. {}".format(i + 1, label))
 
 # partition the data into training and testing splits using 80% of
 # the data for training and the remaining 20% for testing
 (trainX, testX, trainY, testY) = train_test_split(data,
-	labels, test_size=0.2, random_state=42)
+	labels, test_size=0.1, random_state=42)
 # construct the image generator for data augmentation
 aug = ImageDataGenerator(rotation_range=25, width_shift_range=0.1,
 	height_shift_range=0.1, shear_range=0.2, zoom_range=0.2,
@@ -112,13 +118,19 @@ opt = Adam(lr=INIT_LR, decay=INIT_LR / EPOCHS)
 model.compile(loss="binary_crossentropy", optimizer=opt,
 	metrics=["accuracy"])
 
+checkpoint = ModelCheckpoint(filepath='image_features_extract_model.h5', 
+            monitor='loss', 
+            mode='min', 
+            save_best_only=True)
+
 # train the network
 print("[INFO] training network...")
 H = model.fit_generator(
 	aug.flow(trainX, trainY, batch_size=BS),
 	validation_data=(testX, testY),
 	steps_per_epoch=len(trainX) // BS,
-	epochs=EPOCHS, verbose=1)
+	epochs=EPOCHS, verbose=1,
+	callbacks=[checkpoint])
 
 # # save the model to disk
 print("[INFO] serializing network...")

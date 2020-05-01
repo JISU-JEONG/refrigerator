@@ -1,5 +1,5 @@
 # USAGE
-# python classify.py --model fashion.model --labelbin mlb.pickle --image examples/example_01.jpg
+# python classify.py --model fashion.model --labelbin mlb.pickle --image examples/apple.jpg
 
 # import the necessary packages
 from keras.preprocessing.image import img_to_array
@@ -34,9 +34,10 @@ image = np.expand_dims(image, axis=0)
 # load the trained convolutional neural network and the multi-label
 # binarizer
 print("[INFO] loading network...")
-model = load_model(args["model"])
-mlb = pickle.loads(open(args["labelbin"], "rb").read())
-
+# model = load_model(args["model"])
+# mlb = pickle.loads(open(args["labelbin"], "rb").read())
+model = load_model('fashion.model')
+mlb = pickle.loads(open('mlb.pickle', "rb").read())
 # classify the input image then find the indexes of the two class
 # labels with the *largest* probability
 print("[INFO] classifying image...")
